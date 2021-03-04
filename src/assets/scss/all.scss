@@ -1,0 +1,21 @@
+
+// :root {
+//   $primary: #FFC107;
+//   $primary-dark: #FF9900;
+// }
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+// Tailwind CSS
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import 'utilities/utils';
+
+// Components
+@import 'components/_loading';
+@import 'components/carousel';
+
+// Layout

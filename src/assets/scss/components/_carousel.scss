@@ -1,0 +1,42 @@
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
+  left: 1.5rem;
+  background-image: url('~@/assets/images/icon/arrow-left-white.svg');
+  &.white {
+    left: -1rem;
+    background-image: url('~@/assets/images/icon/arrow-left.svg');
+  }
+}
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+  right: 1.5rem;
+  background-image: url('~@/assets/images/icon/arrow-right-white.svg');
+  &.white {
+    right: -1rem;
+    background-image: url('~@/assets/images/icon/arrow-right.svg');
+  }
+}
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next,
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
+  width: 40px;
+  height: 40px;
+  background-color: #4B4B4B;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+  &.white {
+    background-color: #fff;
+  }
+}
+.swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #F2F2F2;
+  transition: all .2s;
+}
+.swiper-pagination-bullet-active {
+  width: 24px;
+  background: #FFC107;
+  border-radius: 10px;
+}

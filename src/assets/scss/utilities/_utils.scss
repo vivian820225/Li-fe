@@ -1,0 +1,62 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  &.overlay-fixed {
+    overflow-y: hidden;
+  }
+}
+
+.text-shadow {
+  text-shadow: 1px 2px 6px rgba(0, 0, 0, .3);
+}
+
+.btn {
+  display: inline-flex;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-weight: bold;
+  border-radius: 8px;
+  &__icon {
+    padding: 2px;
+    font-size: 20px;
+    border-radius: 50%;
+  }
+  &__inline {
+    border-radius: 0 8px 8px 0;
+  }
+}
+
+.go-top {
+  @apply fixed block bg-secondary-dark text-white p-3 rounded-full right-4 bottom-12 shadow-lg cursor-pointer;
+  z-index: 20;
+  span {
+    display: block;
+  }
+}
+
+// Title
+.section-title {
+  @apply text-2xl font-bold;
+}
+
+.sub-section-title {
+  @apply block font-ubu text-xl text-secondary-light;
+} 
+
+@screen sm {
+  .section-title {
+    @apply text-4xl
+  }
+
+  .sub-section-title {
+    @apply inline-block text-2xl;
+  }
+
+  .go-top {
+    @apply right-8
+  }
+}
