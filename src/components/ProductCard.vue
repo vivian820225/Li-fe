@@ -1,29 +1,29 @@
 <template>
   <div class="p-card text-gray-900">
     <div class="p-card__top">
-      <a href="#" class="p-card__img">
-        <img :src="item.imageUrl" alt="" />
-      </a>
+      <router-link :to="`/product/${item.id}`" class="p-card__img">
+        <img :src="item.imageUrl" :alt="item.title" />
+      </router-link>
       <span class="discount bg-primary-default text-sm font-bold">8.5 折</span>
       <button type="button" class="favorite">
-        <span class="material-icons text-primary-default" v-if="isLike"
-          >favorite</span
-        >
+        <span class="material-icons text-primary-default" v-if="isLike">
+          favorite
+        </span>
         <span
           class="material-icons text-gray-500 hover:text-primary-default transition"
-          v-else
-          >favorite_border</span
-        >
+          v-else>
+          favorite_border
+        </span>
       </button>
     </div>
     <div class="p-card__content p-4 flex justify-between items-start">
       <div class="pr-3">
-        <a
-          href="#"
+        <router-link
+          :to="`/product/${item.id}`"
           class="block p-card__name text-base mb-2 hover:text-primary-default transition"
         >
           {{ item.title }}
-        </a>
+        </router-link>
         <div class="flex justify-start items-center flex-wrap">
           <span
             class="price text-secondary-default font-ubu font-bold text-xl mr-2"
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .p-card {
+.p-card {
   display: block;
   list-style: none;
   position: relative;
@@ -82,23 +82,21 @@ export default {
       }
     }
   }
-}
-
-.discount {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 8px 12px;
-}
-
-.favorite {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1;
-  outline: none;
-  &:focus {
+  .discount {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 8px 12px;
+  }
+  .favorite {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
     outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 }
 </style>

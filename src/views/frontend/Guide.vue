@@ -40,7 +40,7 @@
       </p>
       <div class="flex justify-between items-center flex-col md:flex-row">
         <img class="img-size mr-4 mb-8 md:mb-28" src="~@/assets/images/cuate.png" alt="">
-        <p class="md:text-lg text-base lg:text-3xl md:text-2xl text-xl font-bold leading-relaxed
+        <p class="lg:text-3xl md:text-2xl text-xl font-bold leading-relaxed
         text-center md:text-left mb-12 md:mb-0">
           若有任何相關問題，歡迎來電詢問
           客服專線：02-123426789

@@ -37,7 +37,6 @@
       </div>
     </div>
     <div class="result-module" v-if="showResult">
-      <div class="overlay"></div>
       <div class="box text-center relative">
         <div id="good" class="box-wrapper">
           <span class="icon"><img src="images/icon/icon-giftcard.svg" alt=""></span>
@@ -63,18 +62,22 @@
             </button>
           </div>
         </div>
-        <button class="close-button" type="button">
+        <button class="close-button" type="button" @click="showResult = !showResult">
           <span class="material-icons">
             close
           </span>
         </button>
       </div>
     </div>
+    <OverlayMask
+    :overlayopen="showResult"
+    @overlayclose="closeResult()"/>
   </div>
 </template>
 
 <script>
 import TitleBanner from '@/components/TitleBanner.vue';
+import OverlayMask from '@/components/OverlayMask.vue';
 
 export default {
   name: 'Discount',
@@ -113,11 +116,12 @@ export default {
       ],
       windowWidth: document.documentElement.clientWidth,
       windowHeight: document.documentElement.clientHeight,
-      showResult: false,
+      showResult: true,
     };
   },
   components: {
     TitleBanner,
+    OverlayMask,
   },
   mounted() {
     window.addEventListener('resize', this.setDimensions);
@@ -163,6 +167,9 @@ export default {
         this.degree += 360 - (this.degree % 360);
       }
       this.active = -1;
+    },
+    closeResult() {
+      this.showResult = false;
     },
   },
 };
@@ -297,13 +304,8 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
-}
-.overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .5);
+  pointer-events: none;
+  z-index: 100;
 }
 .close-button {
   position: absolute;
@@ -316,6 +318,7 @@ export default {
   max-width: 420px;
   color: #002520;
   border-radius: 1rem;
+  pointer-events: initial;
   overflow: hidden;
 }
 .box-wrapper {

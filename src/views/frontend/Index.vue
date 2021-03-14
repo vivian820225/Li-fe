@@ -2,7 +2,7 @@
   <div>
     <Loading :active.sync="isLoading" />
     <div class="max-w-screen-xl mx-auto font-sans xl:px-0 lg:px-8 px-4">
-      <BannerCarousel class="mb-16" />
+      <BannerCarousel class="md:mb-16 mb-8" />
       <!-- 熱門推薦 -->
       <section class="mb-16">
         <div class="flex justify-between md:items-center items-end mb-4">

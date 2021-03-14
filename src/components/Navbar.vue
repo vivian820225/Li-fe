@@ -2,9 +2,9 @@
   <div class="navbar">
     <Loading :active.sync="isLoading" />
     <nav
-      class="navbar relative md:py-8 py-4"
+      class="navbar relative md:max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4 md:py-8 py-4"
     >
-      <div class="px-4 flex justify-between items-center">
+      <div class="flex justify-between items-center">
         <router-link to="/" class="navbar__logo">
           <img src="@/assets/images/logo.svg" alt="" />
         </router-link>
@@ -38,7 +38,7 @@
             </li>
           </ul>
           <span class="divider bg-secondary-light mr-6 hidden md:block"></span>
-          <ul class="flex justify-end items-center md:mr-0 sm:mr-14 mr-12">
+          <ul class="flex justify-end items-center md:mr-0 mr-10">
             <li class="hidden sm:block md:mr-8 mr-6">
               <router-link
                 class="transition hover:text-secondary-light"
@@ -113,65 +113,60 @@
           </svg>
         </button>
       </div>
-      <!-- Menu Button End -->
-      <!-- Mobile Menu -->
-      <ul
-        v-if="isMobile"
-        :class="isOpen ? 'flex' : 'hidden'"
-        class="absolute bg-gray-100 top-16 left-0 right-0 flex-col items-center
-        w-full text-center z-10"
-      >
-        <li class="w-full">
-          <router-link
-            class="transition hover:text-white hover:bg-secondary-light py-3"
-            to="/products"
-          >
-            產品總覽
-          </router-link>
-        </li>
-        <li class="w-full">
-          <router-link
-            class="transition hover:text-white hover:bg-secondary-light py-3"
-            to="/discount"
-          >
-            優惠活動
-          </router-link>
-        </li>
-        <li class="w-full">
-          <router-link
-          class="transition hover:text-white hover:bg-secondary-light py-3"
-          to="/blog">
-            綠色生活
-          </router-link>
-        </li>
-        <li class="w-full">
-          <router-link
-            class="transition hover:text-white hover:bg-secondary-light py-3"
-            to="/about">
-            品牌故事
-          </router-link>
-        </li>
-        <li class="w-full sm:hidden">
-          <router-link
-            class="transition hover:text-white hover:bg-secondary-light py-3"
-            to="/account">
-            會員專區
-          </router-link>
-        </li>
-        <li class="w-full sm:hidden">
-          <router-link
-            class="transition hover:text-white hover:bg-secondary-light py-3"
-            to="/favorites">
-            我的收藏
-          </router-link>
-        </li>
-      </ul>
     </nav>
-    <div class="overlay"
-    :class="{ 'show': sideCartOpen }"
-    @click="sideCartOpen = !sideCartOpen"></div>
+    <!-- Mobile Menu -->
+    <ul
+      v-if="isMobile"
+      :class="isOpen ? 'flex' : 'hidden'"
+      class="absolute bg-gray-100 top-16 left-0 right-0 flex-col items-center
+      w-full text-center z-10"
+    >
+      <li class="w-full">
+        <router-link
+          class="transition hover:text-white hover:bg-secondary-light py-3"
+          to="/products"
+        >
+          產品總覽
+        </router-link>
+      </li>
+      <li class="w-full">
+        <router-link
+          class="transition hover:text-white hover:bg-secondary-light py-3"
+          to="/discount"
+        >
+          優惠活動
+        </router-link>
+      </li>
+      <li class="w-full">
+        <router-link
+        class="transition hover:text-white hover:bg-secondary-light py-3"
+        to="/blog">
+          綠色生活
+        </router-link>
+      </li>
+      <li class="w-full">
+        <router-link
+          class="transition hover:text-white hover:bg-secondary-light py-3"
+          to="/about">
+          品牌故事
+        </router-link>
+      </li>
+      <li class="w-full sm:hidden">
+        <router-link
+          class="transition hover:text-white hover:bg-secondary-light py-3"
+          to="/account">
+          會員專區
+        </router-link>
+      </li>
+      <li class="w-full sm:hidden">
+        <router-link
+          class="transition hover:text-white hover:bg-secondary-light py-3"
+          to="/favorites">
+          我的收藏
+        </router-link>
+      </li>
+    </ul>
     <SideCart
-    v-if="sideCartOpen"
     :cartlist="cart"
     :cartopen="sideCartOpen"
     :totalprice="totalprice"
@@ -179,11 +174,16 @@
     @deleteproduct="removeCartItem"
     @cartclose="sideCartOpen = !sideCartOpen"
     />
+    <OverlayMask
+    :overlayopen="sideCartOpen"
+    @overlayclose="closeCart()"
+    />
   </div>
 </template>
 
 <script>
 import SideCart from '@/components/SideCart.vue';
+import OverlayMask from '@/components/OverlayMask.vue';
 
 export default {
   name: 'Navbar',
@@ -200,6 +200,7 @@ export default {
   },
   components: {
     SideCart,
+    OverlayMask,
   },
   created() {
     this.getCart();
@@ -221,6 +222,9 @@ export default {
       } else {
         this.isMobile = false;
       }
+    },
+    closeCart() {
+      this.sideCartOpen = false;
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
@@ -291,20 +295,6 @@ export default {
 .divider {
   width: 2px;
   height: 1.5rem;
-}
-
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, .5);
-  z-index: 99;
-  &.show {
-    display: block;
-  }
 }
 
 @media (max-width: 768px) {

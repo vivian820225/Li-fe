@@ -22,11 +22,30 @@ const routes = [
         path: '/products',
         name: 'AllProducts',
         component: () => import('../views/frontend/AllProducts.vue'),
+        meta: {
+          breadcrumb: [{
+            name: '全部商品',
+          }],
+        },
       },
       {
-        path: '/product',
+        path: '/product/:id',
         name: 'Product',
         component: () => import('../views/frontend/Product.vue'),
+        meta: {
+          breadcrumb: [{
+            name: '全部商品',
+            link: '/products',
+          },
+          {
+            name: '當前商品',
+          }],
+        },
+      },
+      {
+        path: '/checkout',
+        name: 'Checkout',
+        component: () => import('../views/frontend/Checkout.vue'),
       },
       {
         path: '/favorites',
@@ -65,6 +84,9 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
 });
 
 export default router;

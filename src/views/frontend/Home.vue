@@ -5,8 +5,8 @@
         keyboard_arrow_up
       </span>
     </a>
-    <Navbar class="md:max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4" />
-    <transition name="fade"><router-view /></transition>
+    <Navbar />
+    <transition name="fade"><router-view :key="$route.fullPath" /></transition>
     <Footer />
   </div>
 </template>
