@@ -1,0 +1,32 @@
+::placeholder,
+::-ms-input-placeholder,
+:-ms-input-placeholder {
+  color: #b4b4b4;
+  opacity: .5;
+}
+.input-field {
+  @apply block w-full border-2 border-gray-500 rounded-lg outline-none;
+  &:focus {
+    @apply border-primary-default ring-4 ring-primary-default ring-opacity-50;
+  }
+  &[type="number"] {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+.select-field {
+  @apply block w-full border-2 mt-1 rounded-md border-gray-500;
+  &:focus {
+    @apply border-primary-default ring-4 ring-primary-default ring-opacity-50;
+  }
+}
+.checkbox-field {
+  @apply rounded border-gray-300 text-primary-dark;
+  &:focus {
+    @apply border-primary-default ring-4 ring-primary-default ring-opacity-50;
+  }
+}

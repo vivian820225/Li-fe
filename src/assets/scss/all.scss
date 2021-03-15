@@ -1,8 +1,7 @@
-
-// :root {
-//   $primary: #FFC107;
-//   $primary-dark: #FF9900;
-// }
+:root {
+  --primary: #FFC107;
+  --primary-shadow: #ffde7b;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
@@ -15,7 +14,10 @@
 @import 'utilities/utils';
 
 // Components
-@import 'components/_loading';
+@import 'components/loading';
 @import 'components/carousel';
 
 // Layout
+@import 'layout/cart';
+@import 'layout/contact';
+@import 'layout/form';
