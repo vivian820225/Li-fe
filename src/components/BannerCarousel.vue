@@ -14,14 +14,17 @@
             </h3>
             <p class="text-white lg:text-3xl md:text-xl text-lg
             font-bold text-shadow mb-4">淨化生活中的焦慮，打造舒適的品質</p>
-            <a href="#" class="btn text-base bg-primary-default shadow-md
-            hover:bg-primary-dark hover:shadow-none transition">
+            <router-link
+              to="/products"
+              class="btn text-base bg-primary-default shadow-md
+            hover:bg-primary-dark hover:shadow-none transition"
+            >
               一起搭配你的生活
               <span class="material-icons btn__icon block ml-2 relative
               border-2 border-gray-900 rounded-full">
                 arrow_forward
               </span>
-            </a>
+            </router-link>
           </div>
         </div>
       </swiper-slide>

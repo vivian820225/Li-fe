@@ -71,6 +71,9 @@
   &:hover {
     @apply bg-gray-50;
   };
+  &.disabled {
+    @apply text-gray-300 pointer-events-none;
+  }
 }
 .btn-add {
   @apply relative inline-flex items-center p-1

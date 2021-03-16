@@ -18,6 +18,8 @@ Vue.filter('currency', currencyFilter);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
 
+Vue.prototype.$bus = new Vue();
+
 new Vue({
   router,
   render: (h) => h(App),

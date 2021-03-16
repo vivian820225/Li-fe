@@ -37,6 +37,7 @@
       <button
         type="button"
         class="bg-primary-default text-gray-900 p-3 rounded-lg hover:bg-primary-dark transition"
+        @click="addToCart(item.id, 1)"
       >
         <span class="material-icons block">add</span>
       </button>
@@ -50,8 +51,12 @@ export default {
   props: ['item', 'isLike'],
   data() {
     return {
-
     };
+  },
+  methods: {
+    addToCart(id, num) {
+      this.$emit('addtocart', id, num);
+    },
   },
 };
 </script>

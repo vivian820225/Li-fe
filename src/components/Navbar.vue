@@ -61,11 +61,6 @@
                 <span class="material-icons"> shopping_basket </span>
               </a>
             </li>
-            <li>
-              <a href="#" class="transition hover:text-secondary-light">
-                <span class="material-icons"> search </span>
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -204,6 +199,10 @@ export default {
   },
   created() {
     this.getCart();
+    this.$bus.$on('get-cart', () => {
+      this.getCart();
+      this.sideCartOpen = true;
+    });
   },
   mounted() {
     this.mediaCheck();

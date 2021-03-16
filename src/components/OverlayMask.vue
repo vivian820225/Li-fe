@@ -1,7 +1,7 @@
 <template>
   <div
     class="overlay"
-    :class="{show: overlayopen}"
+    :class="{'show': overlayopen}"
     @click="overlayClose()">
   </div>
 </template>

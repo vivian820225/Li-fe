@@ -43,19 +43,21 @@
               <button
                 type="button"
                 class="text-xl w-10 h-10 hover:text-primary-default transition"
-                :disabled="tempProduct.quantity === 0"
+                :class="{'text-gray-300 pointer-events-none': quantity === 1}"
+                @click="quantity = quantity - 1"
               >
                 <span class="material-icons text-3xl block">remove</span>
               </button>
               <input
                 type="number"
                 class="q-number"
-                :value="(tempProduct.quantity = 1)"
+                :value="quantity"
                 onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
               />
               <button
                 type="button"
                 class="text-xl w-10 h-10 hover:text-primary-default transition"
+                @click="quantity = quantity + 1"
               >
                 <span class="material-icons text-3xl">add</span>
               </button>
@@ -63,6 +65,7 @@
             <button
               type="button"
               class="flex-grow btn bg-primary-default mr-4 hover:bg-primary-dark transition"
+              @click="addToCart(tempProduct.id)"
             >
               加入購物車
               <span class="material-icons"> shopping_basket </span>
@@ -199,9 +202,11 @@ export default {
   data() {
     return {
       products: [],
+      cart: [],
       tempProduct: {
         imageUrl: [],
       },
+      quantity: 1,
       currentImg: '',
       isLike: false,
       shownReviews: [],
@@ -302,6 +307,7 @@ export default {
     const { id } = this.$route.params;
     this.getProduct(id);
     this.getProducts();
+    this.getCart();
   },
   mounted() {
   },
@@ -314,7 +320,6 @@ export default {
         .get(api)
         .then((res) => {
           this.products = res.data.data;
-          // this.pagination = res.data.meta.pagination;
           this.isLoading = false;
         })
         .catch(() => {
@@ -328,14 +333,70 @@ export default {
         .get(api)
         .then((res) => {
           this.tempProduct = res.data.data;
-          // eslint-disable-next-line no-console
-          console.log(this.tempProduct);
           this.isLoading = false;
         }).catch(() => {
         });
     },
     goToGuide() {
       this.$router.push('/guide').catch(() => {});
+    },
+    getCart() {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+      this.isLoading = true;
+      this.axios
+        .get(api)
+        .then((res) => {
+          this.cart = res.data.data;
+          this.totalprice = 0;
+          this.cart.forEach((item) => {
+            this.totalprice += (item.product.price * item.quantity);
+          });
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
+    },
+    addToCart(id) {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      const checkCart = this.cart.some((item) => {
+        if (item.product.id === id) {
+          const cart = {
+            product: id,
+            quantity: item.quantity + this.quantity,
+          };
+
+          this.axios
+            .patch(api, cart)
+            .then(() => {
+              this.getCart();
+              this.$bus.$emit('get-cart');
+              this.isLoading = false;
+            }).catch(() => {
+              this.isLoading = false;
+            });
+          return true;
+        }
+        return false;
+      });
+      if (!checkCart) {
+        const cart = {
+          product: id,
+          quantity: this.quantity,
+        };
+
+        this.axios
+          .post(api, cart)
+          .then(() => {
+            this.getCart();
+            this.$bus.$emit('get-cart');
+            this.isLoading = false;
+          }).catch(() => {
+            this.isLoading = false;
+          });
+      }
     },
   },
 };
@@ -363,7 +424,7 @@ export default {
     max-width: 60px;
     margin: 0 0.5rem;
     padding: 0.5rem;
-    @apply text-xl border border-gray-900 rounded-lg font-bold;
+    @apply text-xl border-2 border-gray-900 rounded-lg font-bold;
   }
   .product-description {
     p,

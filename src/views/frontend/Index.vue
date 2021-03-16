@@ -22,7 +22,7 @@
             </span>
           </a>
         </div>
-        <NewestProducts :products="products" />
+        <HotProducts :products="products" />
       </section>
       <!-- 最新上架 -->
       <section class="mb-16">
@@ -43,7 +43,7 @@
             </span>
           </a>
         </div>
-        <HotProducts :products="products" />
+        <NewestProducts :products="products" />
       </section>
       <!-- 綠色生活 -->
       <section class="lg:mb-40 md:mb-24 mb-12">

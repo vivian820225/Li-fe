@@ -108,6 +108,7 @@
                 :is-like="isLike"
                 v-for="(product, idx) in products"
                 :key="idx"
+                @addtocart="addToCart"
               />
             </div>
             <div class="pagnation-section flex justify-end items-center">
@@ -116,14 +117,6 @@
                 :pages="pagination"
                 @updateList="getProducts()"
               />
-              <!-- <Select
-              :data="pagination"
-              v-model="pagination.current_page"
-              @valueSelect="getProducts()">
-                <template v-slot:SelectLabel>
-                  前往頁面
-                </template>
-              </Select> -->
             </div>
           </div>
         </div>
@@ -142,6 +135,7 @@ export default {
   name: 'AllProducts',
   data() {
     return {
+      cart: [],
       products: [],
       isLike: false,
       isDown: false,
@@ -164,6 +158,7 @@ export default {
   },
   created() {
     this.getProducts();
+    this.getCart();
   },
   mounted() {
     this.$nextTick(() => {
@@ -185,6 +180,64 @@ export default {
         .catch(() => {
           this.isLoading = false;
         });
+    },
+    getCart() {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+      this.isLoading = true;
+      this.axios
+        .get(api)
+        .then((res) => {
+          this.cart = res.data.data;
+          this.totalprice = 0;
+          this.cart.forEach((item) => {
+            this.totalprice += (item.product.price * item.quantity);
+          });
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
+    },
+    addToCart(id) {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      const checkCart = this.cart.some((item) => {
+        if (item.product.id === id) {
+          const cart = {
+            product: id,
+            quantity: item.quantity + 1,
+          };
+
+          this.axios
+            .patch(api, cart)
+            .then(() => {
+              this.getCart();
+              this.$bus.$emit('get-cart');
+              this.isLoading = false;
+            }).catch(() => {
+              this.isLoading = false;
+            });
+          return true;
+        }
+        return false;
+      });
+      if (!checkCart) {
+        const cart = {
+          product: id,
+          quantity: 1,
+        };
+
+        this.axios
+          .post(api, cart)
+          .then(() => {
+            this.getCart();
+            this.$bus.$emit('get-cart');
+            this.isLoading = false;
+          }).catch(() => {
+            this.isLoading = false;
+          });
+      }
     },
     onValueSelect(value) {
       this.selectedOption = value;
@@ -225,151 +278,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.category-section {
-  max-width: 100%;
-}
-.category-wrapper {
-  width: 100%;
-  transition: all .2s;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  user-select: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &.active {
-    cursor: grabbing;
-    cursor: -webkit-grabbing;
-  }
-}
-.category {
-  @apply pb-8;
-  li {
-    display: block;
-    @apply border rounded mr-4;
-    .item-icon {
-      width: 24px;
-      height: 24px;
-      margin-right: 0.5rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
-    &:first-of-type {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-all.svg");
-      }
-    }
-    &:nth-of-type(2) {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-plant.svg");
-      }
-    }
-    &:nth-of-type(3) {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-pots.svg");
-      }
-    }
-    &:nth-of-type(4) {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-light.svg");
-      }
-    }
-    &:nth-of-type(5) {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-deco.svg");
-      }
-    }
-    &:nth-of-type(6) {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-candle.svg");
-      }
-    }
-    &:last-of-type {
-      .item-icon {
-        background-image: url("~@/assets/images/icon/icon-customization.svg");
-      }
-    }
-    &:hover {
-      @apply text-primary-default bg-gray-50;
-      &:first-of-type {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-all-yellow.svg");
-        }
-      }
-      &:nth-of-type(2) {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-plant-yellow.svg");
-        }
-      }
-      &:nth-of-type(3) {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-pots-yellow.svg");
-        }
-      }
-      &:nth-of-type(4) {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-light-yellow.svg");
-        }
-      }
-      &:nth-of-type(5) {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-deco-yellow.svg");
-        }
-      }
-      &:nth-of-type(6) {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-candle-yellow.svg");
-        }
-      }
-      &:last-of-type {
-        .item-icon {
-          background-image: url("~@/assets/images/icon/icon-customization-yellow.svg");
-        }
-      }
-    }
-  }
-  .item {
-    @apply flex justify-between items-center
-      whitespace-nowrap px-3 py-2 cursor-pointer;
-    img {
-      margin-right: 8px;
-    }
-  }
-}
-
-.listbox-item {
-  @apply text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9;
-  &:hover {
-    @apply text-white bg-indigo-600;
-  }
-  .flex justify-start items-center {
-    @apply ml-3 block font-normal truncate;
-    &:hover {
-      @apply font-semibold;
-    }
-  }
-}
-
-@screen md {
-  .category-wrapper {
-    overflow: initial;
-    padding: 0;
-  }
-  .category {
-    width: 200px;
-    overflow-x: hidden;
-    @apply border rounded-lg pb-0;
-    li {
-      @apply border-none mr-0;
-    }
-    .item {
-      @apply px-4 py-3 border-b;
-    }
-  }
-}
-</style>

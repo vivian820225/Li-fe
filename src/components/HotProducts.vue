@@ -2,7 +2,7 @@
 <div class="relative">
   <swiper class="swiper" :options="swiperOption">
     <swiper-slide v-for="(item, idx) in products" :key="idx">
-       <ProductCard :item=item :is-like=isLike />
+       <ProductCard :item=item :is-like=isLike @addtocart="addToCart(item.id, 1)" />
     </swiper-slide>
   </swiper>
   <div class="swiper-button-prev white swiper-hot-prev" slot="button-prev"></div>
@@ -20,10 +20,6 @@ export default {
   data() {
     return {
       isLike: false,
-      tempProduct: {
-        imageUrl: [],
-        options: {},
-      },
       swiperOption: {
         slidesPerView: 4,
         spaceBetween: 24,
@@ -47,12 +43,73 @@ export default {
     };
   },
   props: ['products'],
+  created() {
+    this.getCart();
+  },
   components: {
     swiper,
     swiperSlide,
     ProductCard,
   },
   methods: {
+    getCart() {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+      this.isLoading = true;
+      this.axios
+        .get(api)
+        .then((res) => {
+          this.cart = res.data.data;
+          this.totalprice = 0;
+          this.cart.forEach((item) => {
+            this.totalprice += (item.product.price * item.quantity);
+          });
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
+    },
+    addToCart(id) {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
+
+      const checkCart = this.cart.some((item) => {
+        if (item.product.id === id) {
+          const cart = {
+            product: id,
+            quantity: item.quantity + 1,
+          };
+
+          this.axios
+            .patch(api, cart)
+            .then(() => {
+              this.getCart();
+              this.$bus.$emit('get-cart');
+              this.isLoading = false;
+            }).catch(() => {
+              this.isLoading = false;
+            });
+          return true;
+        }
+        return false;
+      });
+      if (!checkCart) {
+        const cart = {
+          product: id,
+          quantity: 1,
+        };
+
+        this.axios
+          .post(api, cart)
+          .then(() => {
+            this.getCart();
+            this.$bus.$emit('get-cart');
+            this.isLoading = false;
+          }).catch(() => {
+            this.isLoading = false;
+          });
+      }
+    },
   },
 };
 </script>

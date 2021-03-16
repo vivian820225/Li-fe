@@ -1,5 +1,5 @@
 <template>
-  <div class="cart" :class="{ show: cartopen }">
+  <div class="cart" :class="{ 'show': cartopen }">
     <div class="cart-container">
       <h2 class="section-title sm:mb-4">
         我的購物車
@@ -30,7 +30,11 @@
               </td>
               <td class="sm:whitespace-nowrap">
                 <div class="content">
-                  <p class="name truncate">{{ item.product.title }}</p>
+                  <router-link
+                    class="name truncate"
+                    :to="`/product/${item.product.id}`">
+                    {{ item.product.title }}
+                  </router-link>
                   <div class="sm:block inline-block">
                     <span class="price"
                       >NT$ {{ item.product.price | currency }}</span
@@ -73,6 +77,7 @@
                 <button
                   class="btn-close hover:text-red-700 transition"
                   type="button"
+                  @click="deleteProduct(item.product.id)"
                 >
                   <span class="material-icons">close</span>
                 </button>
@@ -121,6 +126,9 @@ export default {
     },
     shoppingCartClose() {
       this.$emit('cartclose');
+    },
+    SideCartOpen() {
+      this.$emit('sidecartopen');
     },
   },
 };
