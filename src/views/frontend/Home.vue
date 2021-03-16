@@ -6,7 +6,9 @@
       </span>
     </a>
     <Navbar />
-    <transition name="fade"><router-view :key="$route.fullPath" /></transition>
+    <transition name="fade">
+      <router-view/>
+    </transition>
     <Footer />
   </div>
 </template>

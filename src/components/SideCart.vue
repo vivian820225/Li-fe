@@ -127,9 +127,6 @@ export default {
     shoppingCartClose() {
       this.$emit('cartclose');
     },
-    SideCartOpen() {
-      this.$emit('sidecartopen');
-    },
   },
 };
 </script>

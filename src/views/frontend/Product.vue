@@ -346,9 +346,6 @@ export default {
         }).catch(() => {
         });
     },
-    goToGuide() {
-      this.$router.push('/guide').catch(() => {});
-    },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
       this.isLoading = true;
@@ -382,6 +379,7 @@ export default {
             .then(() => {
               this.getCart();
               this.$bus.$emit('get-cart');
+              this.quantity = 1;
               this.isLoading = false;
             }).catch(() => {
               this.isLoading = false;
@@ -406,6 +404,9 @@ export default {
             this.isLoading = false;
           });
       }
+    },
+    goToGuide() {
+      this.$router.push('/guide').catch(() => {});
     },
   },
 };

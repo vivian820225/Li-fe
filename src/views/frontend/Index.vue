@@ -4,7 +4,7 @@
     <div class="max-w-screen-xl mx-auto font-sans xl:px-0 lg:px-8 px-4">
       <BannerCarousel class="md:mb-16 mb-8" />
       <!-- 熱門推薦 -->
-      <section class="mb-16">
+      <section class="md:mb-16 mb-4">
         <div class="flex justify-between md:items-center items-end mb-4">
           <h2 class="section-title">
             熱門推薦
@@ -25,7 +25,7 @@
         <HotProducts :products="products" />
       </section>
       <!-- 最新上架 -->
-      <section class="mb-16">
+      <section class="md:mb-16 mb-4">
         <div class="flex justify-between md:items-center items-end mb-4">
           <h2 class="section-title">
             最新上架

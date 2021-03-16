@@ -104,4 +104,16 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .p-card {
+    &__content {
+      border: solid 2px;
+      border-bottom-right-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+      border-top: none;
+      @apply border-gray-100;
+    }
+  }
+}
 </style>
