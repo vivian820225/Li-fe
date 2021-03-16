@@ -55,7 +55,7 @@
                 <span class="material-icons"> favorite </span>
               </router-link>
             </li>
-            <li class="md:mr-8 sm:mr-6 mr-4">
+            <li>
               <a href="#" class="transition hover:text-secondary-light"
               @click.prevent="sideCartOpen = !sideCartOpen">
                 <span class="material-icons"> shopping_basket </span>

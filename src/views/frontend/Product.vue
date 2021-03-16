@@ -3,110 +3,116 @@
     <Loading :active.sync="isLoading" />
     <div class="max-w-screen-xl mx-auto font-sans xl:px-0 lg:px-8 px-4">
       <Breadcrumb />
-      <section class="product-container">
-        <div id="productInfo" class="info">
-          <div
-            class="inline-block px-4 py-1 text-sm text-gray-500
-            bg-gray-200 rounded-full mb-4"
-          >
-            {{ tempProduct.category }}
-          </div>
-          <h2 class="text-4xl font-bold mb-4">
-            {{ tempProduct.title }}
-          </h2>
-          <div class="text-lg">
-            {{ tempProduct.content }}
-          </div>
-          <hr class="divider-line" />
-          <div class="event text-lg">
-            全店購物不限金額，全台免運<br />
-            開幕慶限時 9 折，優惠碼 green2021
-          </div>
-          <hr class="divider-line" />
-          <div class="mb-6">
-            <div v-if="!tempProduct.price" class="text-4xl font-bold font-ubu">
-              NT$ {{ tempProduct.origin_price }}
-            </div>
-            <div v-else class="flex justify-start items-center">
-              <div class="text-4xl font-bold mr-6">
-                優惠價
-                <span class="font-ubu">NT$ {{ tempProduct.price }}</span>
-              </div>
-              <div class="text-lg line-through text-gray-500">
-                原價
-                <span class="font-ubu">NT$ {{ tempProduct.origin_price }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-between">
-            <div class="flex justify-center items-center flex-none mr-4">
-              <button
-                type="button"
-                class="text-xl w-10 h-10 hover:text-primary-default transition"
-                :class="{'text-gray-300 pointer-events-none': quantity === 1}"
-                @click="quantity = quantity - 1"
-              >
-                <span class="material-icons text-3xl block">remove</span>
-              </button>
-              <input
-                type="number"
-                class="q-number"
-                :value="quantity"
-                onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
+      <div class="product-container">
+        <div class="grid lg:grid-cols-2 sm:grid-cols-3 gap-8 md:mb-8 mb-16">
+          <div class="product-pic">
+              <img
+                class="w-full lg:rounded-2xl rounded-xl mb-4 lg:h-auto sm:h-4/5 object-cover"
+                :src="(currentImg = tempProduct.imageUrl[0])"
+                :alt="tempProduct.title"
               />
-              <button
-                type="button"
-                class="text-xl w-10 h-10 hover:text-primary-default transition"
-                @click="quantity = quantity + 1"
-              >
-                <span class="material-icons text-3xl">add</span>
-              </button>
+              <div class="other-pic flex justify-start items-center">
+                <img
+                  class="lg:w-16 lg:h-16 w-8 h-8 object-cover
+                  lg:rounded-2xl rounded-lg lg:mr-4 cursor-pointer"
+                  v-for="(img, key) in tempProduct.imageUrl"
+                  :key="tempProduct.id + key"
+                  :src="img"
+                  @click="currentImg = img"
+                />
+              </div>
             </div>
-            <button
-              type="button"
-              class="flex-grow btn bg-primary-default mr-4 hover:bg-primary-dark transition"
-              @click="addToCart(tempProduct.id)"
+          <div id="productInfo" class="info lg:col-span-1 sm:col-span-2">
+            <div
+              class="inline-block px-4 py-1 text-sm text-gray-500
+              bg-gray-200 rounded-full mb-4"
             >
-              加入購物車
-              <span class="material-icons"> shopping_basket </span>
-            </button>
-            <button
-              type="button"
-              :class="{ 'bg-primary-default': isLike }"
-              @click="isLike = !isLike"
-              class="flex-none border-2 border-primary-default rounded-lg px-3 py-2
-              hover:bg-gray-50 transition"
-            >
-              <span
-                class="material-icons block text-primary-dark"
-                v-if="isLike"
-              >
-                favorite
-              </span>
-              <span class="material-icons block text-primary-default" v-else>
-                favorite_border
-              </span>
-            </button>
+              {{ tempProduct.category }}
+            </div>
+            <h2 class="lg:text-4xl md:text-3xl text-2xl font-bold mb-4">
+              {{ tempProduct.title }}
+            </h2>
+            <div class="md:text-lg">
+              {{ tempProduct.content }}
+            </div>
+            <hr class="divider-line" />
+            <div class="event md:text-lg">
+              全店購物不限金額，全台免運<br />
+              開幕慶限時 9 折，優惠碼 green2021
+            </div>
+            <hr class="divider-line" />
+            <div class="mb-6">
+              <div v-if="!tempProduct.price" class="text-4xl font-bold font-ubu">
+                NT$ {{ tempProduct.origin_price }}
+              </div>
+              <div v-else class="flex md:justify-start items-center">
+                <div class="md:text-3xl text-2xl font-bold mr-6">
+                  優惠價
+                  <span class="font-ubu">NT$ {{ tempProduct.price }}</span>
+                </div>
+                <div class="md:text-lg line-through text-gray-500">
+                  原價
+                  <span class="font-ubu">NT$ {{ tempProduct.origin_price }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex sm:justify-between justify-center sm:flex-nowrap flex-wrap">
+              <div class="flex justify-center items-center flex-none sm:mr-4 sm:mb-0 mb-8">
+                <button
+                  type="button"
+                  class="w-10 h-10 hover:text-primary-default transition"
+                  :class="{'text-gray-300 pointer-events-none': quantity === 1}"
+                  @click="quantity = quantity - 1"
+                >
+                  <span class="material-icons text-3xl block">remove</span>
+                </button>
+                <input
+                  type="number"
+                  class="q-number"
+                  :value="quantity"
+                  onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
+                />
+                <button
+                  type="button"
+                  class="w-10 h-10 hover:text-primary-default transition"
+                  @click="quantity = quantity + 1"
+                >
+                  <span class="material-icons text-3xl">add</span>
+                </button>
+              </div>
+              <div class="flex justify-between w-full">
+                <button
+                  type="button"
+                  class="btn bg-primary-default mr-4 flex-grow
+                  hover:bg-primary-dark transition"
+                  @click="addToCart(tempProduct.id)"
+                >
+                  加入購物車
+                  <span class="material-icons"> shopping_basket </span>
+                </button>
+                <button
+                  type="button"
+                  :class="{ 'bg-primary-default': isLike }"
+                  @click="isLike = !isLike"
+                  class="flex-none border-2 border-primary-default rounded-lg px-3 py-2
+                  hover:bg-gray-50 transition"
+                >
+                  <span
+                    class="material-icons block text-primary-dark"
+                    v-if="isLike"
+                  >
+                    favorite
+                  </span>
+                  <span class="material-icons block text-primary-default" v-else>
+                    favorite_border
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="main-content">
-          <div class="product-pic mb-10">
-            <img
-              class="w-full rounded-2xl mb-4"
-              :src="(currentImg = tempProduct.imageUrl[0])"
-              :alt="tempProduct.title"
-            />
-            <div class="other-pic flex justify-start items-center">
-              <img
-                class="w-16 h-16 object-cover rounded-2xl mr-4 cursor-pointer"
-                v-for="(img, key) in tempProduct.imageUrl"
-                :key="tempProduct.id + key"
-                :src="img"
-                @click="currentImg = img"
-              />
-            </div>
-          </div>
-          <section class="product-description mb-10">
+        <div class="grid md:grid-cols-2 gap-8">
+          <section class="product-description">
             <h3 class="product-section-title">產品描述</h3>
             <hr class="divider-line" />
             <div class="text-lg">
@@ -125,47 +131,50 @@
             <!-- 多項展開，增加 multiple -->
             <!-- <Accordion id="accordion-fqa" :content="fqa" multiple="multiple" /> -->
           </section>
-          <section class="review mb-16">
-            <h3 class="product-section-title">購買評價</h3>
-            <hr class="divider-line" />
-            <ul class="divide-y-2">
-              <li v-for="item in reviews" :key="item.username">
-                <div class="flex justify-between items-start py-4">
-                  <img
-                    :src="item.avatar" alt="user"
-                    class="rounded-full w-8 h-8 flex-none mr-4"
-                  />
+        </div>
+        <section class="review mb-16">
+          <h3 class="product-section-title">購買評價</h3>
+          <hr class="divider-line" />
+          <ul class="divide-y-2">
+            <li v-for="item in reviews" :key="item.username">
+              <div class="flex justify-between items-start py-4">
+                <img
+                  :src="item.avatar" alt="user"
+                  class="rounded-full w-8 h-8 flex-none mr-4"
+                />
+                <div class="flex justify-start items-start flex-grow md:flex-row flex-col">
                   <div class="info mr-4 flex-grow">
-                    <div class="flex justify-start items-center mb-2 text-sm">
+                    <div class="flex justify-start md:items-center items-start
+                    md:flex-row flex-col mb-2 text-sm">
                       <p class="mr-6">{{ item.username }}</p>
                       <p class="text-gray-500">
                         <span class="mr-2">{{ item.createdTime }} 天前</span>所留下的購買評價
                       </p>
                     </div>
-                    <p>{{ item.review }}</p>
+                    <p class="md:mb-0 mb-4 md:text-base text-sm">{{ item.review }}</p>
                   </div>
                   <StarRating :score="item.rating" class="mr-4"/>
-                   <img
-                    :src="tempProduct.imageUrl[0]"
-                    :alt="tempProduct.title"
-                    class="w-14 h-14 rounded-lg flex-none"
-                  >
                 </div>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  class="w-full flex justify-center items-center
-                  text-primary-default text-lg p-4 hover:bg-gray-50 transition"
+                <img
+                  :src="tempProduct.imageUrl[0]"
+                  :alt="tempProduct.title"
+                  class="sm:w-14 sm:h-14 w-10 h-10 rounded-lg flex-none"
                 >
-                  瀏覽更多評價
-                  <span class="material-icons">keyboard_arrow_down</span>
-                </button>
-              </li>
-            </ul>
-          </section>
-        </div>
-      </section>
+              </div>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="w-full flex justify-center items-center
+                text-primary-default text-lg p-4 hover:bg-gray-50 transition"
+              >
+                瀏覽更多評價
+                <span class="material-icons">keyboard_arrow_down</span>
+              </button>
+            </li>
+          </ul>
+        </section>
+      </div>
       <!-- 其他推薦 -->
       <div class="flex justify-between md:items-center items-end mb-4">
         <h2 class="section-title">你可能也會喜歡</h2>
@@ -405,26 +414,15 @@ export default {
 <style lang="scss">
 .product-container {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 3rem;
-  grid-template-areas: "G2 G1";
-  .info {
-    grid-area: G1;
-  }
-  .main-content {
-    grid-area: G2;
-    max-width: 768px;
-  }
   .event {
     padding-left: 1rem;
     @apply border-l-4 border-primary-default;
   }
   .q-number {
-    max-width: 60px;
+    max-width: 120px;
     margin: 0 0.5rem;
     padding: 0.5rem;
-    @apply text-xl border-2 border-gray-900 rounded-lg font-bold;
+    @apply text-lg border-2 border-gray-900 rounded-lg font-bold;
   }
   .product-description {
     p,
@@ -433,7 +431,32 @@ export default {
     }
   }
   .product-section-title {
-    @apply font-bold text-3xl;
+    @apply font-bold text-2xl;
   }
+}
+
+@screen lg {
+  .product-container {
+    .product-section-title {
+      @apply text-4xl;
+    }
+  }
+}
+
+@screen md {
+  .product-container {
+    .q-number {
+      @apply text-xl;
+    }
+    .product-section-title {
+      @apply text-3xl;
+    }
+  }
+}
+
+@screen sm {
+  .q-number {
+      max-width: 60px;
+    }
 }
 </style>
