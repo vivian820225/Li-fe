@@ -1,3 +1,59 @@
 .login {
-  
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: 
+    "L1 L2";
+  width: 90%;
+  max-width: 720px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #fff;
+  overflow: hidden;
+  opacity: 0;
+  transition: all .3s ease-in-out;
+  z-index: 100;
+  pointer-events: none;
+  &.show {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: initial;
+  }
+  .form-section {
+    grid-area: L1;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1.5rem;
+  }
+  .bg-img {
+    grid-area: L2;
+    background-image: url('~@/assets/images/login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: right center;
+  }
+  a {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    max-width: 320px;
+    grid-template-columns: none;
+    grid-template-rows: 100px 1fr;
+    grid-template-areas: 
+    "L2"
+    "L1";
+    .form-section {
+      padding: 1.25rem 1rem;
+    }
+    .bg-img {
+      background-position: right 20%;
+    }
+  }
 }

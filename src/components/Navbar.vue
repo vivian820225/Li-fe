@@ -7,7 +7,7 @@
     >
         <!-- Menu Button -->
         <div
-          class="flex items-center md:hidden mr-4 z-50"
+          class="flex items-center md:hidden mr-4 z-60"
           :class="isOpen ? 'fixed top-4' : 'relative'"
         >
           <button
@@ -91,10 +91,11 @@
             </ul>
             <span class="divider bg-secondary-light mr-6 hidden md:block"></span>
             <ul class="flex justify-end items-center">
-              <li class="hidden sm:block md:mr-8 mr-6">
+              <li class="md:mr-8 mr-6">
                 <a
                   href="#"
                   class="text-gray-600 transition hover:text-secondary-light"
+                  @click.prevent="loginOpen = !loginOpen"
                 >
                   <span class="material-icons"> account_circle </span>
                 </a>
@@ -126,7 +127,7 @@
       v-if="isMobile"
       :class="isOpen ? 'flex' : 'hidden'"
       class="fixed bg-gray-100 top-0 left-0 right-0 bottom-0
-      items-center justify-center text-center w-full z-40">
+      items-center justify-center text-center w-full z-50">
       <transition name="slide-fade">
         <ul
           v-if="isOpen"
@@ -169,55 +170,54 @@
               品牌故事
             </router-link>
           </li>
-          <li class="w-full sm:hidden">
-            <router-link
-              class="text-gray-500 tracking-wider py-3"
-              to="/account">
-              管理者專區
-            </router-link>
-          </li>
         </ul>
       </transition>
     </div>
     <SideCart
-    :cartlist="cart"
-    :cartopen="sideCartOpen"
-    :totalprice="totalprice"
-    @qtyupdate="quantityUpdate"
-    @deleteproduct="removeCartItem"
-    @cartclose="sideCartOpen = !sideCartOpen"
+      :cartlist="cart"
+      :cartopen="sideCartOpen"
+      :totalprice="totalprice"
+      @qtyupdate="quantityUpdate"
+      @deleteproduct="removeCartItem"
+      @cartclose="sideCartOpen = !sideCartOpen"
     />
-    <!-- <LoginModal
-    /> -->
+    <LoginModal
+      :loginopen="loginOpen"
+      @loginclose="closeModal"
+    />
     <OverlayMask
-    :overlayopen="sideCartOpen"
-    @overlayclose="closeCart()"
+      :overlayopen="sideCartOpen || loginOpen"
+      @overlayclose="closeModal"
     />
   </div>
 </template>
 
 <script>
 import SideCart from '@/components/SideCart.vue';
-// import LoginModal from '@/components/Login.vue';
+import LoginModal from '@/components/Login.vue';
 import OverlayMask from '@/components/OverlayMask.vue';
 
-// eslint-disable-next-line func-names
-window.onload = function () {
+function navSticky() {
   const nav = document.querySelector('#navBar');
   const navTop = nav.offsetTop;
   const originalTop = nav.offsetHeight;
 
-  function navSticky() {
-    if (window.scrollY > navTop) {
-      document.body.style.paddingTop = `${originalTop}px`;
-      nav.classList.add('sticky');
-    } else {
-      document.body.style.paddingTop = 0;
-      nav.classList.remove('sticky');
-    }
+  if (window.scrollY > navTop) {
+    document.body.style.paddingTop = `${originalTop}px`;
+    nav.classList.add('sticky');
+  } else {
+    document.body.style.paddingTop = 0;
+    nav.classList.remove('sticky');
   }
+}
 
-  window.addEventListener('scroll', navSticky);
+// eslint-disable-next-line func-names
+window.onload = function () {
+  if (window.innerWidth > window.innerHeight) {
+    window.addEventListener('scroll', () => {
+      navSticky();
+    });
+  }
 };
 
 export default {
@@ -229,13 +229,14 @@ export default {
       isMobile: false,
       isLoading: false,
       sideCartOpen: false,
+      loginOpen: false,
       cart: [],
       totalprice: 0,
     };
   },
   components: {
     SideCart,
-    // LoginModal,
+    LoginModal,
     OverlayMask,
   },
   created() {
@@ -263,8 +264,9 @@ export default {
         this.isMobile = false;
       }
     },
-    closeCart() {
-      this.sideCartOpen = false;
+    closeModal() {
+      if (this.sideCartOpen) this.sideCartOpen = false;
+      if (this.loginOpen) this.loginOpen = false;
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
@@ -323,41 +325,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-#navBar {
-  position: relative;
-  &.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, .9);
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
-    z-index: 50;
-    .navbar {
-      padding: 1rem;
-    }
-  }
-}
-.navbar {
-  .material-icons, a
-  {
-    display: block;
-  }
-}
-.divider {
-  width: 2px;
-  height: 1.5rem;
-}
-
-@media (max-width: 768px) {
-  .navbar__logo {
-    height: 32px;
-    img {
-      width: auto;
-      height: 100%;
-    }
-  }
-}
-</style>

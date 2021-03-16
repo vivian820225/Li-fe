@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="text-gray-800">
-    <router-view :key="$route.fullPath" />
+    <router-view />
   </div>
 </template>
 

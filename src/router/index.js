@@ -10,7 +10,7 @@ const routes = [
     meta: { title: 'Li-fe' },
     children: [
       {
-        path: '',
+        path: '/',
         name: 'Index',
         component: () => import('../views/frontend/Index.vue'),
         meta: { title: 'Li-fe' },
