@@ -1,14 +1,15 @@
 <template>
   <div class="navbar">
     <Loading :active.sync="isLoading" />
-    <nav id="navBar">
+    <nav
+      id="navBar"
+      :class="{ 'fixed-header': scrolled }">
     <div class="navbar relative md:max-w-screen-xl mx-auto
       xl:px-0 lg:px-8 px-4 md:py-8 py-4 md:block flex justify-between items-center"
     >
         <!-- Menu Button -->
         <div
           class="flex items-center md:hidden mr-4 z-60"
-          :class="isOpen ? 'fixed top-4' : 'relative'"
         >
           <button
             @click="isOpen = !isOpen"
@@ -197,28 +198,28 @@ import SideCart from '@/components/SideCart.vue';
 import LoginModal from '@/components/Login.vue';
 import OverlayMask from '@/components/OverlayMask.vue';
 
-function navSticky() {
-  const nav = document.querySelector('#navBar');
-  const navTop = nav.offsetTop;
-  const originalTop = nav.offsetHeight;
+// function navSticky() {
+//   const nav = document.querySelector('#navBar');
+//   const navTop = nav.offsetTop;
+//   const originalTop = nav.offsetHeight;
 
-  if (window.scrollY > navTop) {
-    document.body.style.paddingTop = `${originalTop}px`;
-    nav.classList.add('sticky');
-  } else {
-    document.body.style.paddingTop = 0;
-    nav.classList.remove('sticky');
-  }
-}
+//   if (window.scrollY > navTop) {
+//     document.body.style.paddingTop = `${originalTop}px`;
+//     nav.classList.add('sticky');
+//   } else {
+//     document.body.style.paddingTop = 0;
+//     nav.classList.remove('sticky');
+//   }
+// }
 
 // eslint-disable-next-line func-names
-window.onload = function () {
-  if (window.innerWidth > window.innerHeight) {
-    window.addEventListener('scroll', () => {
-      navSticky();
-    });
-  }
-};
+// window.onload = function () {
+//   if (window.innerWidth > window.innerHeight) {
+//     window.addEventListener('scroll', () => {
+//       navSticky();
+//     });
+//   }
+// };
 
 export default {
   name: 'Navbar',
@@ -232,6 +233,8 @@ export default {
       loginOpen: false,
       cart: [],
       totalprice: 0,
+      scrolled: false,
+      navHeight: 0,
     };
   },
   components: {
@@ -247,7 +250,19 @@ export default {
     });
   },
   mounted() {
+    this.navHeight = document.querySelector('#navBar').offsetHeight;
+
     this.mediaCheck();
+    window.addEventListener('scroll', () => {
+      this.handleScroll();
+      if (this.scrolled) {
+        // document.querySelector('body').classList.add('top-space');
+        document.querySelector('body').style.paddingTop = `${this.navHeight}px`;
+      } else {
+        // document.querySelector('body').classList.remove('top-space');
+        document.querySelector('body').style.paddingTop = 0;
+      }
+    });
     window.addEventListener('resize', () => {
       this.windowWidth = window.innerWidth;
       this.mediaCheck();
@@ -263,6 +278,9 @@ export default {
       } else {
         this.isMobile = false;
       }
+    },
+    handleScroll() {
+      this.scrolled = window.scrollY > this.navHeight - 20;
     },
     closeModal() {
       if (this.sideCartOpen) this.sideCartOpen = false;

@@ -6,6 +6,9 @@ body {
   &.overlay-fixed {
     overflow-y: hidden;
   }
+  &.top-space {
+    padding-top: 50px;
+  }
 }
 
 .divider-line {
