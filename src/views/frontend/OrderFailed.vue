@@ -1,18 +1,15 @@
 <template>
-  <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-    <p>
-      您的訂單發生無預期的錯誤<br/>
-      請您盡快連絡客服人員協助您處理<br/>
-      造成不便，深感歉意
-    </p>
-    <section id="contactUs" class="mb-8 md:mb-28">
-      <h2 class="section-title mb-4">
-        聯絡我們
-        <span class="sub-section-title">Contact Us</span>
-      </h2>
-      <p class="md:text-lg text-base mb-4">
-        關於商品及服務相關問題，歡迎來電或來信詢問，我們將儘速提供協助。
+  <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4 mb-8 md:mb-16">
+    <StepsBar :steps="steps" class="max-w-screen-md mx-auto mb-8" />
+    <div class="text-center mt-8 mx-auto mb-12">
+      <img class="w-32 md:w-auto mx-auto mb-4" src="~@/assets/images/warning.png" alt="">
+      <p class="font-bold md:text-2xl text-xl">
+        您的訂單發生無預期的錯誤<br/>
+        請您盡快連絡客服人員協助您處理<br/>
+        造成不便，深感歉意
       </p>
+    </div>
+    <section id="contactUs" class="mb-8">
       <ul class="grid md:grid-cols-3 text-center way gap-4">
         <li>
           <i class="contact-icon phone"></i>
@@ -40,14 +37,38 @@
         </li>
       </ul>
     </section>
-    <router-link class="text-primary-default underline" to="/">
+    <router-link
+      class="block font-bold text-primary-default underline text-center"
+      to="/"
+    >
       回首頁
     </router-link>
   </div>
 </template>
 
 <script>
+import StepsBar from '@/components/StepsBar.vue';
+
 export default {
   name: 'OrderFailed',
+  data() {
+    return {
+      steps: [
+        {
+          id: 1,
+          title: '確認訂單資訊',
+          done: true,
+        },
+        {
+          id: 2,
+          title: '訂單成立失敗',
+          done: true,
+        },
+      ],
+    };
+  },
+  components: {
+    StepsBar,
+  },
 };
 </script>

@@ -46,14 +46,6 @@ body {
   }
 }
 
-.go-top {
-  @apply fixed block bg-secondary-dark text-white p-3 rounded-full right-4 bottom-12 shadow-lg cursor-pointer;
-  z-index: 20;
-  span {
-    display: block;
-  }
-}
-
 // Title
 .section-title {
   @apply text-2xl font-bold;
@@ -70,9 +62,5 @@ body {
 
   .sub-section-title {
     @apply inline-block text-2xl;
-  }
-
-  .go-top {
-    @apply right-8
   }
 }

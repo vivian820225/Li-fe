@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-gray-800">
-    <div class="flex justify-between flex-wrap max-w-screen-xl m-auto xl:px-0 lg:px-8 px-4 py-10">
+    <div class="flex justify-between flex-wrap max-w-screen-xl m-auto xl:px-0 lg:px-8 px-4 py-12">
       <div class="flex justify-center sm:justify-between md:justify-start
       flex-col sm:flex-row w-full md:w-auto items-center sm:items-start">
         <div class="footer__logo flex-none mb-6 sm:mr-16 sm:mb-0">

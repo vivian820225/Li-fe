@@ -39,6 +39,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
   counter-reset: current-step;
+  padding-top: 1rem;
   z-index: 1;
   &__input {
     counter-increment: steps;

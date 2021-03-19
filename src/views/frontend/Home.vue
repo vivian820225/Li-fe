@@ -1,22 +1,18 @@
 <template>
   <div class="w-full mx-auto">
-    <a class="go-top" @click.prevent="scrollTop">
-      <span class="material-icons">
-        keyboard_arrow_up
-      </span>
-    </a>
     <Navbar />
     <transition name="fade">
       <router-view/>
     </transition>
     <Footer />
+    <ScrollTop />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
-import $ from 'jquery';
+import ScrollTop from '@/components/ScrollTop.vue';
 
 export default {
   name: 'Home',
@@ -27,11 +23,7 @@ export default {
   components: {
     Navbar,
     Footer,
-  },
-  methods: {
-    scrollTop() {
-      $('html, body').animate({ scrollTop: 0 }, 1000);
-    },
+    ScrollTop,
   },
 };
 </script>

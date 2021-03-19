@@ -198,29 +198,6 @@ import SideCart from '@/components/SideCart.vue';
 import LoginModal from '@/components/Login.vue';
 import OverlayMask from '@/components/OverlayMask.vue';
 
-// function navSticky() {
-//   const nav = document.querySelector('#navBar');
-//   const navTop = nav.offsetTop;
-//   const originalTop = nav.offsetHeight;
-
-//   if (window.scrollY > navTop) {
-//     document.body.style.paddingTop = `${originalTop}px`;
-//     nav.classList.add('sticky');
-//   } else {
-//     document.body.style.paddingTop = 0;
-//     nav.classList.remove('sticky');
-//   }
-// }
-
-// eslint-disable-next-line func-names
-// window.onload = function () {
-//   if (window.innerWidth > window.innerHeight) {
-//     window.addEventListener('scroll', () => {
-//       navSticky();
-//     });
-//   }
-// };
-
 export default {
   name: 'Navbar',
   data() {
@@ -248,6 +225,9 @@ export default {
       this.getCart();
       this.sideCartOpen = true;
     });
+    this.$bus.$on('update-cart', () => {
+      this.getCart();
+    });
   },
   mounted() {
     this.navHeight = document.querySelector('#navBar').offsetHeight;
@@ -256,10 +236,8 @@ export default {
     window.addEventListener('scroll', () => {
       this.handleScroll();
       if (this.scrolled) {
-        // document.querySelector('body').classList.add('top-space');
         document.querySelector('body').style.paddingTop = `${this.navHeight}px`;
       } else {
-        // document.querySelector('body').classList.remove('top-space');
         document.querySelector('body').style.paddingTop = 0;
       }
     });
@@ -270,6 +248,11 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.mediaCheck());
+  },
+  watch: {
+    $route() {
+      this.isOpen = false;
+    },
   },
   methods: {
     mediaCheck() {

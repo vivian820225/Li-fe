@@ -54,6 +54,18 @@ const routes = [
         meta: { title: '訂單確認 | Li-fe' },
       },
       {
+        path: 'order-completed',
+        name: 'OrderAccepted',
+        component: () => import('../views/frontend/OrderAccepted.vue'),
+        meta: { title: '訂單已成立 | Li-fe' },
+      },
+      {
+        path: 'order-failed',
+        name: 'OrderFailed',
+        component: () => import('../views/frontend/OrderFailed.vue'),
+        meta: { title: '訂單成立失敗 | Li-fe' },
+      },
+      {
         path: 'favorites',
         name: 'Favorites',
         component: () => import('../views/frontend/Favorites.vue'),
