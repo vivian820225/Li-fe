@@ -207,13 +207,21 @@
               <div class="flex justify-between items-center mb-2">
                 <span class="text-lg">商品總計</span>
                 <span class="font-bold font-ubu text-lg text-secondary-default">
-                  NT$ {{ totalprice | currency }}
+                  NT {{ totalprice | currency }}
                 </span>
               </div>
               <div class="flex justify-between items-center mb-2">
-                <span class="text-lg">運費</span>
+                <span class="text-lg">
+                  運費
+                  <span
+                    v-if="shipping === 0"
+                    class="text-primary-default text-sm"
+                  >
+                    已達到免運條件
+                  </span>
+                </span>
                 <span class="font-bold font-ubu text-lg text-secondary-default">
-                  NT$ {{ shippingfee | currency }}
+                  NT {{ shipping | currency }}
                 </span>
               </div>
               <hr class="divider-line" />
@@ -224,28 +232,41 @@
                     type="text"
                     class="input-field flex-grow mr-2"
                     placeholder="請輸入優惠折扣碼"
+                    v-model="couponCode"
                   />
                   <button
                     type="button"
-                    class="font-bold text-primary-default underline flex-none w-16 border-2
+                    class="font-bold text-primary-default flex-none w-16 border-2
                     border-primary-default rounded-lg hover:bg-primary-default
                     hover:text-gray-900 transition"
+                    @click="useCoupon"
                   >
                     使用
                   </button>
                 </div>
               </label>
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center" v-if="couponInfo.percent">
                 <span class="text-lg">折扣</span>
                 <span class="font-bold font-ubu text-lg text-secondary-default">
-                  NT$ 50
+                  -NT {{ Math.floor(totalprice * (couponInfo.percent / 100)) | currency }}
                 </span>
               </div>
               <hr class="divider-line" />
               <div class="flex justify-between items-center">
                 <span class="text-xl">結帳總金額</span>
-                <span class="font-bold text-2xl font-ubu text-secondary-default">
-                  NT$ 2,470
+                <span
+                  v-if="couponInfo.percent"
+                  class="font-bold text-2xl font-ubu text-secondary-default"
+                > NT {{
+                  Math.floor(totalprice - totalprice * (couponInfo.percent / 100) + shipping)
+                   | currency
+                  }}
+                </span>
+                <span
+                  v-else
+                  class="font-bold text-2xl font-ubu text-secondary-default"
+                >
+                  NT {{ totalprice + shipping | currency}}
                 </span>
               </div>
               <hr class="divider-line" />
@@ -360,6 +381,8 @@ export default {
         district: '',
         road: '',
       },
+      couponCode: '',
+      couponInfo: {},
       order: {
         name: '',
         email: '',
@@ -394,12 +417,27 @@ export default {
   },
   mounted() {
   },
+  computed: {
+    shipping() {
+      let fee = this.shippingfee;
+      if (this.totalprice > 3000) {
+        fee = 0;
+      } else {
+        fee = 120;
+      }
+      return fee;
+    },
+  },
   methods: {
     createOrder() {
       this.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
       this.order.address = `${this.tempAddress.district}${this.tempAddress.road}`;
       const order = { ...this.order };
+
+      if (this.couponInfo.enabled) {
+        order.coupon = this.couponInfo.code;
+      }
 
       this.axios.post(api, order).then((res) => {
         if (res.data.data.id) {
@@ -412,6 +450,26 @@ export default {
         this.$router.push({ path: '/order-failed' });
         this.isLoading = false;
       });
+    },
+    useCoupon() {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/coupon/search`;
+      const code = {
+        code: this.couponCode,
+      };
+
+      this.axios
+        .post(api, code)
+        .then((res) => {
+          this.couponInfo = res.data.data;
+          // eslint-disable-next-line no-console
+          console.log(this.couponInfo);
+          this.getCart();
+          this.isLoading = false;
+        }).catch(() => {
+          this.isLoading = false;
+        });
+      this.couponCode = '';
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;

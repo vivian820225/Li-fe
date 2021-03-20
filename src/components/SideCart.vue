@@ -37,10 +37,10 @@
                   </router-link>
                   <div class="sm:block inline-block">
                     <span class="price"
-                      >NT$ {{ item.product.price | currency }}</span
+                      >NT {{ item.product.price | currency }}</span
                     >
                     <span class="origin"
-                      >NT$ {{ item.product.origin_price | currency }}</span
+                      >NT {{ item.product.origin_price | currency }}</span
                     >
                   </div>
                 </div>
@@ -88,7 +88,7 @@
         <div class="flex justify-between items-center mb-4">
           <p class="font-bold text-xl">小計</p>
           <p class="font-bold font-ubu text-xl text-secondary-default">
-            NT$ {{ totalprice | currency }}
+            NT {{ totalprice | currency }}
           </p>
         </div>
         <router-link

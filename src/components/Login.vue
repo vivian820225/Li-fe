@@ -6,42 +6,53 @@
       <h2 class="font-bold md:text-2xl text-xl md:mb-8 mb-4">
         會員登入
       </h2>
-      <form @submit.prevent="login" class="w-full flex flex-col">
-        <label class="block w-full mb-4">
-          <div class="flex justify-between items-center mb-1">
-            <span class="text-gray-700">Email</span>
-            <span class="text-gray-500 text-sm">*必填</span>
+      <validation-observer v-slot="{ invalid }" class="w-full flex flex-col">
+        <form @submit.prevent="login">
+          <validation-provider rules="required">
+            <label class="block w-full mb-4">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-gray-700">Email</span>
+                <span class="text-gray-500 text-sm">*必填</span>
+              </div>
+              <input
+                name="使用者帳號"
+                type="email"
+                class="input-field"
+                placeholder="example@service.com"
+                v-model="user.email"
+              />
+            </label>
+          </validation-provider>
+          <validation-provider rules="required">
+            <label class="block w-full mb-4">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-gray-700">Password</span>
+                <span class="text-gray-500 text-sm">*必填</span>
+              </div>
+              <input
+                name="密碼"
+                type="password"
+                class="input-field"
+                placeholder="password"
+                v-model="user.password"
+              />
+            </label>
+          </validation-provider>
+          <div class="text-right">
+            <a href="#" class="underline text-primary-default self-end mb-8">
+              忘記密碼
+            </a>
           </div>
-          <input
-            type="email"
-            class="input-field"
-            v-model="user.email"
-            placeholder="example@service.com"
-            required
-          />
-        </label>
-        <label class="block w-full mb-4">
-          <div class="flex justify-between items-center mb-1">
-            <span class="text-gray-700">Password</span>
-            <span class="text-gray-500 text-sm">*必填</span>
-          </div>
-          <input
-            type="password"
-            class="input-field"
-            v-model="user.password"
-            placeholder="password"
-            required
-          />
-        </label>
-        <a href="#" class="underline text-primary-default self-end mb-8">
-          忘記密碼
-        </a>
-        <button
-          class="btn w-full bg-primary-default"
-          type="submit">
-          登入
-        </button>
-      </form>
+          <button
+            class="btn w-full bg-primary-default"
+            type="submit"
+            :disabled="invalid"
+            :class="{'bg-primary-light text-gray-500 cursor-not-allowed' : invalid}"
+          >
+            登入
+          </button>
+        </form>
+      </validation-observer>
     </div>
     <div class="bg-img">
       <button type="button" class="absolute p-4 right-0" @click="loginOpen">
