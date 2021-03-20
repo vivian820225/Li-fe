@@ -27,10 +27,10 @@
         <div class="flex justify-start items-center flex-wrap">
           <span
             class="price text-secondary-default font-ubu font-bold text-xl mr-2"
-            >NT$ 1,000</span
+            >NT {{ item.price | currency }}</span
           >
           <span class="price__original text-gray-500 font-ubu line-through"
-            >NT$ 1,200</span
+            >NT {{ item.origin_price | currency }}</span
           >
         </div>
       </div>
@@ -66,6 +66,7 @@ export default {
   display: block;
   list-style: none;
   position: relative;
+  animation: zoomIn .3s;
   &__top {
     position: relative;
   }
@@ -114,6 +115,17 @@ export default {
       border-top: none;
       @apply border-gray-100;
     }
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.1, 0.1, 0.1);
+    transform-origin: center center 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

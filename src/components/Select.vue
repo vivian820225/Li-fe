@@ -110,11 +110,11 @@ export default {
 
 <style lang="scss">
   .select-button {
-    @apply cursor-pointer relative w-full rounded-md border
+    @apply cursor-pointer relative w-full rounded-md border-2
     border-gray-300 bg-white pl-3 pr-10 py-2 text-left
     transition ease-in-out duration-150;
     &:focus {
-      @apply outline-none border-blue-300;
+      @apply outline-none border-primary-default;
     }
   }
   .listbox {
@@ -126,10 +126,10 @@ export default {
   .list-item {
     @apply text-gray-900 select-none relative py-2 pl-3 pr-9 cursor-pointer;
     &:hover {
-      @apply text-white bg-indigo-600;
+      @apply bg-gray-100;
     }
     &:focus {
-      @apply outline-none text-white bg-indigo-600;
+      @apply outline-none bg-gray-100;
     }
   }
   @screen sm {

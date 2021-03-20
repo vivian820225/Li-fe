@@ -3,14 +3,14 @@
     <Loading :active.sync="isLoading" />
     <EventCarousel class="md:mb-16 mb-8" />
     <section class="products max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-      <div class="flex justify-between items-start md:flex-row flex-col">
+      <div class="flex justify-between items-start md:flex-row flex-col mb-8 md:mb-28">
         <!-- 分類 -->
         <div class="category-section lg:mr-16 md:mr-8">
           <h3 class="font-bold md:text-3xl text-2xl mb-6">商品分類</h3>
           <div class="category-wrapper">
             <ul class="category md:block flex flex-row">
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '全部商品'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     全部商品
@@ -21,7 +21,7 @@
                 </a>
               </li>
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '植栽 / 盆栽'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     植栽 / 盆栽
@@ -32,7 +32,7 @@
                 </a>
               </li>
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '瓶器 / 陶器'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     瓶器 / 陶器
@@ -43,7 +43,7 @@
                 </a>
               </li>
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '燈飾'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     燈飾
@@ -54,7 +54,7 @@
                 </a>
               </li>
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '擺飾'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     擺飾
@@ -65,7 +65,7 @@
                 </a>
               </li>
               <li>
-                <a class="item">
+                <a class="item" @click.prevent="filterCategory = '香氛蠟燭'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     香氛蠟燭
@@ -76,7 +76,7 @@
                 </a>
               </li>
               <li>
-                <a class="item border-none">
+                <a class="item border-none" @click.prevent="filterCategory = '客製化服務'">
                   <div class="flex justify-start items-center">
                     <span class="item-icon"></span>
                     客製化服務
@@ -90,9 +90,11 @@
           </div>
         </div>
         <!-- 商品列表 -->
-        <div class="products-list-section mb-8 md:mb-28">
+        <div class="products-list-section w-full">
           <div class="flex sm:justify-between justify-end items-center mb-6">
-            <p class="text-gray-500 md:block hidden">全部商品共 24 項，顯示 1 - 12 項</p>
+            <p class="text-gray-500 md:block hidden">
+              全部商品共 {{ filterProducts.length }} 項
+            </p>
             <Select
               :data="Options"
               v-model="selectedOption"
@@ -102,21 +104,27 @@
             </Select>
           </div>
           <div class="products-list">
-            <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
-              <ProductCard
-                :item="product"
-                :is-like="isLike"
-                v-for="(product, idx) in products"
-                :key="idx"
-                @addtocart="addToCart"
-              />
+            <div class="block" v-if="filterProducts.length < 1">
+              <p class="text-gray-500 text-center text-xl pt-8">
+                此分類尚未有商品，請再等等我們上架！😭
+              </p>
             </div>
-            <div class="pagnation-section flex justify-end items-center">
-              <Pagination
-                class=""
-                :pages="pagination"
-                @updateList="getProducts()"
-              />
+            <div v-else class="block">
+              <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
+                <ProductCard
+                  :item="product"
+                  v-for="(product, idx) in filterProducts"
+                  :key="idx"
+                  @addtocart="addToCart"
+                />
+              </div>
+              <div class="pagnation-section flex justify-end items-center">
+                <Pagination
+                  class=""
+                  :pages="pagination"
+                  @updateList="getProducts()"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -137,8 +145,8 @@ export default {
     return {
       cart: [],
       products: [],
-      isLike: false,
-      isDown: false,
+      filterCategory: '',
+      sortData: '',
       tempProduct: {
         imageUrl: [],
         options: {},
@@ -147,7 +155,8 @@ export default {
       isLoading: false,
       selectToggle: false,
       selectedOption: '上架時間由新到舊',
-      Options: ['上架時間由新到舊', '上架時間由舊到新', '價格由低到高', '價格由高到低'],
+      Options: ['價格由低到高', '價格由高到低'],
+      isDown: false,
     };
   },
   components: {
@@ -164,6 +173,36 @@ export default {
     this.$nextTick(() => {
       this.scrollSection();
     });
+  },
+  computed: {
+    filterProducts() {
+      let filterItems = [];
+      switch (this.filterCategory) {
+        case '植栽 / 盆栽':
+        case '瓶器 / 陶器':
+        case '燈飾':
+        case '擺飾':
+        case '香氛蠟燭':
+        case '客製化服務':
+          this.products.forEach((item) => {
+            if (item.category === this.filterCategory) {
+              filterItems.push(item);
+            }
+          });
+          break;
+        default:
+          filterItems = this.products;
+          break;
+      }
+      // 排序
+      filterItems.sort((a, b) => {
+        if (this.sortData === '價格由低到高') {
+          return a.price - b.price;
+        }
+        return b.price - a.price;
+      });
+      return filterItems;
+    },
   },
   methods: {
     getProducts(page = 1) {
@@ -241,6 +280,7 @@ export default {
     },
     onValueSelect(value) {
       this.selectedOption = value;
+      this.sortData = value;
     },
     scrollSection() {
       // category section scroll
