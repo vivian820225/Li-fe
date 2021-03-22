@@ -13,7 +13,9 @@ export default {
 
 <style lang="scss" scoped>
   .banner {
-    @apply rounded-lg bg-center;
+    background-repeat: no-repeat;
+    background-position: left center;
+    @apply rounded-lg;
   }
   h1 {
     @apply text-2xl font-bold px-8 py-4 text-center;

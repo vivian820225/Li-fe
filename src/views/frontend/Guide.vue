@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       title: '退款換貨須知',
-      bgImg: './images/banner-1.jpg',
+      bgImg: './images/bg-guide.jpg',
     };
   },
   components: {

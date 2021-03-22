@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       title: '我的收藏',
-      bgImg: './images/banner-1.jpg',
+      bgImg: './images/bg-fav.jpg',
       isLike: false,
       products: [],
       tempProduct: {

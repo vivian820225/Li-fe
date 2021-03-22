@@ -83,27 +83,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transform-origin: 100px 145px;
+  transform-origin: 36px 40px;
   transition: all 6s cubic-bezier(0.38, 0.22, 0.1, 0.99) 0s;
   z-index: 5;
   &::after {
     content: "";
-    width: 100px;
-    height: 180px;
+    width: 94px;
+    height: 158px;
     background-image: url("~@/assets/images/hand.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
     position: absolute;
-    top: -80px;
+    top: -76px;
     z-index: 10;
     pointer-events: none;
   }
 }
 
 .press {
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   padding: 0;
   color: #ffd967;
   background: #ff9900;

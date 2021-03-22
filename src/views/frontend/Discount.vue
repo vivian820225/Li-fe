@@ -1,11 +1,32 @@
 <template>
   <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-    <TitleBanner :titleText="title" :bgImg="bgImg" class="md:mb-12 mb-6" />
-    <p
-      class="font-bold md:text-3xl sm:text-2xl text-xl sm:mb-12 mb-4 text-center"
-    >
-      - 快來試試手氣，立即獲得優惠 -
-    </p>
+    <TitleBanner
+    :titleText="title"
+    :bgImg="bgImg"
+    class="md:mb-12 mb-6" />
+    <div class="block text-center sm:mb-12 mb-4">
+      <p
+        class="font-bold sm:text-2xl text-xl mb-2"
+      >
+        - 快來試試手氣，立即獲得優惠 -
+      </p>
+      <p class="font-bold md:text-3xl sm:text-2xl text-xl mb-4">
+        您尚有
+        <span class="px-1 font-ubu text-primary-dark">
+          {{ chance }}
+        </span>
+        機會可以使用
+      </p>
+      <button
+        type="button"
+        class="btn w-64 bg-primary-default text-lg"
+        :class="{'bg-primary-light text-gray-500 cursor-not-allowed': noChance}"
+        @click="pressHandler()"
+        :disabled="noChance"
+      >
+        試試手氣
+      </button>
+    </div>
     <div class="wheel-wrapper mb-8 md:mb-28">
       <div id="wheel">
         <ul class="prize-box">
@@ -38,22 +59,30 @@
     </div>
     <div class="result-module" v-if="showResult">
       <div class="box text-center relative">
-        <div id="good" class="box-wrapper">
+        <div
+          id="good"
+          class="box-wrapper"
+          v-if="wellDone"
+        >
           <span class="icon"><img src="images/icon/icon-giftcard.svg" alt=""></span>
           <p class="font-bold text-3xl text-center mb-4">- 恭喜您獲得 -</p>
           <div class="box-content">
-            <p class="font-bold text-5xl text-center mb-8">$100 購物金</p>
+            <p class="font-bold text-5xl text-center mb-8">{{ winPrize.text }}</p>
             <button type="button" class="btn bg-primary-default w-full shadow-lg
             hover:shadow-none hover:bg-primary-dark transition">
               立即使用
             </button>
           </div>
         </div>
-        <div id="bad" class="box-wrapper">
+        <div
+        id="bad"
+        class="box-wrapper"
+        v-else
+        >
           <span class="icon"></span>
           <p class="font-bold text-3xl text-center mb-4">- 很可惜您獲得 -</p>
           <div class="box-content">
-            <p class="font-bold text-5xl text-center mb-8">含淚說掰</p>
+            <p class="font-bold text-5xl text-center mb-8">{{ winPrize.text }}</p>
             <button type="button" class="text-primary-default underline mb-4
             hover:text-primary-dark transition">回活動頁面</button>
             <button type="button" class="btn bg-primary-default w-full shadow-lg
@@ -84,37 +113,61 @@ export default {
   data() {
     return {
       title: '優惠活動',
-      bgImg: './images/banner-1.jpg',
+      bgImg: 'images/bg-event.jpg',
       windowWidth: document.documentElement.clientWidth,
       windowHeight: document.documentElement.clientHeight,
       showResult: false,
       isPressed: false,
       degree: 0,
       active: -1,
+      chance: 3,
+      noChance: false,
+      winPrize: {
+        text: '',
+        code: '',
+      },
+      wellDone: false,
       prizes: [
         {
           icon: 'images/icon/icon-money.svg',
           text: '9折<br/>優惠券',
+          value: '9折優惠券',
+          code: 'lefi_0090',
+          count: 10,
         },
         {
           icon: 'images/icon/icon-money.svg',
           text: '5折<br/>優惠券',
+          value: '5折優惠券',
+          code: 'lefi_0050',
+          count: 5,
         },
         {
           icon: 'images/icon/icon-dissatisfied.svg',
           text: '銘謝惠顧',
+          value: '銘謝惠顧',
+          code: '',
+          count: 15,
         },
         {
           icon: 'images/icon/icon-sad.svg',
           text: '含淚說掰',
+          value: '含淚說掰',
+          count: 10,
         },
         {
           icon: 'images/icon/icon-restar.svg',
-          text: '再來一次',
+          text: '下回再見',
+          value: '下回再見',
+          code: '',
+          count: 15,
         },
         {
           icon: 'images/icon/icon-giftcard.svg',
           text: '不限金額<br/>免運',
+          value: '不限金額免運',
+          code: 'shippingfree',
+          count: 10,
         },
       ],
 
@@ -156,16 +209,60 @@ export default {
 
       return translate;
     },
-    pressHandler() {},
+    generateIndex(data) {
+      const indexArray = [];
+      for (let i = 0; i < data.length; i += 1) {
+        if (data[i].count !== 0) indexArray.push(i);
+      }
+      return indexArray;
+    },
+    getRandomNumber(data) {
+      const idx = this.generateIndex(data);
+      const num = Math.floor(Math.random() * idx.length);
+      return idx[num];
+    },
+    pressHandler() {
+      if (this.isPressed) return;
+
+      if (!this.noChance) {
+        const data = this.prizes;
+        const idx = this.getRandomNumber(data);
+        if (idx === undefined) return;
+
+        this.isPressed = true;
+        this.active = -1;
+        const circle = 6;
+        const len = data.length;
+        const rotate = circle * 360 + idx * (360 / len);
+        this.degree += rotate - (this.degree % 360);
+
+        setTimeout(() => {
+          this.active = idx;
+          if (data[idx].count > 0) {
+            data[idx].count -= 1;
+          }
+          this.winPrize.text = this.prizes[idx].value;
+          this.winPrize.code = this.prizes[idx].code;
+
+          switch (this.winPrize.text) {
+            case '9折優惠券':
+            case '5折優惠券':
+            case '不限金額免運':
+              this.wellDone = true;
+              break;
+            default:
+              this.wellDone = false;
+          }
+          this.showResult = true;
+          this.isPressed = false;
+        }, 6000);
+
+        this.chance -= 1;
+        if (this.chance < 1) this.noChance = true;
+      }
+    },
     rotateHandler() {
       return `rotate(${this.degree}deg)`;
-    },
-    restart() {
-      if (this.isPressed) return;
-      if (this.degree % 360 !== 0) {
-        this.degree += 360 - (this.degree % 360);
-      }
-      this.active = -1;
     },
     closeResult() {
       this.showResult = false;

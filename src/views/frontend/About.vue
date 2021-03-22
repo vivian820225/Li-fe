@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       title: '品牌故事',
-      bgImg: './images/banner-1.jpg',
+      bgImg: './images/bg-about.jpg',
     };
   },
   components: {
