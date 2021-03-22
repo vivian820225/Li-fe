@@ -14,6 +14,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
+import Clipboard from 'v-clipboard';
 import currencyFilter from './filters/currency';
 
 import App from './App.vue';
@@ -30,10 +31,12 @@ localize('zh_TW', TW);
 Vue.component('Loading', Loading);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
-Vue.filter('currency', currencyFilter);
 
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
+Vue.use(Clipboard);
+
+Vue.filter('currency', currencyFilter);
 
 configure({
   classes: {

@@ -167,12 +167,21 @@
   background-image: url('~@/assets/images/box-bad.png');
 }
 .box-content {
-  padding: 2.5rem;
+  padding: 2.5rem 2rem;
   background-color: #fff;
   border-radius: 1rem;
 }
 
 @media screen and (max-width: 620px) {
+  .box {
+    max-width: 280px;
+  }
+  .box-wrapper {
+    padding: 1rem;
+  }
+  .box-content {
+    padding: 1rem;
+  }
   #wheel {
     &::after {
       width: 380px;
@@ -189,15 +198,59 @@
   }
   #hand {
     top: 42%;
+    transform-origin: 26px 28px;
     &::after {
-      width: 80px;
-      height: 128px;
-      top: -60px;
+      width: 70px;
+      height: 120px;
+      top: -56px;
     }
   }
   .press {
     width: 54px;
     height: 54px;
     font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  #wheel {
+    &::after {
+      width: 280px;
+      height: 280px;
+    }
+  }
+  .prize-box {
+    width: 270px;
+    height: 270px;
+  }
+  .prize-content {
+    width: 50px;
+    height: 50px;
+    justify-content: flex-start;
+  }
+  .prize-icon {
+    width: 60px;
+    position: relative;
+    top: -16px;
+    img {
+      margin: 0 auto;
+    }
+  }
+  .prize-text {
+    display: none;
+  }
+  #hand {
+    top: initial;
+    transform-origin: 22px 22px;
+    &::after {
+      width: 60px;
+      height: 100px;
+      top: -48px;
+    }
+  }
+  .press {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
   }
 }

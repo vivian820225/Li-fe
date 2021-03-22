@@ -6,7 +6,7 @@
     class="md:mb-12 mb-6" />
     <div class="block text-center sm:mb-12 mb-4">
       <p
-        class="font-bold sm:text-2xl text-xl mb-2"
+        class="font-bold sm:text-2xl text-lg mb-2"
       >
         - 快來試試手氣，立即獲得優惠 -
       </p>
@@ -19,7 +19,7 @@
       </p>
       <button
         type="button"
-        class="btn w-64 bg-primary-default text-lg"
+        class="btn sm:w-64 w-48 bg-primary-default text-lg"
         :class="{'bg-primary-light text-gray-500 cursor-not-allowed': noChance}"
         @click="pressHandler()"
         :disabled="noChance"
@@ -65,11 +65,21 @@
           v-if="wellDone"
         >
           <span class="icon"><img src="images/icon/icon-giftcard.svg" alt=""></span>
-          <p class="font-bold text-3xl text-center mb-4">- 恭喜您獲得 -</p>
+          <p class="font-bold sm:text-3xl text-xl text-center mb-4">
+            - 恭喜您獲得 -
+          </p>
           <div class="box-content">
-            <p class="font-bold text-5xl text-center mb-8">{{ winPrize.text }}</p>
-            <button type="button" class="btn bg-primary-default w-full shadow-lg
-            hover:shadow-none hover:bg-primary-dark transition">
+            <p class="font-bold md:text-5xl text-3xl text-center sm:mb-8 mb-4">
+              {{ winPrize.text }}
+            </p>
+            <button
+              type="button"
+              class="btn bg-primary-default w-full shadow-lg
+              hover:shadow-none hover:bg-primary-dark transition"
+              v-clipboard:copy="winPrize.code"
+              v-clipboard:success="copySuccess"
+              v-clipboard:error="copyError"
+            >
               立即使用
             </button>
           </div>
@@ -79,19 +89,36 @@
         class="box-wrapper"
         v-else
         >
-          <span class="icon"></span>
-          <p class="font-bold text-3xl text-center mb-4">- 很可惜您獲得 -</p>
+          <span class="icon"><img src="images/icon/icon-sad.svg" alt=""></span>
+          <p class="font-bold sm:text-3xl text-xl text-center mb-4">
+            - 很可惜您獲得 -
+          </p>
           <div class="box-content">
-            <p class="font-bold text-5xl text-center mb-8">{{ winPrize.text }}</p>
-            <button type="button" class="text-primary-default underline mb-4
-            hover:text-primary-dark transition">回活動頁面</button>
-            <button type="button" class="btn bg-primary-default w-full shadow-lg
-            hover:shadow-none hover:bg-primary-dark transition">
-              回首頁
+            <p class="font-bold md:text-5xl text-3xl text-center sm:mb-8 mb-4">
+              {{ winPrize.text }}
+            </p>
+            <button
+              type="button"
+              class="text-primary-default underline mb-4
+              hover:text-primary-dark transition"
+              @click="showResult = !showResult"
+            >
+              回活動頁面
             </button>
+            <router-link
+              to="/"
+              class="btn bg-primary-default w-full shadow-lg
+              hover:shadow-none hover:bg-primary-dark transition"
+            >
+              回首頁
+            </router-link>
           </div>
         </div>
-        <button class="close-button" type="button" @click="showResult = !showResult">
+        <button
+          class="close-button"
+          type="button"
+          @click="showResult = !showResult"
+        >
           <span class="material-icons">
             close
           </span>
@@ -266,6 +293,12 @@ export default {
     },
     closeResult() {
       this.showResult = false;
+    },
+    copySuccess() {
+
+    },
+    copyError() {
+
     },
   },
 };

@@ -15,15 +15,16 @@ export default {
   .banner {
     background-repeat: no-repeat;
     background-position: left center;
+    background-size: cover;
     @apply rounded-lg;
   }
   h1 {
-    @apply text-2xl font-bold px-8 py-4 text-center;
+    @apply text-xl font-bold px-6 py-4 text-left ;
   }
 
   @screen md {
     h1 {
-      @apply text-4xl p-12 text-left;
+      @apply text-4xl p-12;
     }
   }
 </style>

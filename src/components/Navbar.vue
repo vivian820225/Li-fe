@@ -65,7 +65,7 @@
                   class="text-gray-600 transition hover:text-secondary-light"
                   to="/products"
                 >
-                  產品總覽
+                  商品總覽
                 </router-link>
               </li>
               <li class="mr-8">
@@ -154,7 +154,7 @@
               class="text-gray-500 tracking-wider py-3"
               to="/products"
             >
-              產品總覽
+              商品總覽
             </router-link>
           </li>
           <li class="w-full">
