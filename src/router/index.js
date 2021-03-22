@@ -48,24 +48,6 @@ const routes = [
         },
       },
       {
-        path: 'checkout',
-        name: 'Checkout',
-        component: () => import('../views/frontend/Checkout.vue'),
-        meta: { title: '訂單確認 | Li-fe' },
-      },
-      {
-        path: 'order-completed',
-        name: 'OrderAccepted',
-        component: () => import('../views/frontend/OrderAccepted.vue'),
-        meta: { title: '訂單已成立 | Li-fe' },
-      },
-      {
-        path: 'order-failed',
-        name: 'OrderFailed',
-        component: () => import('../views/frontend/OrderFailed.vue'),
-        meta: { title: '訂單成立失敗 | Li-fe' },
-      },
-      {
         path: 'favorites',
         name: 'Favorites',
         component: () => import('../views/frontend/Favorites.vue'),
@@ -94,6 +76,31 @@ const routes = [
         name: '404',
         component: () => import('../views/frontend/NotFound.vue'),
         meta: { title: '此頁面不存在 | Li-fe' },
+      },
+    ],
+  },
+  // Order Check
+  {
+    path: '/checkout',
+    component: () => import('../views/frontend/OrderCheck.vue'),
+    meta: { title: '訂單確認 | Li-fe' },
+    children: [
+      {
+        path: '',
+        name: 'Checkout',
+        component: () => import('../views/frontend/Checkout.vue'),
+      },
+      {
+        path: 'order-completed',
+        name: 'OrderAccepted',
+        component: () => import('../views/frontend/OrderAccepted.vue'),
+        meta: { title: '訂單已成立 | Li-fe' },
+      },
+      {
+        path: 'order-failed',
+        name: 'OrderFailed',
+        component: () => import('../views/frontend/OrderFailed.vue'),
+        meta: { title: '訂單成立失敗 | Li-fe' },
       },
     ],
   },

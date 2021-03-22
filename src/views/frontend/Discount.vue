@@ -2,7 +2,7 @@
   <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
     <TitleBanner :titleText="title" :bgImg="bgImg" class="md:mb-12 mb-6" />
     <p
-      class="font-bold md:text-3xl sm:text-2xl text-xl sm:mb-8 mb-4 text-center"
+      class="font-bold md:text-3xl sm:text-2xl text-xl sm:mb-12 mb-4 text-center"
     >
       - 快來試試手氣，立即獲得優惠 -
     </p>
@@ -85,17 +85,20 @@ export default {
     return {
       title: '優惠活動',
       bgImg: './images/banner-1.jpg',
+      windowWidth: document.documentElement.clientWidth,
+      windowHeight: document.documentElement.clientHeight,
+      showResult: false,
       isPressed: false,
       degree: 0,
       active: -1,
       prizes: [
         {
-          icon: 'images/icon/icon-giftcard.svg',
-          text: '$50<br/>購物金',
+          icon: 'images/icon/icon-money.svg',
+          text: '9折<br/>優惠券',
         },
         {
-          icon: 'images/icon/icon-giftcard.svg',
-          text: '$100<br/>購物金',
+          icon: 'images/icon/icon-money.svg',
+          text: '5折<br/>優惠券',
         },
         {
           icon: 'images/icon/icon-dissatisfied.svg',
@@ -110,13 +113,11 @@ export default {
           text: '再來一次',
         },
         {
-          icon: 'images/icon/icon-money.svg',
-          text: '全品項<br/>8 折',
+          icon: 'images/icon/icon-giftcard.svg',
+          text: '不限金額<br/>免運',
         },
       ],
-      windowWidth: document.documentElement.clientWidth,
-      windowHeight: document.documentElement.clientHeight,
-      showResult: true,
+
     };
   },
   components: {
@@ -134,17 +135,13 @@ export default {
       this.windowWidth = document.documentElement.clientWidth;
       this.windowHeight = document.documentElement.clientHeight;
     },
-    // eslint-disable-next-line consistent-return
     transformHandler(index, location) {
       const len = this.prizes.length;
       const rotate = 360 / len;
       const rotateFrom = -rotate / 2;
       const skewY = rotate - 90;
       let translate = '';
-      // if (index === 0) {
-      //   // eslint-disable-next-line no-console
-      //   console.log(`數量：${len}`, `開始角度：${rotateFrom}`, `旋轉角度：${rotate}`, `頃斜角度：${skewY}`);
-      // }
+
       if (this.windowWidth < 620) {
         translate = 'translate(34px, 50px)';
       } else {
@@ -156,6 +153,8 @@ export default {
       if (location === 'content') {
         return `skewY(${90 - rotate}deg) rotate(${rotate / 2}deg) ${translate}`;
       }
+
+      return translate;
     },
     pressHandler() {},
     rotateHandler() {
@@ -176,207 +175,5 @@ export default {
 </script>
 
 <style lang="scss">
-.wheel-wrapper {
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("~@/assets/images/wheel-bg.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: contain;
-}
-
-#wheel {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &::after {
-    content: "";
-    display: block;
-    width: 600px;
-    height: 600px;
-    background-image: url("~@/assets/images/wheel.svg");
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: contain;
-    position: relative;
-    z-index: 2;
-  }
-}
-
-.prize-box {
-  width: 450px;
-  height: 450px;
-  border-radius: 50%;
-  background-color: #cbcbcb;
-  position: absolute;
-  left: 50%;
-  top: 1%;
-  transform: translateX(-50%);
-  overflow: hidden;
-  z-index: 1;
-}
-
-.prize {
-  width: 50%;
-  height: 50%;
-  background-color: #f2f2f2;
-  border: 5px solid #002520;
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform-origin: 0 100%;
-  &:nth-of-type(2n) {
-    background-color: transparent;
-  }
-  &.active {
-    background-color: #ffc107;
-  }
-}
-
-.prize-content {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.prize-text {
-  font-size: 20px;
-  font-weight: bold;
-  color: #002520;
-  text-align: center;
-}
-
-#hand {
-  position: absolute;
-  top: 32%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-origin: 100px 145px;
-  transition: all 6s cubic-bezier(0.38, 0.22, 0.1, 0.99) 0s;
-  z-index: 5;
-  &::after {
-    content: "";
-    width: 100px;
-    height: 180px;
-    background-image: url("~@/assets/images/hand.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-    position: absolute;
-    top: -80px;
-    z-index: 10;
-    pointer-events: none;
-  }
-}
-
-.press {
-  width: 80px;
-  height: 80px;
-  padding: 0;
-  color: #ffd967;
-  background: #ff9900;
-  border: none;
-  border-radius: 50%;
-  font-size: 40px;
-  font-weight: bold;
-  z-index: 15;
-  outline: none;
-  @apply font-ubu;
-}
-
-// module
-.result-module {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 100;
-}
-.close-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-}
-.box {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  color: #002520;
-  border-radius: 1rem;
-  pointer-events: initial;
-  overflow: hidden;
-}
-.box-wrapper {
-  padding: 2rem;
-  background-repeat: no-repeat;
-  background-size: 140%;
-  background-position: center -150px;
-  .icon {
-    display: inline-block;
-    width: 48px;
-    height: 48px;
-    img {
-      max-width: 100%;
-      height: 100%;
-    }
-  }
-}
-#good {
-  background-color: #FFC107;
-  background-image: url('~@/assets/images/box-good.png');
-}
-#bad {
-  background-color: #CCCCCC;
-  background-image: url('~@/assets/images/box-bad.png');
-}
-.box-content {
-  padding: 2.5rem;
-  background-color: #fff;
-  border-radius: 1rem;
-}
-
-@media screen and (max-width: 620px) {
-  #wheel {
-    &::after {
-      width: 380px;
-      height: 380px;
-      background-image: url("~@/assets/images/wheel-m.svg");
-    }
-  }
-  .prize-box {
-    width: 370px;
-    height: 370px;
-  }
-  .prize-text {
-    font-size: 16px;
-  }
-  #hand {
-    top: 42%;
-    &::after {
-      width: 80px;
-      height: 128px;
-      top: -60px;
-    }
-  }
-  .press {
-    width: 54px;
-    height: 54px;
-    font-size: 28px;
-  }
-}
+  @import '@/assets/scss/layout/_wheel.scss';
 </style>

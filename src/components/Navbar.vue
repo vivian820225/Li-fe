@@ -3,10 +3,11 @@
     <Loading :active.sync="isLoading" />
     <nav
       id="navBar"
+      class="xl:px-0 lg:px-8 px-4"
       :class="{ 'fixed-header': scrolled }">
-    <div class="navbar relative md:max-w-screen-xl mx-auto
-      xl:px-0 lg:px-8 px-4 md:py-8 py-4 md:block flex justify-between items-center"
-    >
+      <div class="relative md:max-w-screen-xl mx-auto
+        md:block flex justify-between items-center"
+      >
         <!-- Menu Button -->
         <div
           class="flex items-center md:hidden mr-4 z-60"
@@ -112,9 +113,16 @@
               <li>
                 <a
                   href="#"
-                  class="text-gray-600 transition hover:text-secondary-light"
+                  class="text-gray-600 transition hover:text-secondary-light relative"
                   @click.prevent="sideCartOpen = !sideCartOpen"
                 >
+                  <span
+                    v-if="cart.length"
+                    class="absolute bg-primary-default rounded-full
+                    w-4 h-4 text-xs text-center font-ubu font-bold -left-2 -top-1"
+                  >
+                    {{ cart.length }}
+                  </span>
                   <span class="material-icons"> shopping_basket </span>
                 </a>
               </li>
@@ -235,11 +243,6 @@ export default {
     this.mediaCheck();
     window.addEventListener('scroll', () => {
       this.handleScroll();
-      if (this.scrolled) {
-        document.querySelector('body').style.paddingTop = `${this.navHeight}px`;
-      } else {
-        document.querySelector('body').style.paddingTop = 0;
-      }
     });
     window.addEventListener('resize', () => {
       this.windowWidth = window.innerWidth;
@@ -248,6 +251,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.mediaCheck());
+    window.removeEventListener('scroll', this.handleScroll());
   },
   watch: {
     $route() {
@@ -263,7 +267,7 @@ export default {
       }
     },
     handleScroll() {
-      this.scrolled = window.scrollY > this.navHeight - 20;
+      this.scrolled = window.scrollY > 200;
     },
     closeModal() {
       if (this.sideCartOpen) this.sideCartOpen = false;

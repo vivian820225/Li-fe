@@ -1,0 +1,44 @@
+.event-banner {
+  background-image: url('~@/assets/images/event-banner.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right center;
+}
+.content {
+  margin: 0 auto;
+  padding: 4rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: right;
+  .code {
+    position: relative;
+    top: -6px;
+    padding: .5rem 1rem;
+    background: var(--primary);
+    font-size: 1.2rem;
+    border-radius: .5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    padding: 3rem;
+    font-size: 1.6rem;
+    .code {
+      top: -4px;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .content {
+    padding: 2rem;
+    font-size: 1.2rem;
+    .code {
+      top: -2px;
+      padding: .25rem .5rem;
+      font-size: 1rem;
+    }
+  }
+}

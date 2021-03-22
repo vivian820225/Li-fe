@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center">
+  <div class="flex items-center ">
     <label id="listbox-label" class="block text-sm leading-5 font-medium mr-2 text-gray-500">
       <slot name="SelectLabel"></slot>
     </label>
@@ -112,13 +112,13 @@ export default {
   .select-button {
     @apply cursor-pointer relative w-full rounded-md border-2
     border-gray-300 bg-white pl-3 pr-10 py-2 text-left
-    transition ease-in-out duration-150;
+    transition ease-in-out duration-150 text-sm leading-5;
     &:focus {
       @apply outline-none border-primary-default;
     }
   }
   .listbox {
-    @apply max-h-56 rounded-md py-1 text-base leading-6 overflow-auto;
+    @apply max-h-56 rounded-md py-1 text-sm leading-5 overflow-auto;
     &:focus {
       @apply outline-none;
     }
@@ -130,14 +130,6 @@ export default {
     }
     &:focus {
       @apply outline-none bg-gray-100;
-    }
-  }
-  @screen sm {
-    .select-button {
-      @apply text-sm leading-5;
-    }
-    .listbox {
-       @apply text-sm leading-5;
     }
   }
 </style>

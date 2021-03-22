@@ -443,11 +443,11 @@ export default {
         if (res.data.data.id) {
           this.getCart();
           this.orderId = res.data.data.id;
-          this.$router.push({ path: '/order-completed' });
+          this.$router.push({ path: '/checkout/order-completed' });
           this.isLoading = false;
         }
       }).catch(() => {
-        this.$router.push({ path: '/order-failed' });
+        this.$router.push({ path: '/checkout/order-failed' });
         this.isLoading = false;
       });
     },

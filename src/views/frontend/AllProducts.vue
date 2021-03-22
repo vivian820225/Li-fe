@@ -1,12 +1,20 @@
 <template>
   <div class="w-full mx-auto">
     <Loading :active.sync="isLoading" />
-    <EventCarousel class="md:mb-16 mb-8" />
+    <section class="max-w-screen-xl mx-auto md:mb-8 mb-6 xl:px-0 lg:px-8 px-4">
+      <div class="event-banner rounded-lg">
+        <p class="content">
+          輸入折扣碼
+          <span class="code font-ubu">2021betterlife</span><br/>
+          立即享有<span class="font-ubu"> 9 </span>折優惠
+        </p>
+      </div>
+    </section>
     <section class="products max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-      <div class="flex justify-between items-start md:flex-row flex-col mb-8 md:mb-28">
+      <div class="flex justify-between items-start md:flex-row flex-col mb-8 md:mb-20">
         <!-- 分類 -->
         <div class="category-section lg:mr-16 md:mr-8">
-          <h3 class="font-bold md:text-3xl text-2xl mb-6">商品分類</h3>
+          <h3 class="font-bold md:text-3xl text-2xl sm:mb-6 mb-4">商品分類</h3>
           <div class="category-wrapper">
             <ul class="category md:block flex flex-row">
               <li>
@@ -110,7 +118,7 @@
               </p>
             </div>
             <div v-else class="block">
-              <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
+              <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-4 mb-8">
                 <ProductCard
                   :item="product"
                   v-for="(product, idx) in filterProducts"
@@ -118,7 +126,7 @@
                   @addtocart="addToCart"
                 />
               </div>
-              <div class="pagnation-section flex justify-end items-center">
+              <div class="pagnation-section flex sm:justify-end justify-center items-center">
                 <Pagination
                   class=""
                   :pages="pagination"
@@ -134,7 +142,6 @@
 </template>
 
 <script>
-import EventCarousel from '@/components/EventCarousel.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import Select from '@/components/Select.vue';
 import Pagination from '@/components/Pagination.vue';
@@ -160,7 +167,6 @@ export default {
     };
   },
   components: {
-    EventCarousel,
     ProductCard,
     Select,
     Pagination,
@@ -318,3 +324,7 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  @import '~@/assets/scss/layout/_event-banner';
+</style>

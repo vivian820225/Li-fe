@@ -77,23 +77,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.footer__logo {
-  height: 2rem;
-  img {
-    width: auto;
-    height: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .footer__author {
-    width: 100%;
-    margin-top: 1rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, .5);
-    text-align: center;
-  }
-}
-</style>

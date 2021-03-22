@@ -4,7 +4,12 @@
       <router-link :to="`/product/${item.id}`" class="p-card__img">
         <img :src="item.imageUrl" :alt="item.title" />
       </router-link>
-      <span class="discount bg-primary-default text-sm font-bold">8.5 折</span>
+      <span
+        v-if="item.price"
+        class="discount bg-primary-light text-xs"
+      >
+        特價
+      </span>
       <button type="button" class="favorite">
         <span class="material-icons text-primary-default" v-if="isLike">
           favorite
@@ -90,9 +95,10 @@ export default {
   }
   .discount {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 8px 12px;
+    bottom: .5rem;
+    left: .5rem;
+    padding: 6px 12px;
+    border-radius: 1rem;
   }
   .favorite {
     position: absolute;
