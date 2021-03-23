@@ -77,8 +77,7 @@
               class="btn bg-primary-default w-full shadow-lg
               hover:shadow-none hover:bg-primary-dark transition"
               v-clipboard:copy="winPrize.code"
-              v-clipboard:success="copySuccess"
-              v-clipboard:error="copyError"
+              @click="copySuccess"
             >
               立即使用
             </button>
@@ -295,10 +294,7 @@ export default {
       this.showResult = false;
     },
     copySuccess() {
-
-    },
-    copyError() {
-
+      this.$bus.$emit('message:push', '已複製代碼', 'success');
     },
   },
 };

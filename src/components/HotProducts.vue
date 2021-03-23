@@ -83,10 +83,12 @@ export default {
           this.axios
             .patch(api, cart)
             .then(() => {
+              // this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
               this.$bus.$emit('get-cart');
               this.isLoading = false;
             }).catch(() => {
+              this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');
               this.isLoading = false;
             });
           return true;

@@ -55,7 +55,6 @@
         </tbody>
       </table>
       <Pagination
-        class=""
         :pages="pagination"
         @updateList="getProducts()"
       />
@@ -64,6 +63,8 @@
 </template>
 
 <script>
+import Pagination from '@/components/Pagination.vue';
+
 export default {
   name: 'AdminProducts',
   data() {
@@ -76,6 +77,9 @@ export default {
       pagination: {},
       isLoading: false,
     };
+  },
+  components: {
+    Pagination,
   },
   created() {
     this.getProducts();

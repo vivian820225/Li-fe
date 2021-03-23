@@ -56,7 +56,7 @@ export default {
             this.messages.splice(i, 1);
           }
         });
-      }, 5000);
+      }, 3000);
     },
     removeMessage(num) {
       this.messages.splice(num, 1);

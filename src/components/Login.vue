@@ -91,15 +91,13 @@ export default {
         .then((res) => {
           const { token } = res.data;
           const { expired } = res.data;
-          // eslint-disable-next-line no-console
-          console.log(res);
 
           document.cookie = `hexToken=${token};expires=${new Date(expired * 1000)};`;
           this.$router.push({ path: '/admin/products' });
+          this.$bus.$emit('message:push', '登入成功', 'success');
           this.isLoading = false;
-        }).catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log(err);
+        }).catch(() => {
+          this.$bus.$emit('message:push', '登入失敗', 'danger');
           this.user.username = '';
           this.user.password = '';
           this.isLoading = false;

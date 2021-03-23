@@ -172,20 +172,14 @@ export default {
         this.$bus.$emit('message:push', '商品新增失敗', 'danger');
       });
     },
-    /**
-     * 上傳圖片
-     */
     uploadFile() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/storage`;
-      // 選取 DOM 中的檔案資訊
       const uploadedFile = this.$refs.file.files[0];
-      // 轉換成 FormData
       const formData = new FormData();
-      // 新增 file 欄位
+
       formData.append('file', uploadedFile);
       this.status.fileUploading = true;
       this.axios.post(api, formData, {
-        // 聲明傳遞的資料為 FormData 的格式
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -193,9 +187,7 @@ export default {
         this.status.fileUploading = false;
         // 200 為 HTTP 狀態碼 Successful responses 請求成功
         if (res.status === 200) {
-          // 將圖片路徑傳進去
           this.tempProduct.imageUrl.push(res.data.data.path);
-          // console.log(res.data.data.path);
         }
       }).catch(() => {
         this.$bus.$emit('message:push', '上傳不可超過 2MB', 'danger');
