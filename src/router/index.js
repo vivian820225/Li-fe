@@ -127,6 +127,12 @@ const routes = [
         component: () => import('../views/backend/AdminCoupons.vue'),
         meta: { requiresAuth: true, title: '優惠券設定 | 後台管理' },
       },
+      {
+        path: 'storage',
+        name: 'AdminStorage',
+        component: () => import('../views/backend/AdminStorage.vue'),
+        meta: { requiresAuth: true, title: '圖片管理 | 後台管理' },
+      },
     ],
   },
   {

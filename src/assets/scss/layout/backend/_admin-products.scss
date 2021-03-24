@@ -1,0 +1,15 @@
+tbody td {
+  height: 38px;
+}
+
+@screen md {
+  table {
+    display: inline-table;
+  }
+  thead tr:not(:first-of-type) {
+    display: none;
+  }
+  tbody td {
+    height: auto;
+  }
+}

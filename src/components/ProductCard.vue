@@ -2,7 +2,7 @@
   <div class="p-card text-gray-900">
     <div class="p-card__top">
       <router-link :to="`/product/${item.id}`" class="p-card__img">
-        <img :src="item.imageUrl" :alt="item.title" />
+        <img :src="item.imageUrl[0]" :alt="item.title" />
       </router-link>
       <span
         v-if="item.price"

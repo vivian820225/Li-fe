@@ -8,7 +8,7 @@
           <div class="product-pic">
               <img
                 class="w-full lg:rounded-2xl rounded-xl mb-4 lg:h-auto sm:h-4/5 object-cover"
-                :src="(currentImg = tempProduct.imageUrl[0])"
+                :src="currentImg"
                 :alt="tempProduct.title"
               />
               <div class="other-pic flex justify-start items-center">
@@ -342,6 +342,8 @@ export default {
         .get(api)
         .then((res) => {
           this.tempProduct = res.data.data;
+          // eslint-disable-next-line prefer-destructuring
+          this.currentImg = this.tempProduct.imageUrl[0];
           this.isLoading = false;
         }).catch(() => {
         });
