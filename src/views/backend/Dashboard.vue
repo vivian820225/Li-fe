@@ -230,5 +230,5 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/assets/scss/layout/backend/_dashboard.scss';
+  @import '@/assets/scss/layout/backend/_table.scss';
 </style>

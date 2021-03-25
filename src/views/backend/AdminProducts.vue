@@ -42,7 +42,7 @@
               class="py-2 px-3 text-left whitespace-nowrap
               md:border-none border-b border-gray-300"
             >
-              產品名稱
+              商品名稱
             </th>
             <th
               class="md:w-32 sm:w-24 py-2 px-3 md:text-center text-left md:border-none
@@ -217,7 +217,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-  @import '@/assets/scss/layout/backend/_admin-products.scss';
-</style>
