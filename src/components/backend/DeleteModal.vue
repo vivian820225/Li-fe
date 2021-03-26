@@ -39,10 +39,10 @@
             </div>
             <!-- Modal Content -->
             <div class="flex flex-col justify-center items-center bg-white px-4 pt-5 pb-4">
-              <p class="text-xl mb-2">
+              <p class="text-xl mb-2 text-center w-full max-w-full truncate">
                 您是否確定要刪除
-                <strong class="text-red-500 font-bold pl-2">
-                  <font class="font-ubu" v-if="!item.title">{{ item.id }}</font>
+                <strong class="text-red-500 font-bold pl-2 ">
+                  <font class="font-ubu block" v-if="!item.title">{{ item.id }}</font>
                   <font v-else>{{ item.title }}</font>
                 </strong>
               </p>
@@ -110,14 +110,13 @@ export default {
         .then(() => {
           this.modalOpen = false;
           this.$bus.$emit('message:push', msg, 'success');
+          this.$emit('updateList');
         }).catch(() => {
           this.modalOpen = false;
           this.$bus.$emit('message:push',
             '發生錯誤！請連絡相關人員處理',
             'danger');
         });
-
-      this.$emit('updateList');
     },
   },
 };

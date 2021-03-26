@@ -205,6 +205,7 @@ export default {
           this.pagination = res.data.meta.pagination;
           this.isLoading = false;
         }).catch(() => {
+          this.$bus.$emit('message:push', '資料索取失敗', 'danger');
           this.isLoading = false;
         });
     },
