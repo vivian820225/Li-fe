@@ -17,7 +17,7 @@
             @click="openModal('new')"
             >
             <span class="material-icons md:mr-2">library_add</span>
-            <span class="md:inline-block hidden">建立新產品</span>
+            <span class="md:inline-block hidden">建立新商品</span>
           </button>
       </div>
       <table
@@ -146,12 +146,21 @@
         @updateList="getProducts()"
       />
     </transition>
+    <transition name="fade">
+      <DeleteModal
+        :item="tempProduct"
+        :is-product="isProduct"
+        ref="DeleteModal"
+        @updateList="getProducts()"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
 import Pagination from '@/components/Pagination.vue';
 import ProductModal from '@/components/backend/ProductModal.vue';
+import DeleteModal from '@/components/backend/DeleteModal.vue';
 
 export default {
   name: 'AdminProducts',
@@ -160,7 +169,9 @@ export default {
       products: [],
       tempProduct: {
         imageUrl: [],
-        options: {},
+        options: {
+          popular: false,
+        },
       },
       pagination: {},
       isProduct: true,
@@ -171,6 +182,7 @@ export default {
   components: {
     Pagination,
     ProductModal,
+    DeleteModal,
   },
   created() {
     this.getProducts();

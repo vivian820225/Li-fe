@@ -1,6 +1,6 @@
 <template>
   <div id="productModal" v-if="modalOpen">
-    <div class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="fixed z-60 inset-0 overflow-y-auto">
       <div
         class="flex items-end justify-center min-h-screen
         pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -31,12 +31,12 @@
             <!-- Modal Heading -->
             <div
               class="flex justify-between items-center py-3 px-4"
-              :class="isNew === true ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-700'"
+              :class="isNew ? 'bg-gray-700 text-white' : 'bg-gray-100 text-gray-700'"
             >
               <h3
                 class="text-xl leading-6 font-bold"
               >
-                {{ isNew === true ? "新增商品" : "編輯商品"}}
+                {{ isNew ? "新增商品" : "編輯商品"}}
               </h3>
               <button
                 type="button"
@@ -48,7 +48,7 @@
               </button>
             </div>
             <!-- Modal Content -->
-            <div class="flex justify-center bg-white px-4 pt-5 pb-4">
+            <div class="flex md:flex-row flex-col justify-center bg-white px-4 pt-5 pb-4">
               <!-- 圖片上傳 -->
               <div class="flex-non md:mr-8">
                 <!-- 圖片顯示 -->
@@ -256,6 +256,9 @@ export default {
             .then((res) => {
               this.tempProduct = res.data.data;
               this.modalOpen = true;
+              this.isLoading = false;
+            }).catch(() => {
+              this.$bus.$emit('message:push', '資料索取失敗', 'danger');
               this.isLoading = false;
             });
           break;

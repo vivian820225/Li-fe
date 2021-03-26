@@ -87,8 +87,8 @@
                   hover:bg-primary-dark transition"
                   @click="addToCart(tempProduct.id)"
                 >
+                  <span class="material-icons mr-2"> shopping_basket </span>
                   加入購物車
-                  <span class="material-icons"> shopping_basket </span>
                 </button>
                 <button
                   type="button"
