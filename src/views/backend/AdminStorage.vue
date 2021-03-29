@@ -69,14 +69,14 @@
       </table>
       <Pagination
         :pages="pagination"
-        @updateList="getStorage()"
+        @updateList="getStorage"
       />
     </div>
     <transition name="fade">
       <DeleteModal
         :item="tempItem"
         ref="DeleteModal"
-        @updateList="getStorage()"
+        @updateList="getStorage"
       />
     </transition>
   </div>

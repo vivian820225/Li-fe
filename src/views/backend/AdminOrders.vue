@@ -160,14 +160,14 @@
       </table>
       <Pagination
         :pages="pagination"
-        @updateList="getOrders()"
+        @updateList="getOrders"
       />
     </div>
     <transition name="fade">
       <OrderModal
         :order-detail="orderDetail"
         ref="OrderModal"
-        @updateList="getOrders()"
+        @updateList="getOrders"
       />
     </transition>
   </div>

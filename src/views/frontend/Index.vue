@@ -22,7 +22,7 @@
             </span>
           </a>
         </div>
-        <HotProducts :products="hotProducts" />
+        <ProductSwiper :products="hotProducts" />
       </section>
       <!-- 最新上架 -->
       <section class="md:mb-16 mb-4">
@@ -43,7 +43,7 @@
             </span>
           </a>
         </div>
-        <NewestProducts :products="recProducts" />
+        <ProductSwiper :products="recProducts" />
       </section>
       <!-- 綠色生活 -->
       <section class="lg:mb-40 md:mb-24 mb-12">
@@ -112,8 +112,7 @@
 
 <script>
 import BannerCarousel from '@/components/BannerCarousel.vue';
-import NewestProducts from '@/components/NewestProducts.vue';
-import HotProducts from '@/components/HotProducts.vue';
+import ProductSwiper from '@/components/ProductSwiper.vue';
 import ArticleCard from '@/components/ArticleCard.vue';
 
 export default {
@@ -156,8 +155,7 @@ export default {
   },
   components: {
     BannerCarousel,
-    NewestProducts,
-    HotProducts,
+    ProductSwiper,
     ArticleCard,
   },
   created() {

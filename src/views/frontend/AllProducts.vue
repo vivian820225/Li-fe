@@ -100,8 +100,11 @@
         <!-- 商品列表 -->
         <div class="products-list-section w-full">
           <div class="flex sm:justify-between justify-end items-center mb-6">
-            <p class="text-gray-500 md:block hidden">
-              全部商品共 {{ filterProducts.length }} 項
+            <p v-if="filterCategory === '全部商品'" class="text-gray-500 md:block hidden">
+              全部商品共 {{ allProducts.length }} 項
+            </p>
+            <p v-else class="text-gray-500 md:block hidden">
+              已篩選出共 {{ filterProducts.length }} 項
             </p>
             <Select
               :data="Options"
@@ -233,7 +236,7 @@ export default {
     },
     getAllProducts() {
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?paged=50`;
 
       this.axios
         .get(api)

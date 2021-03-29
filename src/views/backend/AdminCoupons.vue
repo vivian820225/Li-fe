@@ -145,7 +145,7 @@
       </table>
       <Pagination
         :pages="pagination"
-        @updateList="getOrders()"
+        @updateList="getOrders"
       />
     </div>
     <transition name="fade">
@@ -153,7 +153,7 @@
         :item="tempCoupon"
         :status="status"
         ref="CouponModal"
-        @updateList="getCoupons()"
+        @updateList="getCoupons"
       />
     </transition>
     <transition name="fade">
@@ -161,7 +161,7 @@
         :item="tempCoupon"
         :is-coupon="isCoupon"
         ref="DeleteModal"
-        @updateList="getCoupons()"
+        @updateList="getCoupons"
       />
     </transition>
   </div>
