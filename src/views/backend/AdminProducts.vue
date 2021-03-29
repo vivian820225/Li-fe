@@ -64,6 +64,12 @@
             </th>
             <th
               class="md:w-32 sm:w-24 py-2 px-3 md:text-center text-left md:border-none
+              border-b border-gray-300"
+            >
+              標籤
+            </th>
+            <th
+              class="md:w-32 sm:w-24 py-2 px-3 md:text-center text-left md:border-none
               border-b border-transparent"
             >
               編輯
@@ -108,6 +114,27 @@
                 Disabled
               </span>
             </td>
+            <td class="md:py-1 py-2 px-3 md:text-center
+            md:border-none border-b border-gray-100">
+              <span
+                v-if="item.options.popular"
+                class="bg-red-200 px-2 py-1 text-xs rounded-full"
+              >
+                熱門
+              </span>
+              <span
+                v-else-if="item.options.recommend"
+                class="bg-yellow-200 px-2 py-1 text-xs rounded-full"
+              >
+                推薦
+              </span>
+              <span
+                v-else
+                class="bg-gray-200 px-2 py-1 text-xs rounded-full"
+              >
+                一般
+              </span>
+            </td>
             <td class="py-1 px-3 md:text-center md:border-none border-b border-transparent">
               <div class="flex md:justify-center justify-start">
                 <button
@@ -135,7 +162,7 @@
       </table>
       <Pagination
         :pages="pagination"
-        @updateList="getProducts()"
+        @updateList="getProducts"
       />
     </div>
     <transition name="fade">
@@ -143,7 +170,7 @@
         :product="tempProduct"
         :is-new="isNew"
         ref="ProductModal"
-        @updateList="getProducts()"
+        @updateList="getProducts"
       />
     </transition>
     <transition name="fade">
@@ -151,7 +178,7 @@
         :item="tempProduct"
         :is-product="isProduct"
         ref="DeleteModal"
-        @updateList="getProducts()"
+        @updateList="getProducts"
       />
     </transition>
   </div>
@@ -171,6 +198,7 @@ export default {
         imageUrl: [],
         options: {
           popular: false,
+          recommend: false,
         },
       },
       pagination: {},

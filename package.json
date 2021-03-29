@@ -12,6 +12,7 @@
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "eslint-import-resolver-webpack": "^0.13.0",
     "jquery": "^3.5.1",
     "swiper": "^4.0.7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",

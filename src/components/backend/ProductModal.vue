@@ -180,13 +180,21 @@
                     />
                     <span>是否啟用</span>
                   </label>
-                  <label class="inline-flex items-center">
+                  <label class="inline-flex items-center mr-4">
                     <input
                       type="checkbox"
                       class="checkbox-field mr-1"
                       v-model="tempProduct.options.popular"
                     />
                     <span>熱門商品</span>
+                  </label>
+                  <label class="inline-flex items-center">
+                    <input
+                      type="checkbox"
+                      class="checkbox-field mr-1"
+                      v-model="tempProduct.options.recommend"
+                    />
+                    <span>推薦商品</span>
                   </label>
                 </div>
               </div>
@@ -229,7 +237,10 @@ export default {
       modalOpen: false,
       tempProduct: {
         imageUrl: [],
-        options: {},
+        options: {
+          popular: false,
+          recommend: false,
+        },
       },
       status: {
         fileUploading: false,

@@ -13,7 +13,7 @@
     <section class="products max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
       <div class="flex justify-between items-start md:flex-row flex-col mb-8 md:mb-20">
         <!-- 分類 -->
-        <div class="category-section lg:mr-16 md:mr-8">
+        <div class="category-section lg:mr-12 md:mr-8 flex-none">
           <h3 class="font-bold md:text-3xl text-2xl sm:mb-6 mb-4">商品分類</h3>
           <div class="category-wrapper">
             <ul class="category md:block flex flex-row">
@@ -118,18 +118,21 @@
               </p>
             </div>
             <div v-else class="block">
-              <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-4 mb-8">
+              <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-4 mb-8">
                 <ProductCard
                   :item="product"
                   v-for="(product, idx) in filterProducts"
                   :key="idx"
+                  class="hover:shadow-lg transition-shadow rounded-lg"
                   @addtocart="addToCart"
                 />
               </div>
-              <div class="pagnation-section flex sm:justify-end justify-center items-center">
+              <div
+              v-if="filterCategory === '全部商品'"
+              class="pagnation-section flex sm:justify-end justify-center items-center">
                 <Pagination
                   :pages="pagination"
-                  @updateList="getProducts()"
+                  @updateList="getProducts"
                 />
               </div>
             </div>
@@ -150,8 +153,9 @@ export default {
   data() {
     return {
       cart: [],
+      allProducts: [],
       products: [],
-      filterCategory: '',
+      filterCategory: '全部商品',
       sortData: '',
       tempProduct: {
         imageUrl: [],
@@ -160,7 +164,7 @@ export default {
       pagination: {},
       isLoading: false,
       selectToggle: false,
-      selectedOption: '上架時間由新到舊',
+      selectedOption: '價格由高到低',
       Options: ['價格由低到高', '價格由高到低'],
       isDown: false,
     };
@@ -171,6 +175,7 @@ export default {
     Pagination,
   },
   created() {
+    this.getAllProducts();
     this.getProducts();
     this.getCart();
   },
@@ -189,7 +194,7 @@ export default {
         case '擺飾':
         case '香氛蠟燭':
         case '客製化服務':
-          this.products.forEach((item) => {
+          this.allProducts.forEach((item) => {
             if (item.category === this.filterCategory) {
               filterItems.push(item);
             }
@@ -218,7 +223,22 @@ export default {
         .get(api)
         .then((res) => {
           this.products = res.data.data;
+          this.filterItems = res.data.data;
           this.pagination = res.data.meta.pagination;
+          this.isLoading = false;
+        })
+        .catch(() => {
+          this.isLoading = false;
+        });
+    },
+    getAllProducts() {
+      this.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products`;
+
+      this.axios
+        .get(api)
+        .then((res) => {
+          this.allProducts = res.data.data;
           this.isLoading = false;
         })
         .catch(() => {

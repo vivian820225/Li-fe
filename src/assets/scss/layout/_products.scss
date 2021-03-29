@@ -132,7 +132,7 @@
     padding: 0;
   }
   .category {
-    width: 200px;
+    width: 180px;
     overflow-x: hidden;
     @apply border rounded-lg pb-0;
     li {
@@ -141,5 +141,10 @@
     .item {
       @apply px-4 py-3 border-b;
     }
+  }
+}
+@screen lg{
+  .category {
+    width: 200px;
   }
 }

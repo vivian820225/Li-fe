@@ -31,7 +31,7 @@
         v-for="(page, idx) in pages.total_pages"
         :key="idx"
         :class="{'active': page === pages.current_page}"
-        @click.prevent="emitPages"
+        @click.prevent="emitPages(page)"
         class="page-link"
         href="#"
       >
@@ -68,14 +68,18 @@
 export default {
   name: 'Pagination',
   props: {
-    pages: {},
+    pages: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {};
   },
   methods: {
-    emitPages(item) {
-      this.$emit('updateList', item);
+    emitPages(page) {
+      if (page === this.pages.current_page) return;
+      this.$emit('updateList', page);
     },
   },
 };
@@ -90,6 +94,10 @@ export default {
     &:hover {
       @apply bg-gray-300;
     }
+  }
+  &.disabled {
+    pointer-events: none;
+    @apply bg-gray-50 text-gray-300;
   }
   &:hover {
     @apply  bg-gray-50

@@ -22,7 +22,7 @@
             </span>
           </a>
         </div>
-        <HotProducts :products="products" />
+        <HotProducts :products="hotProducts" />
       </section>
       <!-- 最新上架 -->
       <section class="md:mb-16 mb-4">
@@ -43,7 +43,7 @@
             </span>
           </a>
         </div>
-        <NewestProducts :products="products" />
+        <NewestProducts :products="recProducts" />
       </section>
       <!-- 綠色生活 -->
       <section class="lg:mb-40 md:mb-24 mb-12">
@@ -121,6 +121,8 @@ export default {
   data() {
     return {
       products: [],
+      hotProducts: [],
+      recProducts: [],
       tempProduct: {
         imageUrl: [],
         options: {},
@@ -170,12 +172,23 @@ export default {
         .get(api)
         .then((res) => {
           this.products = res.data.data;
-          // this.pagination = res.data.meta.pagination;
+          this.pagination = res.data.meta.pagination;
+          this.filterProducts();
           this.isLoading = false;
         })
         .catch(() => {
           this.isLoading = false;
         });
+    },
+    filterProducts() {
+      this.products.forEach((item) => {
+        if (item.options.popular) {
+          this.hotProducts.push(item);
+        }
+        if (item.options.recommend) {
+          this.recProducts.push(item);
+        }
+      });
     },
   },
 };

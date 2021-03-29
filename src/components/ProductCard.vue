@@ -77,7 +77,7 @@ export default {
   }
   &__img {
     display: block;
-    max-height: 200px;
+    max-height: 280px;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     overflow: hidden;
