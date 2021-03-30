@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import StepsBar from '@/components/StepsBar.vue';
+import StepsBar from '@/components/frontend/order/StepsBar.vue';
 
 export default {
   name: 'OrderAccepted',

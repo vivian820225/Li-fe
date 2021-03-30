@@ -5,18 +5,20 @@
       <ProductCard :item=item :is-like=isLike @addtocart="addToCart(item.id, 1)"/>
     </swiper-slide>
   </swiper>
-  <div class="swiper-button-prev white swiper-newest-prev" slot="button-prev"></div>
-  <div class="swiper-button-next white swiper-newest-next" slot="button-next"></div>
+  <div class="hot-prev swiper-button-prev white swiper-newest-prev" slot="button-prev">
+  </div>
+  <div class="hot-next swiper-button-next white swiper-newest-next" slot="button-next">
+  </div>
 </div>
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue';
+import ProductCard from '@/components/frontend/ProductCard.vue';
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
 
 export default {
-  name: 'ProductSwiper',
+  name: 'HotProduct',
   props: ['products'],
   data() {
     return {
@@ -27,8 +29,8 @@ export default {
         spaceBetween: 24,
         freeMode: true,
         navigation: {
-          nextEl: '.swiper-newest-next',
-          prevEl: '.swiper-newest-prev',
+          nextEl: '.hot-next',
+          prevEl: '.hot-prev',
         },
         breakpoints: {
           1024: {

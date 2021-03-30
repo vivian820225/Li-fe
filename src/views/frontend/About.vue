@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import TitleBanner from '@/components/TitleBanner.vue';
+import TitleBanner from '@/components/frontend/TitleBanner.vue';
 
 export default {
   name: 'About',

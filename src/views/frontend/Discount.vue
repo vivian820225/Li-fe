@@ -131,8 +131,8 @@
 </template>
 
 <script>
-import TitleBanner from '@/components/TitleBanner.vue';
-import OverlayMask from '@/components/OverlayMask.vue';
+import TitleBanner from '@/components/frontend/TitleBanner.vue';
+import OverlayMask from '@/components/frontend/OverlayMask.vue';
 
 export default {
   name: 'Discount',

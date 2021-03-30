@@ -202,9 +202,9 @@
 </template>
 
 <script>
-import SideCart from '@/components/SideCart.vue';
-import LoginModal from '@/components/Login.vue';
-import OverlayMask from '@/components/OverlayMask.vue';
+import SideCart from '@/components/frontend/SideCart.vue';
+import LoginModal from '@/components/frontend/Login.vue';
+import OverlayMask from '@/components/frontend/OverlayMask.vue';
 
 export default {
   name: 'Navbar',

@@ -147,8 +147,8 @@
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue';
-import Select from '@/components/Select.vue';
+import ProductCard from '@/components/frontend/ProductCard.vue';
+import Select from '@/components/frontend/Select.vue';
 import Pagination from '@/components/Pagination.vue';
 
 export default {

@@ -2,31 +2,35 @@
 <div class="relative">
   <swiper class="swiper" :options="swiperOption">
     <swiper-slide v-for="(item, idx) in products" :key="idx">
-       <ProductCard :item=item :is-like=isLike @addtocart="addToCart(item.id, 1)" />
+      <ProductCard :item=item :is-like=isLike @addtocart="addToCart(item.id, 1)"/>
     </swiper-slide>
   </swiper>
-  <div class="swiper-button-prev white swiper-hot-prev" slot="button-prev"></div>
-  <div class="swiper-button-next white swiper-hot-next" slot="button-next"></div>
+  <div class="rec-prev swiper-button-prev white swiper-newest-prev" slot="button-prev">
+  </div>
+  <div class="rec-next swiper-button-next white swiper-newest-next" slot="button-next">
+  </div>
 </div>
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue';
+import ProductCard from '@/components/frontend/ProductCard.vue';
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
 
 export default {
-  name: 'HotProducts',
+  name: 'RecProduct',
+  props: ['products'],
   data() {
     return {
       isLike: false,
+      cart: [],
       swiperOption: {
         slidesPerView: 4,
         spaceBetween: 24,
         freeMode: true,
         navigation: {
-          nextEl: '.swiper-hot-next',
-          prevEl: '.swiper-hot-prev',
+          nextEl: '.rec-next',
+          prevEl: '.rec-prev',
         },
         breakpoints: {
           1024: {
@@ -42,14 +46,13 @@ export default {
       },
     };
   },
-  props: ['products'],
-  created() {
-    this.getCart();
-  },
   components: {
     swiper,
     swiperSlide,
     ProductCard,
+  },
+  created() {
+    this.getCart();
   },
   methods: {
     getCart() {
@@ -83,7 +86,6 @@ export default {
           this.axios
             .patch(api, cart)
             .then(() => {
-              // this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
               this.$bus.$emit('get-cart');
               this.isLoading = false;

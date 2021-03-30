@@ -188,23 +188,23 @@
           </span>
         </a>
       </div>
-      <HotProducts :products="products" class="md:mb-12 mb-6"/>
+      <RecProduct :products="products" class="md:mb-12 mb-6"/>
     </div>
   </div>
 </template>
 
 <script>
 // import $ from 'jquery';
-import Breadcrumb from '@/components/Breadcrumb.vue';
-import HotProducts from '@/components/HotProducts.vue';
-import Accordion from '@/components/Accordion.vue';
-import StarRating from '@/components/StarRating.vue';
+import Breadcrumb from '@/components/frontend/product/Breadcrumb.vue';
+import RecProduct from '@/components/frontend/home/RecProduct.vue';
+import Accordion from '@/components/frontend/product/Accordion.vue';
+import StarRating from '@/components/frontend/product/StarRating.vue';
 
 export default {
   name: 'Product',
   components: {
     Breadcrumb,
-    HotProducts,
+    RecProduct,
     Accordion,
     StarRating,
   },

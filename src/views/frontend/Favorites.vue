@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import TitleBanner from '@/components/TitleBanner.vue';
-import ProductCard from '@/components/ProductCard.vue';
+import TitleBanner from '@/components/frontend/TitleBanner.vue';
+import ProductCard from '@/components/frontend/ProductCard.vue';
 
 export default {
   name: 'Favorities',

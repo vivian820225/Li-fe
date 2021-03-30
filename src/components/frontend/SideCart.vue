@@ -6,7 +6,7 @@
         <span class="sub-section-title"> My Cart </span>
       </h2>
       <div class="cart-main text-center" v-if="cartlist.length < 1">
-        <h3 class="font-bold text-lg py-8">您的購物車目前是空的喔！</h3>
+        <h3 class="font-bold text-lg py-8">您的購物車是空的喔！</h3>
         <router-link
           to="/products"
           class="btn bg-primary-default hover:bg-primary-dark transition"

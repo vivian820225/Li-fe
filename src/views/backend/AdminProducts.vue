@@ -66,6 +66,12 @@
               class="md:w-32 sm:w-24 py-2 px-3 md:text-center text-left md:border-none
               border-b border-gray-300"
             >
+              價格
+            </th>
+            <th
+              class="md:w-32 sm:w-24 py-2 px-3 md:text-center text-left md:border-none
+              border-b border-gray-300"
+            >
               標籤
             </th>
             <th
@@ -112,6 +118,21 @@
                 class="bg-yellow-200 px-2 py-1 text-xs rounded-full font-ubu"
               >
                 Disabled
+              </span>
+            </td>
+            <td class="md:py-1 py-2 px-3 md:text-center
+            md:border-none border-b border-gray-100">
+              <span
+                v-if="item.origin_price"
+                class="bg-yellow-200 px-2 py-1 text-xs rounded-full"
+              >
+                特價
+              </span>
+              <span
+                v-else
+                class="bg-gray-200 px-2 py-1 text-xs rounded-full"
+              >
+                正常
               </span>
             </td>
             <td class="md:py-1 py-2 px-3 md:text-center

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import AccordionItem from '@/components/AccordionItem.vue';
+import AccordionItem from '@/components/frontend/product/AccordionItem.vue';
 
 export default {
   name: 'Accordion',

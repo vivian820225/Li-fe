@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-import Footer from '@/components/Footer.vue';
-import ScrollTop from '@/components/ScrollTop.vue';
+import Navbar from '@/components/frontend/Navbar.vue';
+import Footer from '@/components/frontend/Footer.vue';
+import ScrollTop from '@/components/frontend/ScrollTop.vue';
 
 export default {
   name: 'Home',

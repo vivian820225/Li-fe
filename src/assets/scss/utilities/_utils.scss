@@ -46,6 +46,15 @@ body {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .btn {
+    padding: 10px 18px;
+    &__icon {
+      font-size: 14px;
+    }
+  }
+}
+
 // Title
 .section-title {
   @apply text-2xl font-bold;

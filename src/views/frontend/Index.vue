@@ -22,7 +22,7 @@
             </span>
           </a>
         </div>
-        <ProductSwiper :products="hotProducts" />
+        <HotProduct :products="hotProducts" />
       </section>
       <!-- 最新上架 -->
       <section class="md:mb-16 mb-4">
@@ -43,7 +43,7 @@
             </span>
           </a>
         </div>
-        <ProductSwiper :products="recProducts" />
+        <RecProduct :products="recProducts" />
       </section>
       <!-- 綠色生活 -->
       <section class="lg:mb-40 md:mb-24 mb-12">
@@ -83,7 +83,7 @@
             >
           </h2>
           <p class="md:text-2xl text-xl font-bold mb-4">
-            歡迎訂閱我們，即刻取得相關資訊<br />一同豐富您的綠色生活！
+            歡迎訂閱我們，即刻取得相關優惠資訊<br />一同豐富您的綠色生活！
           </p>
           <div class="flex w-full mb-4">
             <input
@@ -111,9 +111,10 @@
 </template>
 
 <script>
-import BannerCarousel from '@/components/BannerCarousel.vue';
-import ProductSwiper from '@/components/ProductSwiper.vue';
-import ArticleCard from '@/components/ArticleCard.vue';
+import BannerCarousel from '@/components/frontend/home/BannerCarousel.vue';
+import HotProduct from '@/components/frontend/home/HotProduct.vue';
+import RecProduct from '@/components/frontend/home/RecProduct.vue';
+import ArticleCard from '@/components/frontend/ArticleCard.vue';
 
 export default {
   name: 'Home',
@@ -155,7 +156,8 @@ export default {
   },
   components: {
     BannerCarousel,
-    ProductSwiper,
+    HotProduct,
+    RecProduct,
     ArticleCard,
   },
   created() {

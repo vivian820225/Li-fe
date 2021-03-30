@@ -366,7 +366,7 @@
 </template>
 
 <script>
-import StepsBar from '@/components/StepsBar.vue';
+import StepsBar from '@/components/frontend/order/StepsBar.vue';
 import { Zipcode, County } from 'twzipcode-vue';
 
 export default {

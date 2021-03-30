@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import BannerCarousel from '@/components/BannerCarousel.vue';
-import ArticleCard from '@/components/ArticleCard.vue';
+import BannerCarousel from '@/components/frontend/home/BannerCarousel.vue';
+import ArticleCard from '@/components/frontend/ArticleCard.vue';
 // import Pagination from '@/components/Pagination.vue';
 
 export default {

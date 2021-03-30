@@ -71,9 +71,9 @@
 
 <script>
 
-import ScrollTop from '@/components/ScrollTop.vue';
-import LoginModal from '@/components/Login.vue';
-import OverlayMask from '@/components/OverlayMask.vue';
+import ScrollTop from '@/components/frontend/ScrollTop.vue';
+import LoginModal from '@/components/frontend/Login.vue';
+import OverlayMask from '@/components/frontend/OverlayMask.vue';
 
 export default {
   name: 'OrderCheck',

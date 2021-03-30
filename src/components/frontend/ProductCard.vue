@@ -5,10 +5,10 @@
         <img :src="item.imageUrl[0]" :alt="item.title" />
       </router-link>
       <span
-        v-if="item.price"
+        v-if="item.options.popular"
         class="discount bg-primary-light text-xs"
       >
-        特價
+        熱門
       </span>
       <button type="button" class="favorite">
         <span class="material-icons text-primary-default" v-if="isLike">

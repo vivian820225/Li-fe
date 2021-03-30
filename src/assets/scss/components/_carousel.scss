@@ -40,3 +40,23 @@
   background: #FFC107;
   border-radius: 10px;
 }
+
+@media screen and (max-width: 768px) {
+  .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    left: -1rem;
+    background-size: 20px auto;
+  }
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev {
+    right: -1rem;
+    background-size: 20px auto;
+  }
+  .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next,
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev {
+    width: 28px;
+    height: 28px;
+  }
+}
