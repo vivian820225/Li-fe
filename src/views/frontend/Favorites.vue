@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-    <Loading :active.sync="isLoading" />
     <TitleBanner :titleText=title :bgImg=bgImg class="md:mb-12 mb-6" />
     <!-- 無收藏內容 -->
     <div
@@ -48,7 +47,6 @@ export default {
         options: {},
       },
       pagination: {},
-      isLoading: false,
     };
   },
   components: {
@@ -60,7 +58,7 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
 
       this.axios
@@ -68,10 +66,10 @@ export default {
         .then((res) => {
           this.products = res.data.data;
           this.pagination = res.data.meta.pagination;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
   },

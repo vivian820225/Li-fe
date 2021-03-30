@@ -57,7 +57,7 @@ export default {
   methods: {
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .get(api)
         .then((res) => {
@@ -66,14 +66,14 @@ export default {
           this.cart.forEach((item) => {
             this.totalprice += (item.product.price * item.quantity);
           });
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     addToCart(id) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       const checkCart = this.cart.some((item) => {
@@ -88,10 +88,10 @@ export default {
             .then(() => {
               this.getCart();
               this.$bus.$emit('get-cart');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             });
           return true;
         }
@@ -108,9 +108,9 @@ export default {
           .then(() => {
             this.getCart();
             this.$bus.$emit('get-cart');
-            this.isLoading = false;
+            this.$store.dispatch('updateLoading', false);
           }).catch(() => {
-            this.isLoading = false;
+            this.$store.dispatch('updateLoading', false);
           });
       }
     },

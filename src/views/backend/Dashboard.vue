@@ -1,6 +1,5 @@
 <template>
   <div class="w-full mx-auto">
-    <Loading :active.sync="isLoading" />
     <div class="flex h-screen antialiased text-gray-900">
       <!-- Desktop Menu -->
       <aside
@@ -197,7 +196,6 @@ export default {
       uuid: process.env.VUE_APP_UUID,
       checkSuccess: false,
       asideOpen: false,
-      isLoading: false,
     };
   },
   created() {
@@ -205,7 +203,7 @@ export default {
   },
   methods: {
     checkToken() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
       this.axios.defaults.headers.common.Authorization = `Bearer ${this.token}`;
       const api = `${process.env.VUE_APP_APIPATH}/api/auth/check`;
@@ -213,11 +211,11 @@ export default {
       this.axios.post(api, { api_token: this.token }).then((res) => {
         if (res.data.success) {
           this.checkSuccess = true;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         }
       }).catch(() => {
         this.$router.push('/');
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       });
     },
     logout() {

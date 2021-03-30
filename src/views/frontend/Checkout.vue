@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-screen-xl mx-auto xl:px-0 lg:px-8 px-4">
-    <Loading :active.sync="isLoading" />
     <StepsBar :steps="steps" class="max-w-screen-md mx-auto mb-8" />
     <validation-observer v-slot="{ invalid }">
       <form @submit.prevent="createOrder()">
@@ -404,7 +403,6 @@ export default {
           done: false,
         },
       ],
-      isLoading: false,
     };
   },
   components: {
@@ -430,7 +428,7 @@ export default {
   },
   methods: {
     createOrder() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/orders`;
       this.order.address = `${this.tempAddress.district}${this.tempAddress.road}`;
       const order = { ...this.order };
@@ -444,15 +442,15 @@ export default {
           this.getCart();
           this.orderId = res.data.data.id;
           this.$router.push({ path: '/checkout/order-completed' });
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         }
       }).catch(() => {
         this.$router.push({ path: '/checkout/order-failed' });
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       });
     },
     useCoupon() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/coupon/search`;
       const code = {
         code: this.couponCode,
@@ -462,18 +460,16 @@ export default {
         .post(api, code)
         .then((res) => {
           this.couponInfo = res.data.data;
-          // eslint-disable-next-line no-console
-          console.log(this.couponInfo);
           this.getCart();
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         }).catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
       this.couponCode = '';
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .get(api)
         .then((res) => {
@@ -482,10 +478,10 @@ export default {
           this.cart.forEach((item) => {
             this.totalprice += item.product.price * item.quantity;
           });
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     quantityUpdate(id, num) {
@@ -497,26 +493,26 @@ export default {
         product: id,
         quantity: num,
       };
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios.patch(api, data).then(() => {
         this.getCart();
         this.$bus.$emit('update-cart');
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       });
     },
     removeCartItem(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/${id}`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios.delete(api).then(() => {
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
         this.getCart();
       });
     },
     removeAllCartItem() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios.delete(api).then(() => {
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
         this.getCart();
       });
     },

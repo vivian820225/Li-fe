@@ -1,6 +1,5 @@
 <template>
   <div class="navbar">
-    <Loading :active.sync="isLoading" />
     <nav
       id="navBar"
       class="xl:px-0 lg:px-8 px-4"
@@ -213,7 +212,6 @@ export default {
       windowWidth: window.innerWidth,
       isOpen: false,
       isMobile: false,
-      isLoading: false,
       sideCartOpen: false,
       loginOpen: false,
       cart: [],
@@ -275,7 +273,7 @@ export default {
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .get(api)
         .then((res) => {
@@ -284,10 +282,10 @@ export default {
           this.cart.forEach((item) => {
             this.totalprice += (item.product.price * item.quantity);
           });
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     quantityUpdate(id, num) {
@@ -299,31 +297,31 @@ export default {
         product: id,
         quantity: num,
       };
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .patch(api, data)
         .then(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           this.getCart();
         });
     },
     removeCartItem(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/${id}`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .delete(api)
         .then(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           this.getCart();
         });
     },
     removeAllCartItem() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping/all/product`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .delete(api)
         .then(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           this.getCart();
         });
     },

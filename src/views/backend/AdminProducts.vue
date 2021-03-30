@@ -1,6 +1,5 @@
 <template>
   <div class="w-full">
-    <Loading :active.sync="isLoading"/>
     <div class="flex justify-center items-end flex-col">
       <div class="min-w-max w-full flex justify-between items-center">
           <h2 class="font-bold md:text-2xl text-xl flex items-center">
@@ -225,7 +224,6 @@ export default {
       pagination: {},
       isProduct: true,
       isNew: false,
-      isLoading: false,
     };
   },
   components: {
@@ -238,17 +236,17 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/products?page=${page}`;
       this.axios
         .get(api)
         .then((res) => {
           this.products = res.data.data;
           this.pagination = res.data.meta.pagination;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         }).catch(() => {
           this.$bus.$emit('message:push', '資料索取失敗', 'danger');
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     openModal(type, item) {

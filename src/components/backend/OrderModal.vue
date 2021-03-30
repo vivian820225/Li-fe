@@ -176,7 +176,7 @@ export default {
   },
   methods: {
     getOrderDetail(id) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/orders/${id}`;
 
       this.axios
@@ -184,7 +184,7 @@ export default {
         .then((res) => {
           this.tempOrder = res.data.data;
           this.modalOpen = true;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
   },

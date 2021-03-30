@@ -249,7 +249,7 @@ export default {
   },
   methods: {
     getProductDetail(id, type) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${id}`;
 
       switch (type) {
@@ -259,7 +259,7 @@ export default {
             options: {},
           };
           this.modalOpen = true;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           break;
         default:
           this.axios
@@ -267,10 +267,10 @@ export default {
             .then((res) => {
               this.tempProduct = res.data.data;
               this.modalOpen = true;
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '資料索取失敗', 'danger');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             });
           break;
       }

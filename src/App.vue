@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="text-gray-800">
+    <Loading :active.sync="isLoading" />
     <MessageAlert />
     <router-view :key="$route.fullPath" />
   </div>
@@ -14,6 +15,11 @@ export default {
   data() {
     return {
     };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.isLoading;
+    },
   },
 };
 </script>

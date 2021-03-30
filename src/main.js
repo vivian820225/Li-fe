@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import {
@@ -19,6 +20,7 @@ import currencyFilter from './filters/currency';
 
 import App from './App.vue';
 import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false;
 
@@ -32,6 +34,7 @@ Vue.component('Loading', Loading);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
+Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
 Vue.use(Clipboard);
@@ -49,5 +52,6 @@ Vue.prototype.$bus = new Vue();
 
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount('#app');

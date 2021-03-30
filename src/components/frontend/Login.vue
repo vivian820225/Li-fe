@@ -83,7 +83,7 @@ export default {
       this.$emit('loginclose');
     },
     login() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/auth/login`;
 
       this.axios
@@ -95,12 +95,12 @@ export default {
           document.cookie = `hexToken=${token};expires=${new Date(expired * 1000)};`;
           this.$router.push({ path: '/admin/products' });
           this.$bus.$emit('message:push', '登入成功', 'success');
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         }).catch(() => {
           this.$bus.$emit('message:push', '登入失敗', 'danger');
           this.user.username = '';
           this.user.password = '';
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
   },

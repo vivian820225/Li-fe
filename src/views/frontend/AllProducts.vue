@@ -1,6 +1,5 @@
 <template>
   <div class="w-full mx-auto">
-    <Loading :active.sync="isLoading" />
     <section class="max-w-screen-xl mx-auto md:mb-8 mb-6 xl:px-0 lg:px-8 px-4">
       <div class="event-banner rounded-lg">
         <p class="content">
@@ -165,7 +164,6 @@ export default {
         options: {},
       },
       pagination: {},
-      isLoading: false,
       selectToggle: false,
       selectedOption: '價格由高到低',
       Options: ['價格由低到高', '價格由高到低'],
@@ -219,7 +217,7 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
 
       this.axios
@@ -228,29 +226,29 @@ export default {
           this.products = res.data.data;
           this.filterItems = res.data.data;
           this.pagination = res.data.meta.pagination;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     getAllProducts() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?paged=50`;
 
       this.axios
         .get(api)
         .then((res) => {
           this.allProducts = res.data.data;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       this.axios
         .get(api)
         .then((res) => {
@@ -259,14 +257,14 @@ export default {
           this.cart.forEach((item) => {
             this.totalprice += (item.product.price * item.quantity);
           });
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         })
         .catch(() => {
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
         });
     },
     addToCart(id) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
 
       const checkCart = this.cart.some((item) => {
@@ -282,10 +280,10 @@ export default {
               // this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
               this.$bus.$emit('get-cart');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             });
           return true;
         }
@@ -302,9 +300,9 @@ export default {
           .then(() => {
             this.getCart();
             this.$bus.$emit('get-cart');
-            this.isLoading = false;
+            this.$store.dispatch('updateLoading', false);
           }).catch(() => {
-            this.isLoading = false;
+            this.$store.dispatch('updateLoading', false);
           });
       }
     },

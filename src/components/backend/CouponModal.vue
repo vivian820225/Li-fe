@@ -166,14 +166,14 @@ export default {
   },
   methods: {
     getCouponDetail(id, status) {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/coupon/${id}`;
 
       switch (status) {
         case 'created':
           this.tempCoupon = {};
           this.modalOpen = true;
-          this.isLoading = false;
+          this.$store.dispatch('updateLoading', false);
           break;
         default:
           this.axios
@@ -183,16 +183,16 @@ export default {
               this.dedlineAt = this.tempCoupon.deadline.datetime.split(' ');
               [this.due_date, this.due_time] = this.dedlineAt;
               this.modalOpen = true;
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '資料索取失敗', 'danger');
-              this.isLoading = false;
+              this.$store.dispatch('updateLoading', false);
             });
           break;
       }
     },
     updateCoupon() {
-      this.isLoading = true;
+      this.$store.dispatch('updateLoading', true);
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/coupon`;
       let httpMethod = '';
       let statusMsg = '';
@@ -212,11 +212,11 @@ export default {
         this.modalOpen = false;
         this.$bus.$emit('message:push', statusMsg, 'success');
         this.$emit('updateList');
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       }).catch(() => {
         this.$bus.$emit('message:push', '發生錯誤！請連絡相關人員處理', 'danger');
         this.modalOpen = false;
-        this.isLoading = false;
+        this.$store.dispatch('updateLoading', false);
       });
     },
   },

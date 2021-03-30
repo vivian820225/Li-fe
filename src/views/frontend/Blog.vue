@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading" />
     <div class="max-w-screen-xl mx-auto font-sans xl:px-0 lg:px-8 px-4">
       <BannerCarousel class="mb-16" />
       <section class="lg:mb-40 md:mb-24 mb-12">
@@ -75,7 +74,6 @@ export default {
   name: 'Blog',
   data() {
     return {
-      isLoading: false,
       pagination: {},
       articles: [
         {
