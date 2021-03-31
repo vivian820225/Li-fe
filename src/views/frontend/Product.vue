@@ -126,12 +126,13 @@
             <h3 class="product-section-title">產品描述</h3>
             <hr class="divider-line" />
             <div class="text-lg">
-              <p>{{ tempProduct.content }}</p>
+              <div v-html="tempProduct.content"></div>
+              <hr class="divider-line">
+              <img class="w-full" src="~@/assets/images/content-img.jpg" alt="" />
               <p>
                 適合自家擺設或送禮祝賀，為日常的生活空間點綴些色彩，
                 打造優良的生活環境。
               </p>
-              <img src="https://picsum.photos/800/300" alt="" />
               <p>
                 商品退換貨詳情請見
                 <router-link class="underline text-primary-default" to="/guide">退換貨須知</router-link>

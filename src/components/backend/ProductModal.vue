@@ -161,7 +161,7 @@
                       rows="3"
                     ></textarea>
                 </label>
-                <label class="block">
+                <!-- <label class="block">
                   <span class="text-gray-700">詳細介紹</span>
                   <textarea
                       type="text"
@@ -170,6 +170,14 @@
                       v-model="tempProduct.content"
                       rows="5"
                     ></textarea>
+                </label> -->
+                <label class="block vueEditor">
+                  <span class="text-gray-700">詳細介紹</span>
+                  <vue-editor
+                    v-model="tempProduct.content"
+                    :editor-toolbar="customToolbar"
+                  >
+                  </vue-editor>
                 </label>
                 <div class="flex justify-start items-center">
                   <label class="inline-flex items-center mr-4">
@@ -229,11 +237,19 @@
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor';
+
 export default {
   name: 'ProductModal',
   props: ['product', 'isNew'],
   data() {
     return {
+      customToolbar: [
+        [{ header: [false, 1, 2, 3, 4, 5, 6] }],
+        ['bold', 'italic', 'underline'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['image', 'code-block'],
+      ],
       modalOpen: false,
       tempProduct: {
         imageUrl: [],
@@ -247,6 +263,7 @@ export default {
       },
     };
   },
+  components: { VueEditor },
   methods: {
     getProductDetail(id, type) {
       this.$store.dispatch('updateLoading', true);
@@ -256,7 +273,10 @@ export default {
         case 'new':
           this.tempProduct = {
             imageUrl: [],
-            options: {},
+            options: {
+              popular: false,
+              recommend: false,
+            },
           };
           this.modalOpen = true;
           this.$store.dispatch('updateLoading', false);
@@ -321,3 +341,41 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+  // @import "~vue2-editor/dist/vue2-editor.css";
+  .vueEditor {
+    .ql-snow .ql-toolbar button, .ql-snow.ql-toolbar button {
+      float: initial;
+    }
+    .quillWrapper .ql-snow.ql-toolbar {
+      display: flex;
+      align-items: center;
+      padding: 8px 4px;
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      border-width: 2px;
+      @apply border-gray-500;
+    }
+    .ql-toolbar.ql-snow + .ql-container.ql-snow {
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      border-width: 2px;
+      @apply border-gray-500;
+    }
+    .quillWrapper .ql-toolbar.ql-snow .ql-formats {
+      display: flex;
+      align-items: center;
+      margin: 0 .5rem;
+      &:first-of-type {
+        &::before {
+          content: '';
+          display: block;
+          width: 1px;
+          height: 1px;
+          opacity: 0;
+        }
+      }
+    }
+  }
+</style>
