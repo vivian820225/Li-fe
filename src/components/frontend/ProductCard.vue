@@ -16,8 +16,8 @@
         class="favorite"
         @click="removeFavorList(item.id)"
       >
-        <span class="material-icons text-primary-default">
-          favorite_border
+        <span class="material-icons text-primary-default hover:text-primary-dark transition">
+          favorite
         </span>
       </button>
       <button

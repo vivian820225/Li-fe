@@ -26,8 +26,8 @@ export default {
   },
   getters: {
     favorListProducts(state, getters, rootGetters) {
-      // eslint-disable-next-line max-len
-      return rootGetters.productsModules.allProducts.filter((item) => state.favorList.indexOf(item.id) !== -1);
+      return rootGetters.productsModules.allProducts
+        .filter((item) => state.favorList.indexOf(item.id) !== -1);
     },
   },
 };

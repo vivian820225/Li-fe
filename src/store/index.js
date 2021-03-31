@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import productsModules from './products';
-import favorListModules from './favorities';
+import favorListModules from './favorites';
 
 Vue.use(Vuex);
 

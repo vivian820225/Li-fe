@@ -25,7 +25,7 @@
     class="favorite-list md:mb-28 mb-8">
       <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
         <ProductCard
-          :item=favorListProducts
+          :item=item
           v-for="(item, idx) in favorListProducts"
           :key=idx
         />
@@ -45,13 +45,10 @@ export default {
     return {
       title: '我的收藏',
       bgImg: './images/bg-fav.jpg',
-      isLike: false,
-      products: [],
       tempProduct: {
         imageUrl: [],
         options: {},
       },
-      pagination: {},
     };
   },
   components: {
@@ -65,25 +62,10 @@ export default {
     ...mapGetters('favorListModules', ['favorListProducts']),
   },
   created() {
-    this.getProducts();
+    this.$store.dispatch('productsModules/getAllProducts');
     this.$store.commit('favorListModules/GET_FAVOR_LIST');
   },
   methods: {
-    getProducts(page = 1) {
-      this.$store.dispatch('updateLoading', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
-
-      this.axios
-        .get(api)
-        .then((res) => {
-          this.products = res.data.data;
-          this.pagination = res.data.meta.pagination;
-          this.$store.dispatch('updateLoading', false);
-        })
-        .catch(() => {
-          this.$store.dispatch('updateLoading', false);
-        });
-    },
   },
 };
 </script>
