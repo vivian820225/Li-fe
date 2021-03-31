@@ -13,7 +13,7 @@
               <div class="other-pic flex justify-start items-center">
                 <img
                   class="lg:w-16 lg:h-16 w-8 h-8 object-cover
-                  lg:rounded-2xl rounded-lg lg:mr-4 cursor-pointer"
+                  lg:rounded-2xl rounded-lg lg:mr-4 mr-2 cursor-pointer"
                   v-for="(img, key) in tempProduct.imageUrl"
                   :key="tempProduct.id + key"
                   :src="img"
@@ -32,7 +32,7 @@
               {{ tempProduct.title }}
             </h2>
             <div class="md:text-lg">
-              {{ tempProduct.content }}
+              {{ tempProduct.description }}
             </div>
             <hr class="divider-line" />
             <div class="event md:text-lg">
@@ -67,7 +67,7 @@
                 </button>
                 <input
                   type="number"
-                  class="q-number"
+                  class="q-number flex-auto"
                   :value="quantity"
                   onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
                 />
@@ -90,19 +90,30 @@
                   加入購物車
                 </button>
                 <button
+                  v-if="favorList.indexOf(tempProduct.id) !== -1"
                   type="button"
-                  :class="{ 'bg-primary-default': isLike }"
-                  @click="isLike = !isLike"
-                  class="flex-none border-2 border-primary-default rounded-lg px-3 py-2
-                  hover:bg-gray-50 transition"
+                  class="flex-none border-2 border-primary-default
+                  bg-primary-default rounded-lg px-3 py-2 hover:bg-gray-50
+                  transition"
+                  @click="removeFavorList(tempProduct.id)"
                 >
-                  <span
-                    class="material-icons block text-primary-dark"
-                    v-if="isLike"
+                  <span class="material-icons text-primary-dark
+                    block"
                   >
                     favorite
                   </span>
-                  <span class="material-icons block text-primary-default" v-else>
+                </button>
+                <button
+                  v-else
+                  type="button"
+                  class="flex-none border-2 border-primary-default
+                  rounded-lg px-3 py-2 hover:bg-gray-50 transition"
+                  @click="addToFavorList(tempProduct.id)"
+                >
+                  <span
+                    class="material-icons text-primary-default
+                    block"
+                  >
                     favorite_border
                   </span>
                 </button>
@@ -115,7 +126,7 @@
             <h3 class="product-section-title">產品描述</h3>
             <hr class="divider-line" />
             <div class="text-lg">
-              <p>{{ tempProduct.description }}</p>
+              <p>{{ tempProduct.content }}</p>
               <p>
                 適合自家擺設或送禮祝賀，為日常的生活空間點綴些色彩，
                 打造優良的生活環境。
@@ -201,6 +212,7 @@ import Breadcrumb from '@/components/frontend/product/Breadcrumb.vue';
 import RecProduct from '@/components/frontend/home/RecProduct.vue';
 import Accordion from '@/components/frontend/product/Accordion.vue';
 import StarRating from '@/components/frontend/product/StarRating.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Product',
@@ -218,7 +230,6 @@ export default {
       },
       quantity: 1,
       currentImg: '',
-      isLike: false,
       shownReviews: [],
       reviews: [
         {
@@ -298,17 +309,6 @@ export default {
             </p>
           `,
         },
-        {
-          id: 4,
-          active: false,
-          title: '退款換貨須知',
-          details: `
-            <p>
-              <a id="guideLink" class="underline cursor-pointer">點我了解</a>
-              完整退款換貨須知
-            </p>
-          `,
-        },
       ],
     };
   },
@@ -316,6 +316,9 @@ export default {
     allProducts() {
       return this.$store.state.productsModules.allProducts;
     },
+    ...mapState('favorListModules', {
+      favorList: (state) => state.favorList,
+    }),
   },
   created() {
     const { id } = this.$route.params;
@@ -398,6 +401,14 @@ export default {
             this.$store.dispatch('updateLoading', false);
           });
       }
+    },
+    addToFavorList(id) {
+      this.$store.dispatch('favorListModules/addToFavorList', id);
+      this.$bus.$emit('message:push', '已加入收藏', 'success');
+    },
+    removeFavorList(id) {
+      this.$store.dispatch('favorListModules/removeFavorList', id);
+      this.$bus.$emit('message:push', '已移除收藏', 'warning');
     },
   },
 };
