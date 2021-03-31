@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import productsModules from './products';
+import favorListModules from './favorities';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -17,5 +20,12 @@ export default new Vuex.Store({
     LOADING(state, status) {
       state.isLoading = status;
     },
+  },
+  getters: {
+
+  },
+  modules: {
+    productsModules,
+    favorListModules,
   },
 });

@@ -155,7 +155,6 @@ export default {
   data() {
     return {
       cart: [],
-      allProducts: [],
       products: [],
       filterCategory: '全部商品',
       sortData: '',
@@ -186,6 +185,9 @@ export default {
     });
   },
   computed: {
+    allProducts() {
+      return this.$store.state.productsModules.allProducts;
+    },
     filterProducts() {
       let filterItems = [];
       switch (this.filterCategory) {
@@ -233,18 +235,7 @@ export default {
         });
     },
     getAllProducts() {
-      this.$store.dispatch('updateLoading', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?paged=50`;
-
-      this.axios
-        .get(api)
-        .then((res) => {
-          this.allProducts = res.data.data;
-          this.$store.dispatch('updateLoading', false);
-        })
-        .catch(() => {
-          this.$store.dispatch('updateLoading', false);
-        });
+      this.$store.dispatch('productsModules/getAllProducts');
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;

@@ -10,14 +10,26 @@
       >
         熱門
       </span>
-      <button type="button" class="favorite">
-        <span class="material-icons text-primary-default" v-if="isLike">
-          favorite
+      <button
+        v-if="favorList.indexOf(item.id) !== -1"
+        type="button"
+        class="favorite"
+        @click="removeFavorList(item.id)"
+      >
+        <span class="material-icons text-primary-default">
+          favorite_border
         </span>
+      </button>
+      <button
+        v-else
+        type="button"
+        class="favorite"
+        @click="addToFavorList(item.id)"
+      >
         <span
           class="material-icons text-gray-500 hover:text-primary-default transition"
-          v-else>
-          favorite_border
+        >
+          favorite
         </span>
       </button>
     </div>
@@ -51,6 +63,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'ProductCard',
   props: ['item', 'isLike'],
@@ -58,9 +72,22 @@ export default {
     return {
     };
   },
+  computed: {
+    ...mapState('favorListModules', {
+      favorList: (state) => state.favorList,
+    }),
+  },
   methods: {
     addToCart(id, num) {
       this.$emit('addtocart', id, num);
+    },
+    addToFavorList(id) {
+      this.$store.dispatch('favorListModules/addToFavorList', id);
+      this.$bus.$emit('message:push', '已加入收藏', 'success');
+    },
+    removeFavorList(id) {
+      this.$store.dispatch('favorListModules/removeFavorList', id);
+      this.$bus.$emit('message:push', '已移除收藏', 'warning');
     },
   },
 };

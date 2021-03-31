@@ -3,7 +3,7 @@
     <TitleBanner :titleText=title :bgImg=bgImg class="md:mb-12 mb-6" />
     <!-- 無收藏內容 -->
     <div
-    v-if="products.length < 0"
+    v-if="favorListProducts.length < 1"
     class="h-custom text-center mb-8 md:mb-28">
       <p class="font-bold md:text-3xl sm:text-2xl text-xl sm:mb-8 mb-4 text-center">
         您還沒有收藏任何商品喔！
@@ -24,7 +24,11 @@
     v-else
     class="favorite-list md:mb-28 mb-8">
       <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
-        <ProductCard :item=product :is-like=isLike v-for="(product, idx) in products" :key=idx />
+        <ProductCard
+          :item=favorListProducts
+          v-for="(item, idx) in favorListProducts"
+          :key=idx
+        />
       </div>
     </div>
   </div>
@@ -33,6 +37,7 @@
 <script>
 import TitleBanner from '@/components/frontend/TitleBanner.vue';
 import ProductCard from '@/components/frontend/ProductCard.vue';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'Favorities',
@@ -53,8 +58,15 @@ export default {
     TitleBanner,
     ProductCard,
   },
+  computed: {
+    ...mapState('favorListModules', {
+      favorList: (state) => state.favorList,
+    }),
+    ...mapGetters('favorListModules', ['favorListProducts']),
+  },
   created() {
     this.getProducts();
+    this.$store.commit('favorListModules/GET_FAVOR_LIST');
   },
   methods: {
     getProducts(page = 1) {

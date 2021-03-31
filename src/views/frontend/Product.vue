@@ -115,12 +115,16 @@
             <h3 class="product-section-title">產品描述</h3>
             <hr class="divider-line" />
             <div class="text-lg">
+              <p>{{ tempProduct.description }}</p>
               <p>
-                典雅白釉陶瓷設計，簡約穩重，適合自家擺設或送禮祝賀，為日常的生活空間點綴些色彩。
-                盆器底部孔洞設計，增加散熱通風空間，為植物根部打造優良的生活環境，健康茁壯。
+                適合自家擺設或送禮祝賀，為日常的生活空間點綴些色彩，
+                打造優良的生活環境。
               </p>
               <img src="https://picsum.photos/800/300" alt="" />
-              <p>盆器資訊 盆器尺寸：高 11 CM X 寬 9 CM 盆器材質：白釉陶瓷</p>
+              <p>
+                商品退換貨詳情請見
+                <router-link class="underline text-primary-default" to="/guide">退換貨須知</router-link>
+              </p>
             </div>
           </section>
           <section class="fqa mb-10">
@@ -187,13 +191,12 @@
           </span>
         </a>
       </div>
-      <RecProduct :products="products" class="md:mb-12 mb-6"/>
+      <RecProduct :products="allProducts" class="md:mb-12 mb-6"/>
     </div>
   </div>
 </template>
 
 <script>
-// import $ from 'jquery';
 import Breadcrumb from '@/components/frontend/product/Breadcrumb.vue';
 import RecProduct from '@/components/frontend/home/RecProduct.vue';
 import Accordion from '@/components/frontend/product/Accordion.vue';
@@ -209,7 +212,6 @@ export default {
   },
   data() {
     return {
-      products: [],
       cart: [],
       tempProduct: {
         imageUrl: [],
@@ -310,28 +312,20 @@ export default {
       ],
     };
   },
+  computed: {
+    allProducts() {
+      return this.$store.state.productsModules.allProducts;
+    },
+  },
   created() {
     const { id } = this.$route.params;
     this.getProduct(id);
-    this.getProducts();
+    this.getAllProducts();
     this.getCart();
   },
-  mounted() {
-  },
   methods: {
-    getProducts(page = 1) {
-      this.$store.dispatch('updateLoading', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
-
-      this.axios
-        .get(api)
-        .then((res) => {
-          this.products = res.data.data;
-          this.$store.dispatch('updateLoading', false);
-        })
-        .catch(() => {
-          this.$store.dispatch('updateLoading', false);
-        });
+    getAllProducts() {
+      this.$store.dispatch('productsModules/getAllProducts');
     },
     getProduct(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
@@ -404,9 +398,6 @@ export default {
             this.$store.dispatch('updateLoading', false);
           });
       }
-    },
-    goToGuide() {
-      this.$router.push('/guide').catch(() => {});
     },
   },
 };

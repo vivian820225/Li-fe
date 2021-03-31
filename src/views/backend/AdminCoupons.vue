@@ -144,7 +144,7 @@
       </table>
       <Pagination
         :pages="pagination"
-        @updateList="getOrders"
+        @updateList="getCoupons"
       />
     </div>
     <transition name="fade">
