@@ -15,6 +15,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
+import vuescroll from 'vuescroll';
 import Clipboard from 'v-clipboard';
 import currencyFilter from './filters/currency';
 
@@ -37,6 +38,8 @@ Vue.component('ValidationProvider', ValidationProvider);
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
+Vue.use(vuescroll, { ops: {} });
+
 Vue.use(Clipboard);
 
 Vue.filter('currency', currencyFilter);
