@@ -101,7 +101,7 @@
                 </div>
               </div>
               <!-- 商品詳情 -->
-              <div class="flex-grow grid gap-4">
+              <div class="md:flex-grow grid grid-cols-1 gap-4">
                 <label class="block">
                   <span class="text-gray-700">商品名稱</span>
                   <input
@@ -111,7 +111,7 @@
                     v-model="tempProduct.title"
                   />
                 </label>
-                <div class="grid grid-flow-col gap-4">
+                <div class="grid md:grid-flow-col gap-4">
                   <label class="block">
                     <span class="text-gray-700">分類</span>
                     <input
@@ -131,7 +131,7 @@
                     />
                   </label>
                 </div>
-                <div class="grid grid-flow-col gap-4">
+                <div class="grid md:grid-flow-col gap-4">
                   <label class="block">
                     <span class="text-gray-700">原價</span>
                     <input
@@ -161,16 +161,6 @@
                       rows="3"
                     ></textarea>
                 </label>
-                <!-- <label class="block">
-                  <span class="text-gray-700">詳細介紹</span>
-                  <textarea
-                      type="text"
-                      class="input-field"
-                      placeholder="請輸入詳細介紹"
-                      v-model="tempProduct.content"
-                      rows="5"
-                    ></textarea>
-                </label> -->
                 <label class="block vueEditor">
                   <span class="text-gray-700">詳細介紹</span>
                   <vue-editor
@@ -245,7 +235,7 @@ export default {
   data() {
     return {
       customToolbar: [
-        [{ header: [false, 1, 2, 3, 4, 5, 6] }],
+        // [{ header: [false, 1, 2, 3, 4, 5, 6] }],
         ['bold', 'italic', 'underline'],
         [{ list: 'ordered' }, { list: 'bullet' }],
         ['image', 'code-block'],
@@ -350,6 +340,7 @@ export default {
     }
     .quillWrapper .ql-snow.ql-toolbar {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       padding: 8px 4px;
       border-top-left-radius: 0.5rem;
@@ -368,13 +359,7 @@ export default {
       align-items: center;
       margin: 0 .5rem;
       &:first-of-type {
-        &::before {
-          content: '';
-          display: block;
-          width: 1px;
-          height: 1px;
-          opacity: 0;
-        }
+        margin-left: 0;
       }
     }
   }

@@ -232,6 +232,8 @@
                     class="input-field flex-grow mr-2"
                     placeholder="請輸入優惠折扣碼"
                     v-model="couponCode"
+                    ref="couponInput"
+                    :disabled="couponInput"
                   />
                   <button
                     type="button"
@@ -246,9 +248,14 @@
               </label>
               <div class="flex justify-between items-center" v-if="couponInfo.percent">
                 <span class="text-lg">折扣</span>
-                <span class="font-bold font-ubu text-lg text-secondary-default">
-                  -NT {{ Math.floor(totalprice * (couponInfo.percent / 100)) | currency }}
-                </span>
+                <div class="block">
+                  <span class="font-bold font-ubu text-lg text-secondary-default mr-2">
+                    -NT {{ Math.floor(totalprice * (couponInfo.percent / 100)) | currency }}
+                  </span>
+                  <button type="button" class="text-red-500 underline" @click="cancelCoupon">
+                    取消
+                  </button>
+                </div>
               </div>
               <hr class="divider-line" />
               <div class="flex justify-between items-center">
@@ -271,13 +278,13 @@
               <hr class="divider-line" />
               <!-- 付款方式 -->
               <h3 class="md:text-3xl text-2xl font-bold mb-4">請選擇付款方式</h3>
-              <div class="flex mb-8 select-none text-center">
+              <div class="flex justify-start mb-4 select-none">
                 <validation-provider rules="required" v-slot="{ errors }">
                   <label
                     for="atm"
-                    class="inline-block relative py-2 sm:px-4 px-2 font-bold border-2
+                    class="inline-block relative py-2 md:px-4 px-2 font-bold border-2
                     border-primary-default rounded-lg hover:bg-primary-default
-                    transition cursor-pointer mr-4"
+                    transition cursor-pointer md:mr-4 mr-2 md:mb-4 mb-2"
                     :class="[order.payment === 'ATM' ? 'bg-primary-default': 'bg-white']"
                   >
                     <span>ATM 轉帳</span>
@@ -292,9 +299,9 @@
                   </label>
                   <label
                     for="credit"
-                    class="inline-block relative py-2 px-4 font-bold border-2
+                    class="inline-block relative py-2 md:px-4 px-2 font-bold border-2
                     border-primary-default rounded-lg hover:bg-primary-default
-                    transition cursor-pointer mr-4"
+                    transition cursor-pointer md:mr-4 mr-2"
                     :class="[order.payment === 'Credit' ? 'bg-primary-default': 'bg-white']"
                   >
                     <span>信用卡付款</span>
@@ -309,7 +316,7 @@
                   </label>
                   <label
                     for="applePay"
-                    class="inline-block relative py-2 px-4 font-bold border-2
+                    class="inline-block relative py-2 md:px-4 px-2 font-bold border-2
                     border-primary-default rounded-lg hover:bg-primary-default
                     transition cursor-pointer"
                     :class="[order.payment === 'ApplePay' ? 'bg-primary-default': 'bg-white']"
@@ -382,6 +389,7 @@ export default {
       },
       couponCode: '',
       couponInfo: {},
+      couponInput: false,
       order: {
         name: '',
         email: '',
@@ -461,11 +469,20 @@ export default {
         .then((res) => {
           this.couponInfo = res.data.data;
           this.getCart();
+          this.$bus.$emit('message:push', '成功使用優惠券', 'success');
+          this.couponInput = true;
           this.$store.dispatch('updateLoading', false);
         }).catch(() => {
+          this.$bus.$emit('message:push', '此優惠券不存在', 'danger');
           this.$store.dispatch('updateLoading', false);
+          this.couponCode = '';
         });
+    },
+    cancelCoupon() {
+      this.couponInput = false;
       this.couponCode = '';
+      // 暫無取消優惠券的 API，暫時以頁面重整代替
+      this.$router.go(this.$router.currentRoute);
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;

@@ -69,6 +69,10 @@
             - 恭喜您獲得 -
           </p>
           <div class="box-content">
+             <p class="md:text-2xl text-xl text-center font-ubu border-2 bg-gray-100
+              mb-4 py-2 px-4">
+              {{ winPrize.code }}
+            </p>
             <p class="font-bold md:text-5xl text-3xl text-center sm:mb-8 mb-4">
               {{ winPrize.text }}
             </p>
@@ -78,6 +82,7 @@
               hover:shadow-none hover:bg-primary-dark transition"
               v-clipboard:copy="winPrize.code"
               @click="copySuccess"
+              v-clipboard:error="clipboardErrorHandler"
             >
               立即使用
             </button>
@@ -158,14 +163,14 @@ export default {
           icon: 'images/icon/icon-money.svg',
           text: '9折<br/>優惠券',
           value: '9折優惠券',
-          code: 'lefi_0090',
+          code: 'life_0090',
           count: 10,
         },
         {
           icon: 'images/icon/icon-money.svg',
           text: '5折<br/>優惠券',
           value: '5折優惠券',
-          code: 'lefi_0050',
+          code: 'life_0050',
           count: 5,
         },
         {
@@ -190,9 +195,9 @@ export default {
         },
         {
           icon: 'images/icon/icon-giftcard.svg',
-          text: '不限金額<br/>免運',
-          value: '不限金額免運',
-          code: 'shippingfree',
+          text: '95折<br/>優惠券',
+          value: '95折優惠券',
+          code: 'life_0095',
           count: 10,
         },
       ],
@@ -295,6 +300,10 @@ export default {
     },
     copySuccess() {
       this.$bus.$emit('message:push', '已複製代碼', 'success');
+    },
+    clipboardErrorHandler() {
+      // eslint-disable-next-line no-alert
+      alert('發生錯誤，請直接選取代碼複製');
     },
   },
 };

@@ -2,21 +2,19 @@
   <div class="w-full mx-auto">
     <nav id="navBar" class="xl:px-0 lg:px-8 px-4">
       <div class="relative md:max-w-screen-xl mx-auto
-        md:block flex justify-between items-center"
+        flex justify-between items-center"
       >
-        <div class="flex justify-between items-center">
-          <router-link to="/" class="navbar__logo">
-            <img src="@/assets/images/logo.svg" alt="" />
-          </router-link>
-          <a
-            href="#"
-            class="flex items-center text-gray-600 transition hover:text-secondary-light"
-            @click.prevent="loginOpen = !loginOpen"
-          >
-            <span class="material-icons mr-2"> account_circle </span>
-            <span>會員登入</span>
-          </a>
-        </div>
+        <router-link to="/" class="navbar__logo">
+          <img src="@/assets/images/logo.svg" alt="" />
+        </router-link>
+        <a
+          href="#"
+          class="flex items-center text-gray-600 transition hover:text-secondary-light"
+          @click.prevent="loginOpen = !loginOpen"
+        >
+          <span class="material-icons mr-2"> account_circle </span>
+          <span>會員登入</span>
+        </a>
       </div>
     </nav>
     <transition name="fade">

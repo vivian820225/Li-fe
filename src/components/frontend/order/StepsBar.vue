@@ -126,7 +126,7 @@ export default {
   --step-bar-bg: hsl(0, 0%, 80%);
   --step-bullet-bg: var(--step-bar-bg);
   --step-bullet-color: hsl(0, 0%, 20%);
-  --step-content: "✔";
+  --step-content: counter(current-step);
 }
 .stepper__input:checked ~ .stepper__content {
     opacity: .5;
