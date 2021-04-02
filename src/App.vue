@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="text-gray-800">
-    <Loading :active.sync="isLoading" />
+    <Loading :active.sync="isLoading" >
+    </Loading>
     <MessageAlert />
     <router-view :key="$route.fullPath" />
   </div>

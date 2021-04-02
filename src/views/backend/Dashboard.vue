@@ -109,7 +109,11 @@
                 </button>
               </div>
               <router-link to="/admin" class="w-20 mr-8">
-                <img src="@/assets/images/logo.svg" alt="" />
+                <img
+                  class="sm:h-auto sm:w-full h-10 w-auto"
+                  src="~@/assets/images/logo-w.png"
+                  alt="Li-fe"
+                />
               </router-link>
             </div>
             <a

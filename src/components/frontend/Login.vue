@@ -2,7 +2,7 @@
   <div class="login shadow-lg rounded-lg"
     :class="{'show': loginopen}">
     <div class="form-section">
-      <img class="md:w-24 w-20 mb-4" src="~@/assets/images/logo.svg" alt="">
+      <img class="md:w-24 w-20 mb-4" src="~@/assets/images/logo.png" alt="Li-fe">
       <h2 class="font-bold md:text-2xl text-xl md:mb-8 mb-4">
         會員登入
       </h2>

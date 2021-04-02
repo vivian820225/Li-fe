@@ -2,7 +2,7 @@
   <div class="navbar">
     <nav
       id="navBar"
-      class="xl:px-0 lg:px-8 px-4"
+      class="py-4 xl:px-0 lg:px-8 px-4"
       :class="{ 'fixed-header': scrolled }">
       <div class="relative md:max-w-screen-xl mx-auto
         md:block flex justify-between items-center"
@@ -55,7 +55,7 @@
         </div>
         <div class="flex justify-between items-center flex-grow">
           <router-link to="/" class="navbar__logo">
-            <img src="@/assets/images/logo.svg" alt="" />
+            <img class="logo-img" src="~@/assets/images/logo.png" alt="Li-fe" />
           </router-link>
           <div class="menu justify-end items-center flex">
             <ul class="justify-end items-center hidden md:flex">

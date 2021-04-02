@@ -1,11 +1,11 @@
 <template>
   <div class="w-full mx-auto">
-    <nav id="navBar" class="xl:px-0 lg:px-8 px-4">
+    <nav id="navBar" class="py-4 xl:px-0 lg:px-8 px-4">
       <div class="relative md:max-w-screen-xl mx-auto
         flex justify-between items-center"
       >
         <router-link to="/" class="navbar__logo">
-          <img src="@/assets/images/logo.svg" alt="" />
+          <img src="~@/assets/images/logo.png" alt="" />
         </router-link>
         <a
           href="#"
@@ -28,7 +28,7 @@
           <div class="flex justify-center sm:justify-between md:justify-start
           flex-col sm:flex-row w-full md:w-auto items-center sm:items-start">
             <div class="footer__logo flex-none mb-6 sm:mr-16 sm:mb-0">
-              <img src="@/assets/images/logo.svg" alt="" />
+              <img src="~@/assets/images/logo-w.png" alt="Li-fe" />
             </div>
           </div>
           <div class="footer__author">
@@ -36,12 +36,12 @@
               <li class="flex md:justify-start md:mb-6 mb-4 justify-center">
                 <a href="#" class="mr-4">
                   <i class="social-media">
-                    <img src="@/assets/images/icon/github.svg" alt="">
+                    <img src="~@/assets/images/icon/github.svg" alt="">
                   </i>
                 </a>
                 <a href="#">
                   <i class="social-media">
-                    <img src="@/assets/images/icon/linkedIn.svg" alt="">
+                    <img src="~@/assets/images/icon/linkedIn.svg" alt="">
                   </i>
                 </a>
               </li>

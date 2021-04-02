@@ -4,7 +4,7 @@
       <div class="flex justify-center sm:justify-between md:justify-start
       flex-col sm:flex-row w-full md:w-auto items-center sm:items-start">
         <div class="footer__logo flex-none mb-6 sm:mr-16 sm:mb-0">
-          <img src="@/assets/images/logo.svg" alt="" />
+          <img src="~@/assets/images/logo-w.png" alt="Li-fe" />
         </div>
         <div class="flex text-sm">
           <ul class="text-white mr-12 flex-none">
@@ -47,12 +47,12 @@
           <li class="flex md:justify-start md:mb-6 mb-4 justify-center">
             <a href="#" class="mr-4">
               <i class="social-media">
-                <img src="@/assets/images/icon/github.svg" alt="">
+                <img src="~@/assets/images/icon/github.svg" alt="">
               </i>
             </a>
             <a href="#">
               <i class="social-media">
-                <img src="@/assets/images/icon/linkedIn.svg" alt="">
+                <img src="~@/assets/images/icon/linkedIn.svg" alt="">
               </i>
             </a>
           </li>
