@@ -278,7 +278,7 @@ export default {
           switch (this.winPrize.text) {
             case '9折優惠券':
             case '5折優惠券':
-            case '不限金額免運':
+            case '95折優惠券':
               this.wellDone = true;
               break;
             default:
