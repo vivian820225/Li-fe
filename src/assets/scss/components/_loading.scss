@@ -1,90 +1,68 @@
-@keyframes ldio-fe6q606wmn {
-  0% {
-    transform: translate(16px, 84px) scale(0);
-  }
-  25% {
-    transform: translate(16px, 84px) scale(0);
-  }
-  50% {
-    transform: translate(16px, 84px) scale(1);
-  }
-  75% {
-    transform: translate(84px, 84px) scale(1);
-  }
-  100% {
-    transform: translate(152px, 84px) scale(1);
-  }
+.vld-overlay .vld-background {
+  opacity: 0.95;
 }
-@keyframes ldio-fe6q606wmn-r {
-  0% {
-    transform: translate(152px, 84px) scale(1);
-  }
-  100% {
-    transform: translate(152px, 84px) scale(0);
-  }
-}
-@keyframes ldio-fe6q606wmn-c {
-  0% {
-    background: #072824;
-  }
-  25% {
-    background: #6ca55e;
-  }
-  50% {
-    background: #3d7a52;
-  }
-  75% {
-    background: #1b4f3e;
-  }
-  100% {
-    background: #072824;
-  }
-}
-.ldio-fe6q606wmn div {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  transform: translate(84px, 84px) scale(1);
-  background: #072824;
-  animation: ldio-fe6q606wmn 2s infinite cubic-bezier(0, 0.5, 0.5, 1);
-}
-.ldio-fe6q606wmn div:nth-child(1) {
-  background: #1b4f3e;
-  transform: translate(152px, 84px) scale(1);
-  animation: ldio-fe6q606wmn-r 0.5s infinite cubic-bezier(0, 0.5, 0.5, 1), ldio-fe6q606wmn-c 2s infinite step-start;
-}
-.ldio-fe6q606wmn div:nth-child(2) {
-  animation-delay: -0.5s;
-  background: #072824;
-}
-.ldio-fe6q606wmn div:nth-child(3) {
-  animation-delay: -1s;
-  background: #1b4f3e;
-}
-.ldio-fe6q606wmn div:nth-child(4) {
-  animation-delay: -1.5s;
-  background: #3d7a52;
-}
-.ldio-fe6q606wmn div:nth-child(5) {
-  animation-delay: -2s;
-  background: #6ca55e;
-}
-.loadingio-spinner-ellipsis-5yq9k1hnc4f {
-  width: 200px;
-  height: 200px;
-  display: inline-block;
-  overflow: hidden;
-  background: transparent;
-}
-.ldio-fe6q606wmn {
-  width: 100%;
-  height: 100%;
+
+.loader {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  border: 4px solid #FFC107;
+  border-radius: .75rem;
   position: relative;
-  transform: translateZ(0) scale(1);
-  backface-visibility: hidden;
-  transform-origin: 0 0;
+  top: 50%;
+  overflow: hidden;
+  animation: loader 2s infinite ease;
 }
-.ldio-fe6q606wmn div {
-  box-sizing: content-box;
+
+.loader-inner {
+  display: inline-block;
+  width: 100%;
+  background-color: #FFC107;
+  vertical-align: top;
+  animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  
+  25% {
+    transform: rotate(180deg);
+  }
+  
+  50% {
+    transform: rotate(180deg);
+  }
+  
+  75% {
+    transform: rotate(360deg);
+  }
+  
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-inner {
+  0% {
+    height: 0%;
+  }
+  
+  25% {
+    height: 0%;
+  }
+  
+  50% {
+    height: 100%;
+  }
+  
+  75% {
+    height: 100%;
+  }
+  
+  100% {
+    height: 0%;
+  }
 }
