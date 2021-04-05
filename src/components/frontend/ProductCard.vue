@@ -2,7 +2,8 @@
   <div class="p-card text-gray-900">
     <div class="p-card__top">
       <router-link :to="`/product/${item.id}`" class="p-card__img">
-        <img :src="item.imageUrl[0]" :alt="item.title" />
+        <img v-if="!item.imageUrl" src="~@/assets/images/img-loading.jpg" alt="">
+        <img v-else :src="item.imageUrl[0]" :alt="item.title" />
       </router-link>
       <span
         v-if="item.options.popular"

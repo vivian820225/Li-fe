@@ -25,5 +25,8 @@ export default {
     Footer,
     ScrollTop,
   },
+  created() {
+    this.$store.dispatch('productsModules/getAllProducts');
+  },
 };
 </script>

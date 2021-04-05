@@ -31,7 +31,6 @@ export default {
         .then((res) => {
           context.commit('PRODUCTS', res.data.data);
           context.commit('PAGINATION', res.data.meta.pagination);
-          // this.filterItems = res.data.data;
           context.commit('LOADING', false, { root: true });
         })
         .catch(() => {
@@ -51,8 +50,11 @@ export default {
     },
   },
   getters: {
-    allProducts(state) {
-      return state.allProducts;
+    filterHotProducts(state) {
+      return state.allProducts.filter((item) => item.options.popular);
+    },
+    filterRecProducts(state) {
+      return state.allProducts.filter((item) => item.options.recommend);
     },
   },
 };

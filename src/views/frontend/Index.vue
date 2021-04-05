@@ -21,7 +21,7 @@
             </span>
           </router-link>
         </div>
-        <HotProduct :products="hotProducts" />
+        <HotProduct :products="filterHotProducts" />
       </section>
       <!-- 最新上架 -->
       <section class="md:mb-16 mb-4">
@@ -42,7 +42,7 @@
             </span>
           </router-link>
         </div>
-        <RecProduct :products="recProducts" />
+        <RecProduct :products="filterRecProducts" />
       </section>
       <!-- 綠色生活 -->
       <section class="lg:mb-40 md:mb-24 mb-12">
@@ -115,19 +115,12 @@ import BannerCarousel from '@/components/frontend/home/BannerCarousel.vue';
 import HotProduct from '@/components/frontend/home/HotProduct.vue';
 import RecProduct from '@/components/frontend/home/RecProduct.vue';
 import ArticleCard from '@/components/frontend/ArticleCard.vue';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'Home',
   data() {
     return {
-      products: [],
-      hotProducts: [],
-      recProducts: [],
-      tempProduct: {
-        imageUrl: [],
-        options: {},
-      },
-      pagination: {},
       articles: [
         {
           id: 1,
@@ -153,42 +146,20 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState('productsModules', [
+      'allProducts',
+    ]),
+    ...mapGetters('productsModules', [
+      'filterHotProducts',
+      'filterRecProducts',
+    ]),
+  },
   components: {
     BannerCarousel,
     HotProduct,
     RecProduct,
     ArticleCard,
-  },
-  created() {
-    this.getProducts();
-  },
-  methods: {
-    getProducts(page = 1) {
-      this.$store.dispatch('updateLoading', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
-
-      this.axios
-        .get(api)
-        .then((res) => {
-          this.products = res.data.data;
-          this.pagination = res.data.meta.pagination;
-          this.filterProducts();
-          this.$store.dispatch('updateLoading', false);
-        })
-        .catch(() => {
-          this.$store.dispatch('updateLoading', false);
-        });
-    },
-    filterProducts() {
-      this.products.forEach((item) => {
-        if (item.options.popular) {
-          this.hotProducts.push(item);
-        }
-        if (item.options.recommend) {
-          this.recProducts.push(item);
-        }
-      });
-    },
   },
 };
 </script>
