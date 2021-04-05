@@ -120,7 +120,7 @@
               </p>
             </div>
             <div v-else class="block">
-              <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-4 mb-8">
+              <div class="grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 gap-4 mb-8">
                 <ProductCard
                   :item="product"
                   v-for="(product, idx) in filterProducts"
@@ -268,9 +268,9 @@ export default {
           this.axios
             .patch(api, cart)
             .then(() => {
-              // this.$bus.$emit('message:push', '加入購物車成功', 'success');
+              this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
-              this.$bus.$emit('get-cart');
+              // this.$bus.$emit('get-cart');
               this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');

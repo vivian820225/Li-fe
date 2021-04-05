@@ -34,26 +34,29 @@
       </button>
     </div>
     <div class="p-card__content p-4 flex justify-between items-start">
-      <div class="pr-3">
+      <div class="md:pr-3">
         <router-link
           :to="`/product/${item.id}`"
-          class="block p-card__name text-base mb-2 hover:text-primary-default transition"
+          class="block p-card__name sm:text-base text-sm md:mb-1
+          hover:text-primary-default transition"
         >
           {{ item.title }}
         </router-link>
-        <div class="flex justify-start items-center flex-wrap">
+        <div class="flex justify-start sm:items-center items-start sm:flex-row flex-col">
           <span
-            class="price text-secondary-default font-ubu font-bold text-xl mr-2"
+            class="price text-secondary-default font-ubu font-bold
+            lg:text-lg md:text-base text-sm sm:mr-2"
             >NT {{ item.price | currency }}</span
           >
-          <span class="price__original text-gray-500 font-ubu line-through"
+          <span class="price__original text-gray-500 font-ubu text-xs line-through"
             >NT {{ item.origin_price | currency }}</span
           >
         </div>
       </div>
       <button
         type="button"
-        class="bg-primary-default text-gray-900 p-3 rounded-lg hover:bg-primary-dark transition"
+        class="add-to-cart
+        bg-primary-default text-gray-900 p-3 rounded-lg hover:bg-primary-dark transition"
         @click="addToCart(item.id, 1)"
       >
         <span class="material-icons block">add</span>
@@ -142,13 +145,34 @@ export default {
 @media screen and (max-width: 768px) {
   .p-card {
     &__content {
+      position: relative;
+      padding: .5rem;
       border: solid 2px;
       border-bottom-right-radius: 1rem;
       border-bottom-left-radius: 1rem;
       border-top: none;
       @apply border-gray-100;
     }
+    .discount {
+      padding: 4px 12px;
+    }
   }
+  .add-to-cart {
+    position: absolute;
+    right: .5rem;
+    top: -50%;
+  }
+
+}
+
+@media screen and (max-width: 580px) {
+  .p-card {
+    .add-to-cart {
+    padding: .25rem;
+    top: -40px;
+  }
+  }
+
 }
 
 @keyframes zoomIn {

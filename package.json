@@ -10,6 +10,7 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/postcss7-compat": "^2.0.2",
+    "aos": "^2.3.4",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "eslint-import-resolver-webpack": "^0.13.0",

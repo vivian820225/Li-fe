@@ -11,15 +11,15 @@
               >Popular Items</span
             >
           </h2>
-          <a
-            href="#"
+          <router-link
+            to="/products"
             class="flex items-center text-gray-500 hover:text-primary-default transition"
           >
             更多商品
             <span class="material-icons ml-1 text-xl leading-none">
               arrow_forward
             </span>
-          </a>
+          </router-link>
         </div>
         <HotProduct :products="hotProducts" />
       </section>
@@ -32,15 +32,15 @@
               >What's New</span
             >
           </h2>
-          <a
-            href="#"
+          <router-link
+            to="/products"
             class="flex items-center text-gray-500 hover:text-primary-default transition"
           >
             更多商品
             <span class="material-icons ml-1 text-xl leading-none">
               arrow_forward
             </span>
-          </a>
+          </router-link>
         </div>
         <RecProduct :products="recProducts" />
       </section>
@@ -53,15 +53,15 @@
               >Green Life</span
             >
           </h2>
-          <a
-            href="#"
+          <router-link
+            to="/blog"
             class="flex items-center text-gray-500 hover:text-primary-default transition"
           >
             更多文章
             <span class="material-icons ml-1 text-xl leading-none">
               arrow_forward
             </span>
-          </a>
+          </router-link>
         </div>
         <div class="grid md:grid-flow-col md:grid-cols-3 sm:grid-cols-2 md:gap-8 sm:gap-6 gap-4">
           <ArticleCard :article=article v-for="(article, id) in articles" :key="id" />
@@ -74,7 +74,7 @@
         class="relative max-w-screen-xl mx-auto font-sans
         grid grid-flow-col md:grid-cols-2"
       >
-        <div class="block">
+        <div class="block" data-aos="fade-right" data-aos-duration="3000">
           <h2 class="section-title md:mb-12 mb-4">
             訂閱我們
             <span class="sub-section-title"
@@ -101,7 +101,8 @@
             <a href="#" class="underline">隱私權保護政策</a>
           </span>
         </div>
-        <div class="hidden md:block relative lg:-top-40 md:-top-20">
+        <div class="hidden md:block relative lg:-top-40 md:-top-20"
+        data-aos="fade-left" data-aos-duration="3000">
           <img class="absolute right-0" src="~@/assets/images/contact_us.png" alt="">
         </div>
       </div>

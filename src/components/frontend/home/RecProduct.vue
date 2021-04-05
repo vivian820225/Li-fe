@@ -37,10 +37,11 @@ export default {
             slidesPerView: 3,
           },
           768: {
-            slidesPerView: 2,
+            slidesPerView: 3,
           },
           480: {
-            slidesPerView: 1,
+            slidesPerView: 2,
+            spaceBetween: 16,
           },
         },
       },
@@ -86,8 +87,9 @@ export default {
           this.axios
             .patch(api, cart)
             .then(() => {
+              this.$bus.$emit('message:push', '加入購物車成功', 'success');
+              // this.$bus.$emit('get-cart');
               this.getCart();
-              this.$bus.$emit('get-cart');
               this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');

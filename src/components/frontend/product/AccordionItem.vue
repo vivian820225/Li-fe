@@ -85,7 +85,9 @@ export default {
   $size: 8px;
   display: block;
   position: absolute;
-  top: 0; right: 1.25rem; bottom: 0;
+  top: 0;
+  right: 1.25rem;
+  bottom: 0;
   margin: auto;
   width: $size;
   height: $size;
@@ -101,11 +103,25 @@ export default {
   overflow: hidden;
   background-color: whitesmoke;
 }
-.accordion-item-enter-active, .accordion-item-leave-active {
+.accordion-item-enter-active,
+.accordion-item-leave-active {
   will-change: height;
   transition: height 0.2s ease;
 }
-.accordion-item-enter, .accordion-item-leave-to {
+.accordion-item-enter,
+.accordion-item-leave-to {
   height: 0 !important;
+}
+
+@media screen and (max-width: 480px) {
+  .accordion-item-trigger,
+  .accordion-item-details-inner {
+    padding: 0.75rem 1rem;
+  }
+  .accordion-item-title {
+    h4 {
+      font-size: 1rem;
+    }
+  }
 }
 </style>

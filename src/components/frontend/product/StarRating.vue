@@ -45,17 +45,10 @@ export default {
       return `${this.stars} of ${this.maxStars}`;
     },
   },
-  methods: {
-    // rate(star) {
-    //   if (typeof star === 'number' && star <= this.maxStars && star >= 0) {
-    //     this.stars = this.stars === star ? star - star : star;
-    //   }
-    // },
-  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .rating {
   display: flex;
   justify-content: center;
@@ -75,6 +68,14 @@ export default {
   .rating-counter {
     color: #4B4B4B;
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .star {
+    .material-icons {
+      font-size: 1rem;
+    }
   }
 }
 </style>

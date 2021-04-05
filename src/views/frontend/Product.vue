@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl mx-auto font-sans xl:px-0 lg:px-8 px-4">
       <Breadcrumb />
       <div class="product-container">
-        <div class="grid lg:grid-cols-2 sm:grid-cols-3 gap-8 md:mb-8 mb-16">
+        <div class="grid lg:grid-cols-2 sm:grid-cols-3 gap-8 mb-8">
           <div class="product-pic">
               <img
                 class="w-full lg:rounded-2xl rounded-xl mb-4 lg:h-auto sm:h-4/5 object-cover"
@@ -45,18 +45,18 @@
                 NT$ {{ tempProduct.origin_price }}
               </div>
               <div v-else class="flex md:justify-start items-center">
-                <div class="md:text-3xl text-2xl font-bold mr-6">
+                <div class="md:text-3xl sm:text-2xl text-xl font-bold mr-6">
                   優惠價
                   <span class="font-ubu">NT$ {{ tempProduct.price }}</span>
                 </div>
-                <div class="md:text-lg line-through text-gray-500">
+                <div class="md:text-lg text-sm line-through text-gray-500">
                   原價
                   <span class="font-ubu">NT$ {{ tempProduct.origin_price }}</span>
                 </div>
               </div>
             </div>
             <div class="flex sm:justify-between justify-center sm:flex-nowrap flex-wrap">
-              <div class="flex justify-center items-center flex-none sm:mr-4 sm:mb-0 mb-8">
+              <div class="flex justify-center items-center flex-none sm:mr-4 sm:mb-0 mb-6">
                 <button
                   type="button"
                   class="w-10 h-10 hover:text-primary-default transition"
@@ -121,7 +121,7 @@
             </div>
           </div>
         </div>
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
           <section class="product-description">
             <h3 class="product-section-title">產品描述</h3>
             <hr class="divider-line" />
@@ -139,7 +139,7 @@
               </p>
             </div>
           </section>
-          <section class="fqa mb-10">
+          <section class="fqa">
             <h3 class="product-section-title">常見問答</h3>
             <hr class="divider-line" />
             <Accordion id="accordion-fqa" :content="fqa" ref="linkDiv"/>
@@ -152,7 +152,7 @@
           <hr class="divider-line" />
           <ul class="divide-y-2">
             <li v-for="item in reviews" :key="item.username">
-              <div class="flex justify-between items-start py-4">
+              <div class="flex justify-between items-start sm:py-4 py-2">
                 <img
                   :src="item.avatar" alt="user"
                   class="rounded-full w-8 h-8 flex-none mr-4"
@@ -166,7 +166,7 @@
                         <span class="mr-2">{{ item.createdTime }} 天前</span>所留下的購買評價
                       </p>
                     </div>
-                    <p class="md:mb-0 mb-4 md:text-base text-sm">{{ item.review }}</p>
+                    <p class="mb-1 md:text-base text-sm">{{ item.review }}</p>
                   </div>
                   <StarRating :score="item.rating" class="mr-4"/>
                 </div>
@@ -375,11 +375,13 @@ export default {
           this.axios
             .patch(api, cart)
             .then(() => {
+              this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
-              this.$bus.$emit('get-cart');
+              // this.$bus.$emit('get-cart');
               this.quantity = 1;
               this.$store.dispatch('updateLoading', false);
             }).catch(() => {
+              this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');
               this.$store.dispatch('updateLoading', false);
             });
           return true;

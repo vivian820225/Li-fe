@@ -3,7 +3,9 @@
     <TitleBanner :titleText=title :bgImg=bgImg class="md:mb-12 mb-6" />
     <div class="content grid grid-cols-3 gap-4 mb-10 md:mb-8">
       <div class="content-title text-center md:text-left">
-        <h2 class="font-bold md:text-3xl text-xl mb-4">
+        <h2
+          class="font-bold md:text-3xl text-xl mb-4"
+        >
           現代生活忙碌，節奏快<br/>
           在繁忙的日常中，人們時常忘記要放慢步調。
         </h2>
@@ -21,7 +23,7 @@
           Li-fe 陪伴你在緊湊的生活中得到一點點鼓勵。
         </p>
       </div>
-      <div class="content-img">
+      <div class="content-img" data-aos="zoom-in-up">
         <img class="m-auto" src="~@/assets/images/contact_us-2.png" alt="">
       </div>
     </div>
@@ -34,7 +36,7 @@
         關於商品及服務相關問題，歡迎來電或來信詢問，我們將儘速提供協助。
       </p>
       <ul class="grid md:grid-cols-3 text-center way gap-4">
-        <li>
+        <li data-aos="fade-up" data-aos-duration="1000">
           <i class="contact-icon phone"></i>
           <h3 class="font-bold text-xl text-secondary-default mb-4">客服專線</h3>
           <p class="md:text-lg text-base mb-4">
@@ -42,7 +44,7 @@
             服務時間：週一至週六 09:00 - 18:00
           </p>
         </li>
-        <li>
+        <li data-aos="fade-up" data-aos-duration="1500">
           <i class="contact-icon email"></i>
           <h3 class="font-bold text-xl text-secondary-default mb-4">服務信箱</h3>
           <p class="md:text-lg text-base mb-4">
@@ -50,7 +52,7 @@
             平均回覆時間： 24 小時
           </p>
         </li>
-        <li>
+        <li data-aos="fade-up" data-aos-duration="2000">
           <i class="contact-icon location"></i>
           <h3 class="font-bold text-xl text-secondary-default mb-4">門市據點</h3>
           <p class="md:text-lg text-base mb-4">

@@ -17,6 +17,8 @@ import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
 import vuescroll from 'vuescroll';
 import Clipboard from 'v-clipboard';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import currencyFilter from './filters/currency';
 
 import App from './App.vue';
@@ -39,8 +41,10 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 Vue.use(VueAwesomeSwiper);
 Vue.use(vuescroll, { ops: {} });
-
 Vue.use(Clipboard);
+Vue.use(AOS);
+
+AOS.init();
 
 Vue.filter('currency', currencyFilter);
 
