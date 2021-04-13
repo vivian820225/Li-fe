@@ -226,11 +226,11 @@ export default {
   data() {
     return {
       cart: [],
-      tempProduct: {
-        imageUrl: [],
-      },
+      // tempProduct: {
+      //   imageUrl: [],
+      // },
       quantity: 1,
-      currentImg: '',
+      // currentImg: '',
       shownReviews: [],
       reviews: [
         {
@@ -317,20 +317,27 @@ export default {
     allProducts() {
       return this.$store.state.productsModules.allProducts;
     },
+    ...mapState('productsModules', {
+      tempProduct: (state) => state.product,
+      currentImg: {
+        get() {
+          return this.$store.state.currentImg;
+        },
+        // set(value) {
+        //   this.$store.commit('UpdateImg', value);
+        // },
+      },
+    }),
     ...mapState('favorListModules', {
       favorList: (state) => state.favorList,
     }),
   },
   created() {
-    const { id } = this.$route.params;
-    this.getProduct(id);
-    this.getAllProducts();
+    this.$store.dispatch('productsModules/getProduct', this.$route.params.id);
+    this.$store.dispatch('productsModules/getAllProducts');
     this.getCart();
   },
   methods: {
-    getAllProducts() {
-      this.$store.dispatch('productsModules/getAllProducts');
-    },
     getProduct(id) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
       this.$store.dispatch('updateLoading', true);

@@ -5,7 +5,26 @@ export default {
   state: {
     allProducts: [],
     products: [],
+    product: {},
+    currentImg: '',
     pagination: {},
+  },
+  mutations: {
+    ALL_PRODUCTS(state, payload) {
+      state.allProducts = payload;
+    },
+    PRODUCTS(state, payload) {
+      state.products = payload;
+    },
+    PRODUCT(state, payload) {
+      state.product = payload;
+    },
+    PRODUCT_CURRENT_IMG(state, payload) {
+      state.currentImg = payload;
+    },
+    PAGINATION(state, payload) {
+      state.pagination = payload;
+    },
   },
   actions: {
     getAllProducts(context) {
@@ -37,16 +56,19 @@ export default {
           context.commit('LOADING', false, { root: true });
         });
     },
-  },
-  mutations: {
-    ALL_PRODUCTS(state, payload) {
-      state.allProducts = payload;
-    },
-    PRODUCTS(state, payload) {
-      state.products = payload;
-    },
-    PAGINATION(state, payload) {
-      state.pagination = payload;
+    getProduct(context, id) {
+      context.commit('LOADING', true, { root: true });
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
+
+      axios
+        .get(api)
+        .then((res) => {
+          context.commit('PRODUCT', res.data.data);
+          context.commit('PRODUCT_CURRENT_IMG', res.data.data.imgUrl[0]);
+          context.commit('LOADING', false, { root: true });
+        }).catch(() => {
+          context.commit('LOADING', false, { root: true });
+        });
     },
   },
   getters: {

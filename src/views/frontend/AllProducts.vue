@@ -149,20 +149,17 @@
 import ProductCard from '@/components/frontend/ProductCard.vue';
 import Select from '@/components/frontend/Select.vue';
 import Pagination from '@/components/Pagination.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'AllProducts',
   data() {
     return {
       cart: [],
-      products: [],
+      // products: [],
       filterCategory: '全部商品',
       sortData: '',
-      tempProduct: {
-        imageUrl: [],
-        options: {},
-      },
-      pagination: {},
+      // pagination: {},
       selectToggle: false,
       selectedOption: '價格由高到低',
       Options: ['價格由低到高', '價格由高到低'],
@@ -175,8 +172,8 @@ export default {
     Pagination,
   },
   created() {
-    this.getAllProducts();
-    this.getProducts();
+    this.$store.dispatch('productsModules/getAllProducts');
+    this.$store.dispatch('productsModules/getProducts', 1);
     this.getCart();
   },
   mounted() {
@@ -185,9 +182,26 @@ export default {
     });
   },
   computed: {
-    allProducts() {
-      return this.$store.state.productsModules.allProducts;
+    products: {
+      get() {
+        return this.$store.state.productsModules.products;
+      },
+      set(page) {
+        this.$store.dispatch('productsModules/getProducts', page);
+      },
     },
+    pagination: {
+      get() {
+        return this.$store.state.productsModules.pagination;
+      },
+      set(page) {
+        this.$store.dispatch('productsModules/getProducts', page);
+      },
+    },
+    ...mapState('productsModules', {
+      allProducts: (state) => state.allProducts,
+      pagination: (state) => state.pagination,
+    }),
     filterProducts() {
       let filterItems = [];
       switch (this.filterCategory) {
@@ -219,23 +233,7 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
-      this.$store.dispatch('updateLoading', true);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/products?page=${page}`;
-
-      this.axios
-        .get(api)
-        .then((res) => {
-          this.products = res.data.data;
-          this.filterItems = res.data.data;
-          this.pagination = res.data.meta.pagination;
-          this.$store.dispatch('updateLoading', false);
-        })
-        .catch(() => {
-          this.$store.dispatch('updateLoading', false);
-        });
-    },
-    getAllProducts() {
-      this.$store.dispatch('productsModules/getAllProducts');
+      this.$store.dispatch('productsModules/getProducts', page);
     },
     getCart() {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/shopping`;
@@ -270,7 +268,6 @@ export default {
             .then(() => {
               this.$bus.$emit('message:push', '加入購物車成功', 'success');
               this.getCart();
-              // this.$bus.$emit('get-cart');
               this.$store.dispatch('updateLoading', false);
             }).catch(() => {
               this.$bus.$emit('message:push', '發生錯誤，加入失敗', 'danger');

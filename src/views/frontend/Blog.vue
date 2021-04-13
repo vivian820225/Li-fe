@@ -18,11 +18,6 @@
           <ArticleCard :article=article v-for="(article, id) in articles" :key="id" />
         </div>
       </section>
-      <!-- <Pagination
-        class=""
-        :pages="pagination"
-        @updateList="getProducts()"
-      /> -->
     </div>
     <!-- 訂閱我們 -->
     <section class="contact-us bg-gray-100 md:py-24 py-16 px-4 md:px-8">
@@ -68,7 +63,6 @@
 <script>
 import BannerCarousel from '@/components/frontend/home/BannerCarousel.vue';
 import ArticleCard from '@/components/frontend/ArticleCard.vue';
-// import Pagination from '@/components/Pagination.vue';
 
 export default {
   name: 'Blog',
